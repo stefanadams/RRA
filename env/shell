@@ -1,0 +1,62 @@
+MYSQLHOST=mysql.washingtonrotary.com
+MYSQLUSER=washingtonrotary
+MYSQLPASS=harris
+
+ajax () 
+{ 
+    if [ "$1" = "on" ]; then
+        export HTTP_X_REQUESTED_WITH=XMLHttpRequest AJAX="-H \"X-Requested-With: XMLHttpRequest\""
+    else
+        unset HTTP_X_REQUESTED_WITH AJAX;
+    fi
+    alias curl="curl $AJAX $JSON"
+}
+complete -W "on off" ajax
+
+json () 
+{ 
+    if [ "$1" = "on" ]; then
+        export CONTENT_TYPE="application/json" JSON="-H \"Content-type: application/json\""
+    else
+        unset CONTENT_TYPE JSON
+    fi
+    alias curl="curl $AJAX $JSON"
+}
+complete -W "on off" json
+
+export MYSQLHOST MYSQLUSER MYSQLPASS
+set_mysql_alias () {
+    export MYSQL_PS1="mysql [\d]> "
+    alias mysql="mysql -h ${MYSQLHOST:-localhost} -u ${MYSQLUSER:-root} -p$MYSQLPASS"
+    alias mysqldump="mysqldump -h ${MYSQLHOST:-localhost} -u ${MYSQLUSER:-root} -p$MYSQLPASS -Q -a -c --add-drop-table"
+}
+set_mysql_alias
+
+A ()
+{
+    if [ -x /etc/init.d/apache2 ]; then
+        sudo /etc/init.d/apache2 "$1"
+    elif [ -x /etc/init.d/httpd ]; then
+        sudo /etc/init.d/httpd "$1"
+    fi
+}
+complete -W "start stop restart" A
+
+devbackup ()
+{
+    unset note
+    [ -z "$1" ] && { echo "Usage: $FUNCNAME {$(echo 'show databases' | mysql | sed 1d | paste -s -d '|')}"; return; }
+    shift;
+    note="$@"
+    [ -z "$note" ] && { echo -n "Enter a note about this backup: "; read note; }
+    [ -z "$note" ] && { echo "You didn't enter a note."; exit; }
+
+    a=$(date +'%Y-%m-%d--%H-%M-%S')
+
+    mysqldump $MYSQLDBMASTER > "$HOME/$DEVMODE/backups/$MYSQLDBMASTER.$a.$note.sql"
+
+    tar cvzf "$HOME/$DEVMODE/backups/full-$PROJECT-$DEVMODE.$a.$note.tar.gz" --exclude "backups/full-*.tar.gz" -C $HOME/$DEVMODE .
+    #scp $HOME/$DEVMODE/backups/full-washrotary.$a.$note.tar.gz cogent@stefan.cog-ent.com:/tmp
+    echo -e "\n$a\n"
+}
+complete -W "$(echo 'show databases' | mysql | sed 1d)" devbackup

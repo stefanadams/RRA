@@ -1,0 +1,206 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" />
+<title>Items</title>
+
+<link rel="stylesheet" type="text/css" media="screen" href="css/smoothness/jquery-ui-1.8.16.custom.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="css/jquery.autocomplete.css" />
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="js/i18n/grid.locale-en.js"></script>
+<script type="text/javascript" src="js/jquery.jqGrid.min.js"></script>
+<script type="text/javascript" src="js/jquery.json-2.3.min.js"></script>
+<script type="text/javascript" src="js/jquery.autocomplete.js"></script>
+<script type="text/javascript" src="js/jquery.maskedinput.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	var categories = ":;food:Food;gc:Gift Certificates;travel:Travel;personal care:Personal Care;auto:Auto;apparel:Apparel;sports:Sports;event tickets:Event Tickets;baskets:Baskets;wine:Wine;misc:Misc;garden:Garden;one per:One Per";
+
+	function alertAddedItemNumber(response,postdata) {
+		// Reference in .navGrid {add} object afterSubmit: property
+		var json=response.responseText;
+		var result=eval("("+json+")");
+		if (result.sc) alert("Added Item Number "+result.number);
+		return [result.sc,result.msg,null];
+	}
+
+	// Autocompletes
+	function ac_donor(elem){
+		$(elem).autocomplete('pl/api/ac/donor', {minChars: 3});
+		$(elem).result(function(event, data, formatted){
+			if (data) {
+				$('#advertisement').val(data[1]);
+			}
+		}); 
+		return true;
+	}
+	function ac_stockitem(elem){
+		$(elem).autocomplete('pl/api/ac/stockitem', {minChars: 3});
+		$(elem).result(function(event, data, formatted){
+			if (data) {
+				$('#item').val(data[1]);
+				$('#value').val(data[2]);
+			}
+		}); 
+		return true;
+	}
+	function ac_item(elem){
+		$(elem).autocomplete('pl/api/ac/item', {minChars: 3, extraParams: {donor: function(){ return $('#donor').val(); }}});
+		$(elem).result(function(event, data, formatted){
+			if (data) {
+				$('#description').val(data[1]);
+				$('#value').val(data[2]);
+				$('#url').val(data[3]);
+			}
+		}); 
+		return true;
+	}
+	function ac_advertisement(elem){
+		$(elem).autocomplete('pl/api/ac/advertisement', {minChars: 3, extraParams: {donor: function(){ return $('#donor').val(); }}});
+		return true;
+	}
+
+	// Reference in .jqGrid {options} colModel {name:...} property with formatter:'___Fmatter' property
+	function hideFK(cellvalue, options, rowdata) {
+		if ( cellvalue ) {
+			var re = /^(.*?):([0-9]+)$/.exec(cellvalue);
+			return re[1] + '<span style="display: none">:' + re[2] + '</span>';
+		}
+		return '';
+	}
+	function showFK(cellvalue, options) {
+		if ( cellvalue ) return cellvalue;
+		return '';
+	}
+	function hasFK(value, colname) {
+		var RE = /:[0-9]+$/;
+		if ( RE.test(value) ) return [true,""];
+		return [false,colname+": Please make a selection from the suggestion menu"];
+	}
+
+	function checkUpdate(response,postdata) {  
+		// Reference in .navGrid {add/edit/del} object afterSubmit: property
+		var json=response.responseText;
+		var result=eval("("+json+")");
+		return [result.sc,result.msg,null];
+	}
+
+	function formatGridCells() {
+			// Reference in .jqGrid {options} loadComplete: property
+			$('table#list1 tbody tr td[title="Yes"]').css('color', 'green');
+			$('table#list1 tbody tr td[title="No"]').css('color', 'red');   
+			$('table#list1 tbody tr td[aria-describedby="list1_items"]').css('color', 'green');
+			$('table#list1 tbody tr td[aria-describedby="list1_items"][title="0"]').css('color', 'red');
+	}
+
+	jQuery.extend($.fn.fmatter , {
+			// Reference in .jqGrid {options} colModel {name:...} property with formatter:'___Fmatter' property
+			phoneFmatter : function(cellvalue, options, rowdata) {
+					if ( cellvalue ) {
+							var re = /\(?([0-9]{3})\)? ?([0-9]{3})-?([0-9]{4})/.exec(cellvalue);
+							return "(" + re[1] + ") " + re[2] + "-" + re[3];
+					}
+					return '&nbsp;';
+			},
+			boolFmatter : function(cellvalue, options, rowdata) {
+					if ( cellvalue == 1 ) return 'Yes';
+					return 'No';
+			},
+			categoryFmatter : function(cellvalue, options, rowdata) {
+					if ( cellvalue ) return cellvalue.charAt(0).toUpperCase() + cellvalue.slice(1);
+					return '&nbsp;';
+			}
+	});
+
+	$("#list1").jqGrid({
+		url: 'pl/api/items',
+		postData: {debug: 1},
+		mtype: 'POST',   
+		datatype: 'json',
+		jsonReader: {repeatitems: false, id: "item_id"},
+		ajaxGridOptions: { contentType: "application/json; charset=utf-8" },  
+		serializeGridData: function (postData) { return $.toJSON(postData); },
+		caption: "Items",
+		colModel:[
+			{name:'year',label:'Year',width:30,editable:false},
+			{name:'number',label:'Number',width:30,editable:false},
+			{name:'donor',label:'Donor',width:200,editable:true,editoptions:{size:50,dataInit:ac_donor},editrules:{required:true,custom:true,custom_func:hasFK},formatter:hideFK,unformat:showFK},
+			{name:'stockitem',label:'Stock Item',width:100,editable:true,hidden:true,editoptions:{size:50,dataInit:ac_stockitem},editrules:{edithidden:true,required:false,custom:true,custom_func:hasFK},formatter:hideFK,unformat:showFK},
+			{name:'category',label:'Category', width:100,editable:true,edittype:'select',editoptions:{multiple:true,value:categories},formatter:'categoryFmatter'},
+			{name:'item',label:'Item', width:200,editable:true,editoptions:{size:50,dataInit:ac_item},editrules:{required:true}},
+			{name:'description',label:'Description', width:100,editable:true,hidden:true,edittype:'textarea',editoptions:{rows:4,cols:40},editrules:{edithidden:true}},
+			{name:'value',label:'Value', width:80, align:"right", align:"right",editable:true,editoptions:{size:10},editrules:{required:true,number:true,minValue:0},formatter:'currency',formatoptions:{decimalSeparator:".", thousandsSeparator: ",", decimalPlaces: 0, prefix: "$"}},
+			{name:'advertisement',label:'Advertisement',hidden:true,editable:true,edittype:'textarea',editrules:{edithidden:true},editoptions:{rows:4,cols:40,dataInit:ac_advertisement}},
+			{name:'url',label:'More Info URL', width:100,editable:true,hidden:true,editoptions:{size:50},editrules:{edithidden:true}},
+		],
+		cellEdit: true,
+		cellurl: 'pl/api/items/cell',
+		beforeSubmitCell: function(rowid,celname,value,iRow,iCol){
+			if (celname=="stockitem"){
+				return {celname:"stockitem_id",stockitem_id:value};
+			} else if (celname=="donor"){
+				return {celname:"donor_id",donor_id:value};
+			} else {
+				return {celname:celname};
+			}
+		},
+		loadComplete: formatGridCells,
+		recreateForm: true,
+		altRows: true,
+		rownumbers: true,
+		scroll: true,
+		rowNum: 50,
+		rowList: [10, 20, 50, 100, 500, 1000, 5000, 10000],
+		pager: $('#pager1'),
+		sortname: 'year,number',
+		viewrecords: true,
+		height: "75\%",
+		autowidth: true
+	}).navGrid('#pager1',
+		{edit:true,add:true,del:true},
+		// {edit}, {add}, {del}, {search}, {view}
+		{
+			url: "pl/api/items/edit",
+			editCaption: "Edit Item",
+			width: 700,
+			closeOnEscape: true,
+			//closeAfterEdit: true,
+			afterSubmit: checkUpdate
+		},
+		{
+			url: "pl/api/items/add",
+			addCaption: "Add Item",
+			width: 700,
+			closeOnEscape: true,
+			afterSubmit: alertAddedItemNumber
+		},
+		{
+			url: "pl/api/items/del",
+			caption: "Delete Item",
+			msg: "Deleted selected items(s)?",
+			afterSubmit: checkUpdate
+		},
+        { 
+            url: "pl/api/items/search",
+            caption: "Search Donor",
+			multipleSearch:false
+        },
+        { 
+            url: "pl/api/items/view",
+            caption: "View Item",
+        }
+	);
+	// Increase column width of the rownumbers column
+	$("#list1_rn").width(50);   
+	$('table#list1 tbody tr td:first-child').width(50);
+});
+</script>
+</head> 
+<body> 
+<table id="list1" class="scroll"></table> 
+<div id="pager1" class="scroll" style="text-align:center;" />
+</body> 
+</html>

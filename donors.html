@@ -1,0 +1,185 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" />
+<title>Donors</title>
+
+<link rel="stylesheet" type="text/css" media="screen" href="css/smoothness/jquery-ui-1.8.16.custom.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="css/jquery.autocomplete.css" />
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="js/i18n/grid.locale-en.js"></script>
+<script type="text/javascript" src="js/jquery.jqGrid.min.js"></script>
+<script type="text/javascript" src="js/jquery.json-2.3.min.js"></script>
+<script type="text/javascript" src="js/jquery.autocomplete.js"></script>
+<script type="text/javascript" src="js/jquery.maskedinput.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	var selectBool = "1:Yes;0:No";
+	var categories = ":;bank:Bank;lawyer:Lawyer;realty:Realty;doctor:Doctor;cpa:CPA;personal:Personal;esq:ESQ;seq:SEQ;insurance:Insurance";
+
+	// Forces a specific format for a phone number.  Make sure that the
+	// DB definition is varchar(14)
+	function phoneMask(elem) {
+		// Reference in .jqGrid {options} colModel {name:...} property with editoptions:{dataInit:___Mask} property
+		$(elem).mask("(999) 999-9999");
+	}
+
+	// Pops an alert after add form indicating the item number that was just added
+	function alertAddedItemNumber(response,postdata) {
+		// Reference in .navGrid {add} object afterSubmit: property
+		var json=response.responseText;
+		var result=eval("("+json+")");
+		if (result.sc) alert("Added Item Number "+result.number);
+		return [result.sc,result.msg,null];
+	}
+
+	function ac_city(elem){
+		$(elem).autocomplete('pl/api/ac/city');
+		$(elem).result(function(event, data, formatted){
+			if (data) {
+				$('#state').val(data[1]);
+				$('#zip').val(data[2]);
+			}
+		});
+		return true;
+	}
+
+	function formatGridCells() {
+		// Reference in .jqGrid {options} loadComplete: property
+		$('table#list1 tbody tr td[title="Yes"]').css('color', 'green');
+		$('table#list1 tbody tr td[title="No"]').css('color', 'red');
+		$('table#list1 tbody tr td[aria-describedby="list1_items"]').css('color', 'green');
+		$('table#list1 tbody tr td[aria-describedby="list1_items"][title="0"]').css('color', 'red');
+	}
+
+	function checkUpdate(response,postdata) {
+		// Reference in .navGrid {add/edit/del} object afterSubmit: property
+		var json=response.responseText;
+		var result=eval("("+json+")");
+		return [result.sc == 'true' ? true : false,result.msg,null];
+	}
+
+	jQuery.extend($.fn.fmatter , {
+		// Reference in .jqGrid {options} colModel {name:...} property with formatter:'___Fmatter' property
+		phoneFmatter : function(cellvalue, options, rowdata) {
+			if ( cellvalue ) {
+				var re = /\(?([0-9]{3})\)? ?([0-9]{3})-?([0-9]{4})/.exec(cellvalue);
+				return "(" + re[1] + ") " + re[2] + "-" + re[3];
+			}
+			return '&nbsp;';
+		},
+		boolFmatter : function(cellvalue, options, rowdata) {
+			if ( cellvalue == 1 ) return 'Yes';
+			return 'No';
+		},
+		categoryFmatter : function(cellvalue, options, rowdata) {
+			if ( cellvalue ) return cellvalue.charAt(0).toUpperCase() + cellvalue.slice(1);
+			return '&nbsp;';
+		}
+	});
+
+	$("#list1").jqGrid({
+		// To do: run boolFmatter after update
+		// To do: Escape on cell edit sometimes does not work
+		url: 'pl/api/donors',
+		postData: {debug: 1},
+		mtype: 'POST',
+		datatype: 'json',
+		jsonReader: {repeatitems: false, id: "donor_id", subgrid: {root: "rows", repeatitems: true}},
+		ajaxGridOptions: { contentType: "application/json; charset=utf-8" },
+		serializeGridData: function (postData) { return $.toJSON(postData); },
+		caption: "Donors",
+		colModel:[
+			{name:'chamberid',label:'C-ID',width:30,hidden:true,editable:true,editrules:{number:true,minValue:1,maxValue:9999}},
+			{name:'phone',label:'Phone',width:70,editable:true,editoptions:{dataInit:phoneMask},editrules:{required:true},formoptions:{elmsuffix:'(*)'},formatter:'phoneFmatter'},
+			{name:'category',label:'Category',width:40,editable:true,edittype:'select',editoptions:{multiple:false,value:categories},formatter:'categoryFmatter'},
+			{name:'donor',label:'Donor',width:200,editable:true,editrules:{required:true},formoptions:{elmsuffix:'(*)'}},
+			{name:'contact',label:'Contact',width:100,editable:true,editrules:{required:true},formoptions:{elmsuffix:'(*)'}},
+			{name:'address',label:'Address',width:100,search:false,editable:true,editrules:{required:true},formoptions:{elmsuffix:'(*)'}},
+			{name:'city',label:'City',width:60,editable:true,editoptions:{dataInit:ac_city}},
+			{name:'state',label:'State',width:60,editable:true,hidden:true,editrules:{edithidden:true}},
+			{name:'zip',label:'Zip',width:60,editable:true,hidden:true,editrules:{edithidden:true}},
+			{name:'email',label:'Email',width:60,search:false,editable:true,hidden:true,editrules:{email:true,edithidden:true,required:false}},
+			{name:'url',label:'URL',width:60,search:false,editable:true,hidden:true,editrules:{url:true,edithidden:true,required:false}},
+			{name:'advertisement',label:'Advertisement',hidden:true,search:false,editable:true,edittype:'textarea',editrules:{edithidden:true}},
+			{name:'solicit',label:'Solicit',width:25,editable:true,edittype:'select',editoptions:{multiple:false,value:selectBool},formatter:'boolFmatter'},
+			{name:'items',label:'LY#',width:25,editable:false},
+			{name:'rotarian',label:'Rotarian',width:100,editable:true,edittype:'select',editoptions:{multiple:false,dataUrl:'pl/api/buildselect/rotarians'}},
+			{name:'comments',label:'Comments',width:100,search:false,editable:true}
+		],
+		subGrid: true,
+		subGridUrl: 'pl/api/donors/items',
+		subGridModel: [ {
+			name: ['Donor ID', 'Year', 'Night', '#', 'Item', 'Value', 'High Bid', 'Bellringer'],
+			width: [30, 30, 30, 30, 400, 30, 30, 30],
+			params: ['donor_id']
+		} ],
+		cellEdit: true,
+		cellurl: 'pl/api/donors/cell',
+		beforeSubmitCell: function(rowid,celname,value,iRow,iCol){
+			if (celname=="rotarian"){
+				return {celname:"rotarian_id",rotarian_id:value};
+			} else {
+				return {celname:celname};
+			}
+		},
+		loadComplete: formatGridCells,
+		recreateForm: true,
+		altRows: true,
+		rownumbers: true,
+		scroll: true,
+		rowNum: 50,
+		rowList: [10, 20, 50, 100, 500, 1000, 5000, 10000],
+		pager: $('#pager1'),
+		sortname: 'donor',
+		viewrecords: true,
+		height: "75\%",
+		autowidth: true
+	}).navGrid('#pager1',
+		{edit:true,add:true,del:true},
+		// {edit}, {add}, {del}, {search}, {view}
+		{
+			url: "pl/api/donors/edit",
+			editCaption: "Edit Donor",
+			width: 700,
+			closeOnEscape: true,
+			closeAfterEdit: true,
+			afterSubmit: checkUpdate
+		},
+		{
+			url: "pl/api/donors/add",
+			addCaption: "Add Donor",
+			width: 700,
+			closeOnEscape: true,
+			afterSubmit: checkUpdate
+		},
+		{
+			url: "pl/api/donors/del",
+			caption: "Delete Donor",
+			msg: "Deleted selected donor(s)?",
+			afterSubmit: checkUpdate
+		},
+		{
+			url: "pl/api/donors/search",
+			caption: "Search Donor",
+		},
+		{
+			url: "pl/api/donors/view",
+			caption: "View Donor",
+		}
+	);
+	// Increase column width of the rownumbers column
+	$("#list1_rn").width(50);
+	$('table#list1 tbody tr td:first-child').width(50);
+//	$('table#list1 tbody tr td[aria-describedby="list1_rn"]').width(50);
+});
+</script>
+</head> 
+<body>
+<table id="list1" class="scroll"></table> 
+<div id="pager1" class="scroll" style="text-align:center;" />
+</body> 
+</html>

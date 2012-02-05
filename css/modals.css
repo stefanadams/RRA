@@ -1,0 +1,105 @@
+#mask {
+  position:absolute;
+  left:0;
+  top:0;
+  z-index:9000;
+  background-color:#000;
+  display:none;
+}
+  
+#boxes .window {
+  position:absolute;
+  left:0;
+  top:0;
+  width:300px;
+  height:200px;
+  display:none;
+  z-index:9999;
+  padding:20px;
+  background-color: #ffffff;
+}
+
+#boxes #dialog {
+  width:375px; 
+  height:203px;
+  padding:10px;
+  background-color:#ffffff;
+}
+
+#boxes #dialog_devon {
+  width:375px; 
+  height:203px;
+}
+
+#dialog_devon .d-header {
+//  background:url(/washrotary/images/login-header.png) no-repeat 0 0 transparent; 
+  background-color:#fff;
+  width:375px; 
+  height:150px;
+}
+
+#dialog_devon .d-header input {
+  position:relative;
+  top:60px;
+  left:60px;
+  border:3px solid #cccccc;
+  height:22px;
+  width:200px;
+  font-size:15px;
+  padding:5px;
+  margin-top:4px;
+}
+
+#dialog_devon .d-blank {
+  float:left;
+//  background:url(/washrotary/images/login-blank.png) no-repeat 0 0 transparent; 
+  background-color:#fff;
+  width:267px; 
+  height:53px;
+}
+
+#dialog_devon .d-login {
+  background-color:#fff;
+  float:left;
+  width:108px; 
+  height:53px;
+}
+
+#boxes #dialog_placebid {
+  width:375px; 
+  height:203px;
+}
+
+#dialog_placebid .d-header {
+//  background:url(/washrotary/images/login-header.png) no-repeat 0 0 transparent; 
+  background-color:#fff;
+  width:375px; 
+  height:150px;
+}
+
+#dialog_placebid .d-header input {
+  position:relative;
+  top:60px;
+  left:60px;
+  border:3px solid #cccccc;
+  height:22px;
+  width:200px;
+  font-size:15px;
+  padding:5px;
+  margin-top:4px;
+}
+
+#dialog_placebid .d-blank {
+  float:left;
+//  background:url(/washrotary/images/login-blank.png) no-repeat 0 0 transparent; 
+  background-color:#fff;
+  width:267px; 
+  height:53px;
+}
+
+#dialog_placebid .d-login {
+  background-color:#fff;
+  float:left;
+  width:108px; 
+  height:53px;
+}

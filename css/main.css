@@ -1,0 +1,70 @@
+div.humanized-message{position:absolute;text-align:center;width:70%;min-height:20px;_height:20px;background:#000;opacity:0.8;-moz-opacity:0.8;filter:alpha(opacity=80);color:#fff;z-index:100000;padding:20px;font-size:30px;visibility:hidden;-moz-border-radius:10px;-webkit-border-radius:10px;-o-border-radius:10px;border-radius:10px;}
+
+* {font-family:verdana;font-size:14px;margin:0}
+/* html, body {height:100%;background-color:#fc6} */
+html, body {height:100%;background-color:#eeeeee}
+body {padding:170px 0 50px 0}
+* html body {overflow:hidden} 
+* html div#body {height:100%;overflow:auto}
+@media screen {
+	body>div#headergroup {position:fixed}
+	body>div#footergroup {position:fixed}
+}
+
+a:link {color:red;text-decoration:underline}   
+a:visited {color:red;text-decoration:underline}
+a:hover {color:red;text-decoration:underline} 
+a:active {color:red;text-decoration:underline}
+
+#alert, #alertmsg {background-color:#FF6666;text-align:center}
+#alert table, #alertmsg table {width:100%}
+#alert tr.msg {display:none}
+#alert .alert {text-decoration:underline;cursor:pointer}
+#alert .selected {font-weight:bold}
+#alert-msg {background-color:#ffd685;border:thin solid #414794;color:grey}
+
+a.modal {cursor:pointer}
+div.modal {display:none}
+#headergroup {position:absolute;top:0;left:0;opacity:0.9;-moz-opacity:0.9;filter:alpha(opacity=90);z-index:5;width:100%}
+#auth {position:absolute;background-color:transparent;z-index:10;color:green;font-weight:bold;top:10px;right:10px}
+#footergroup {position:absolute;bottom:0;left:0;opacity:0.8;-moz-opacity:0.8;filter:alpha(opacity=80);z-index:5;width:100%;height:25px}
+#key {width:100%;background-color:#F2F2E0;padding:3px 0px 3px 10px}
+
+.hidden {display:none}
+div.tooltip {display: inline;}
+hr.tooltip {color: #ADD9ED}
+.truncate {display: inline}
+
+.sold {background-color: #6cf}
+.timer {background-color: #fc3}
+.bellringer {background-color: #fc3}
+.newbid {font-weight: bold;}
+
+table.items {width:95%;border-collapse:collapse;margin-left:auto;margin-right:auto}
+table.items tr.highlight {background-color:#bbb}
+table.items td {border:thin solid black;padding-left:5px;padding-right:5px;padding-top:2px;padding-bottom:2px}
+
+table.items div[col="value"] {text-align:right}
+table.items div[col="highbid"] {text-align:right}
+table.items div[col="bidder"] {text-align:center}
+
+
+
+// ---------------------------------------------------------------------
+//div[name="noitems"] {text-align:center}
+//table.items div[col="donor"] {text-align:center;padding-left:16px}
+//table.items td {padding-left: 5px; padding-right: 5px; padding-top: 2px; padding-bottom: 2px}
+//table.items td[col="name"] {width:618px}
+//table.items td[col="value"] {width:47px}
+//table.items td[col="highbid"] {width:68px}
+//table.items td[col="bidder"] {width:141px}
+//table.items td[col="donor"] {width:253px}
+
+/*
+table	{padding:0; spacing:0; border-collapse: collapse;}
+tr		{font-family:verdana; font-size:12px; color:black;}
+table.body	{width: 100%; background-color: #ffd685;}
+#body_title	{color: #414794; font-size: 14px;}
+table.body  {width: 100%}
+table.body div.body_title {text-align: center; font-size: 16px; font-weight: bold; color: #414794; margin-bottom: 15px;}
+*/

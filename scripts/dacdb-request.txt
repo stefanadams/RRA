@@ -1,0 +1,1 @@
+Format=Excel&Type=Club&ClubID=2353&MemberTypeIDs=0&MemberTypeIDs=5&MemberTypeIDs=2&MemberTypeIDs=1&FromDate=&ToDate=&XSLTemplate=Report%2FReport.cfm&XSLPath=Club

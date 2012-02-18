@@ -1,0 +1,63 @@
+<!-- Edit this file to change the layout of the detail view form -->
+
+<br>
+<table border=1 bordercolor=navy cellpadding=0 cellspacing=0>
+	<tr>
+		<td>
+			<div class=TableTitle><%%DETAIL_VIEW_TITLE%%></div>
+			</td>
+		</tr>
+	<tr>
+		<td class=TableHeader colspan=3 height=25>
+			<div class=TableHeader style="text-align: right; height: 100%; padding-right: 3px;">
+				<a href="donations_view.php?FilterField[1]=donations.advertising_radiotext&FilterOperator[1]=%3C%3D%3E&FilterValue[1]=<%%VALUE(id)%%>" style="position: relative; top: 5px; border: 1px solid navy; background-color: #ffffff; text-decoration: none; color: navy; padding: 1px 10px 1px 10px; visibility: hidden;" id="donations_link">Donations</a>
+							</div>
+						</td>
+					</tr>
+	<tr>
+		<td>
+			<table>
+				<tr>
+					<td colspan=2></td>
+					<td rowspan=6 valign=top>
+						<div><%%UPDATE_BUTTON%%></div>
+						<div><%%DELETE_BUTTON%%></div>
+						<div><%%DESELECT_BUTTON%%></div>
+						<br>
+						<div><%%INSERT_BUTTON%%></div>
+						</td>
+					</tr>
+				<tr>
+					<td class=TableHeader valign=top>
+						<div class=TableHeader style="text-align:right;">ID</div>
+						</td>
+					<td class=TableBody width=300 valign=top><%%VALUE(id)%%>&nbsp;&nbsp;</td>
+					</tr>
+				<tr>
+					<td class=TableHeader valign=top>
+						<div class=TableHeader style="text-align:right;">Contact id</div>
+						</td>
+					<td class=TableBody width=300 valign=top><input size= 40 type=text class=TextBox name=contact_id value="<%%VALUE(contact_id)%%>">&nbsp;&nbsp;</td>
+					</tr>
+				<tr>
+					<td class=TableHeader valign=top>
+						<div class=TableHeader style="text-align:right;">Contact name</div>
+						</td>
+					<td class=TableBody width=300 valign=top><input size= 40 type=text class=TextBox name=contact_name value="<%%VALUE(contact_name)%%>">&nbsp;&nbsp;</td>
+					</tr>
+				<tr>
+					<td class=TableHeader valign=top>
+						<div class=TableHeader style="text-align:right;">Text to annouce on the radio</div>
+						</td>
+					<td class=TableBody width=300 valign=top><input size=10 type=text class=TextBox name=advertising_radiotext value="<%%VALUE(advertising_radiotext)%%>">&nbsp;&nbsp;</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	
+	<script>
+		if(document.getElementsByName('contact_id').length){
+			document.getElementsByName('contact_id')[0].focus();
+		}
+	</script>

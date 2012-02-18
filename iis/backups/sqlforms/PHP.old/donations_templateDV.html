@@ -1,0 +1,145 @@
+<!-- Edit this file to change the layout of the detail view form -->
+
+<script>
+function gup( name )
+{
+  name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+  var regexS = "[\\?&]"+name+"=([^&#]*)";
+  var regex = new RegExp( regexS );
+  var results = regex.exec( window.location.href );
+  if( results == null )
+    return "";
+  else
+    return results[1];
+}
+var form = document.forms[0];
+form.setAttribute('onkeypress', 'checkenter(event);');
+form.donation_more_text.hasFocus = false;
+function checkenter(e){
+var characterCode;
+if(e && e.which){
+e = e;
+characterCode = e.which;
+}
+else{
+e = event;
+characterCode = e.keyCode;
+}
+if(characterCode == 13){
+var form = document.forms[0];
+if(form.donation_more_text.hasFocus){
+return true;
+} else {
+var el = document.createElement("INPUT");
+el.type="hidden";
+el.name="insert.x";
+el.value="5"; // whatever
+form.appendChild(el);
+el = document.createElement("INPUT");
+el.type="hidden";
+el.name="insert.y";
+el.value="8"; // idem
+form.appendChild(el);
+form.submit();
+return false;
+}
+}
+else{
+return true;
+}
+
+}
+</script>
+
+
+<br>
+<table border=1 bordercolor=navy cellpadding=0 cellspacing=0>
+	<tr>
+		<td>
+			<div class=TableTitle><%%DETAIL_VIEW_TITLE%%></div>
+			</td>
+		<td>
+			Last Id: <div style="color: red;font-weight: bold;"><script>document.write(gup('LastID'));</script></div>
+			</td>
+		</tr>
+	<tr>
+		<td>
+			<table>
+				<tr>
+					<td class=TableHeader valign=top>
+						<div class=TableHeader style="text-align:right;">ID</div>
+						</td>
+					<td class=TableBody width=300 valign=top><%%VALUE(id)%%>&nbsp;&nbsp;</td>
+					</tr>
+				<tr>
+					<td class=TableHeader valign=top>
+						<div class=TableHeader style="text-align:right;"><b class="Error"><%%TRANSLATION(*)%%></b> Auction Year</div>
+						</td>
+					<td class=TableBody width=300 valign=top><input size=10 type=text class=TextBox name=donation_year value="<%%VALUE(donation_year)%%>">&nbsp;&nbsp;</td>
+					</tr>
+				<tr>
+					<td class=TableHeader valign=top>
+						<div class=TableHeader style="text-align:right;">Name</div>
+						</td>
+					<td class=TableBody width=300 valign=top><input size= 40 type=text class=TextBox name=donation_item value="<%%VALUE(donation_item)%%>">&nbsp;&nbsp;</td>
+					</tr>
+				<tr>
+					<td class=TableHeader valign=top>
+						<div class=TableHeader style="text-align:right;">Description</div>
+						</td>
+					<td class=TableBody width=300 valign=top><input size= 40 type=text class=TextBox name=donation_description value="<%%VALUE(donation_description)%%>">&nbsp;&nbsp;</td>
+					</tr>
+				<tr>
+					<td class=TableHeader valign=top>
+						<div class=TableHeader style="text-align:right;">MSRP</div>
+						</td>
+					<td class=TableBody width=300 valign=top><input size= 15 type=text class=TextBox name=donation_msrp value="<%%VALUE(donation_msrp)%%>">&nbsp;&nbsp;</td>
+					</tr>
+				<tr>
+					<td class=TableHeader valign=top>
+						<div class=TableHeader style="text-align:right;">More url</div>
+						</td>
+					<td class=TableBody width=300 valign=top><input size= 40 type=text class=TextBox name=donation_more_url value="<%%VALUE(donation_more_url)%%>">&nbsp;&nbsp;</td>
+					</tr>
+				<tr>
+					<td class=TableHeader valign=top>
+						<div class=TableHeader style="text-align:right;">More text</div>
+						</td>
+					<td class=TableBody width=300 valign=top><textarea onfocus="this.hasFocus=true;" onblur="this.hasFocus=false;" class=TextBox name=donation_more_text id=donation_more_text cols=50 rows=3><%%VALUE(donation_more_text)%%></textarea>&nbsp;&nbsp;</td>
+					</tr>
+				<tr>
+					<td class=TableHeader valign=top>
+						<div class=TableHeader style="text-align:right;">Donor</div>
+						</td>
+					<td class=TableBody width=300 valign=top><%%COMBO(contact_id)%%> <%%PLINK(contact_id)%%>&nbsp;&nbsp;</td>
+					</tr>
+				<tr>
+					<td class=TableHeader valign=top>
+						<div class=TableHeader style="text-align:right;">Stock Item</div>
+						</td>
+					<td class=TableBody width=300 valign=top><%%COMBO(stockitem_id)%%> <%%PLINK(stockitem_id)%%>&nbsp;&nbsp;</td>
+					</tr>
+				</table>
+			</td>
+		<td>
+			<table>
+				<tr>
+					<td colspan=2></td>
+					<td rowspan=6 valign=top>
+						<div><%%UPDATE_BUTTON%%></div>
+						<div><%%DELETE_BUTTON%%></div>
+						<div><%%DESELECT_BUTTON%%></div>
+						<br>
+						<div><%%INSERT_BUTTON%%></div>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	
+	<script>
+		if(document.getElementsByName('donation_year').length){
+			document.getElementsByName('donation_year')[0].focus();
+		}
+	</script>

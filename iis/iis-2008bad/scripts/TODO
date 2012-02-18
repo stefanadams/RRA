@@ -1,0 +1,6 @@
+fix single/last bid
+delete single/last bid
+Who won an item?
+Display bidder info of a single/last bid
+timestamp problem (it's an auto update, so any touching of a record updates the timestamp: BAD)
+Add LIMIT 1 to all update scripts

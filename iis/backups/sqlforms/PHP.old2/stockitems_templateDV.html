@@ -1,0 +1,69 @@
+<!-- Edit this file to change the layout of the detail view form -->
+
+<br>
+<table border=1 bordercolor=navy cellpadding=0 cellspacing=0>
+	<tr>
+		<td>
+			<div class=TableTitle><%%DETAIL_VIEW_TITLE%%></div>
+			</td>
+		</tr>
+	<tr>
+		<td class=TableHeader colspan=3 height=25>
+			<div class=TableHeader style="text-align: right; height: 100%; padding-right: 3px;">
+				<a href="donations_view.php?FilterField[1]=donations.stockitem_id&FilterOperator[1]=%3C%3D%3E&FilterValue[1]=<%%VALUE(id)%%>" style="position: relative; top: 5px; border: 1px solid navy; background-color: #ffffff; text-decoration: none; color: navy; padding: 1px 10px 1px 10px; visibility: hidden;" id="donations_link">Donations</a>
+							</div>
+						</td>
+					</tr>
+	<tr>
+		<td>
+			<table>
+				<tr>
+					<td colspan=2></td>
+					<td rowspan=6 valign=top>
+						<div><%%UPDATE_BUTTON%%></div>
+						<div><%%DELETE_BUTTON%%></div>
+						<div><%%DESELECT_BUTTON%%></div>
+						<br>
+						<div><%%INSERT_BUTTON%%></div>
+						</td>
+					</tr>
+				<tr>
+					<td class=TableHeader valign=top>
+						<div class=TableHeader style="text-align:right;">ID</div>
+						</td>
+					<td class=TableBody width=300 valign=top><%%VALUE(id)%%>&nbsp;&nbsp;</td>
+					</tr>
+				<tr>
+					<td class=TableHeader valign=top>
+						<div class=TableHeader style="text-align:right;"><b class="Error"><%%TRANSLATION(*)%%></b> Item</div>
+						</td>
+					<td class=TableBody width=300 valign=top><input size=40 type=text class=TextBox name=stockitem_item value="<%%VALUE(stockitem_item)%%>">&nbsp;&nbsp;</td>
+					</tr>
+				<tr>
+					<td class=TableHeader valign=top>
+						<div class=TableHeader style="text-align:right;">Text to annouce on the radio regarding this item</div>
+						</td>
+					<td class=TableBody width=300 valign=top><textarea class=TextBox name=stockitem_radiotext id=stockitem_radiotext cols=50 rows=3><%%VALUE(stockitem_radiotext)%%></textarea>&nbsp;&nbsp;</td>
+					</tr>
+				<tr>
+					<td class=TableHeader valign=top>
+						<div class=TableHeader style="text-align:right;"><b class="Error"><%%TRANSLATION(*)%%></b> MSRP</div>
+						</td>
+					<td class=TableBody width=300 valign=top><input size=10 type=text class=TextBox name=stockitem_msrp value="<%%VALUE(stockitem_msrp)%%>">&nbsp;&nbsp;</td>
+					</tr>
+				<tr>
+					<td class=TableHeader valign=top>
+						<div class=TableHeader style="text-align:right;"><b class="Error"><%%TRANSLATION(*)%%></b> Cost</div>
+						</td>
+					<td class=TableBody width=300 valign=top><input size=10 type=text class=TextBox name=stockitem_cost value="<%%VALUE(stockitem_cost)%%>">&nbsp;&nbsp;</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	
+	<script>
+		if(document.getElementsByName('stockitem_item').length){
+			document.getElementsByName('stockitem_item')[0].focus();
+		}
+	</script>

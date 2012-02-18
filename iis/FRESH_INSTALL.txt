@@ -1,0 +1,29 @@
+How to setup Washington Rotary Radio Auction ASP site.
+
+Install IIS n Win2k3 Server via Windows Components under Add/Remove Programs.
+-- Select IIS under Application Server.
+-- While in AR Progs, Uninstall IE Enhanced Security Configuration
+
+Install the MySQL Connector/ODBC Driver 3.51
+http://dev.mysql.com/downloads/connector/odbc/3.51.html
+
+Run the IIS Management Console.
+Under web service extensions, allow ASP
+-- When prohibited, the ASP pages will be reported as 404.
+-- Make sure the DirectoryIndex is default.asp (Web root Properties)
+
+Share and set security to wwwroot for a user (washrotary/harris)
+
+
+
+
+
+
+
+
+
+
+
+
+
+echo 'select number,id,items.name,description,"Ready",value,donors.name,items.donor_id,night,seq,items.advertisement,items.url from items join donors using (donor_id) where year=2011 order by night,seq' | mysql -u washingtonrotary -pharris washrotary | perl -pi -e '$a||=0; $a++; @_=map { s/[\r\n]//g; s/"/\\"/g; /NULL/?"":$_ } split /\t/; $_[9]=$a; $_="INSERT INTO items (id, newdb_id, name, description, status, suggestedprice, sellername, donor_id, night, sequencenumber, advertisement, moreinfo) VALUES (\"".join("\",\"", @_)."\");\n";' > /tmp/a.sql

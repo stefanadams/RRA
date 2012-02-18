@@ -1,0 +1,305 @@
+For installation:
+
+# dnsip radioauction.washingtonrotary.com
+24.182.140.82
+# dnsname $(dnsip radioauction.washingtonrotary.com)
+24-182-140-82.static.stls.mo.charter.com
+# dnsip www.washingtonrotary.com
+64.123.54.220
+# dnsname $(dnsip www.washingtonrotary.com)
+www.cogentinnovators.com
+# dnsip windb.borgia.com
+172.16.254.13
+
+-----  Win2k3 (windb.borgia.com)  ------
+Enable IIS on Win2k3 Server
+DirectoryIndex: default.asp
+Web Service Extensions: Allow Active Service Pages
+
+MySQL Connector/ODBC 3.51
+http://dev.mysql.com/downloads/connector/odbc/3.51.html
+
+Radio Auction Website
+Unzip radioauction.washingtonrotary.com-IIS-MySQL41.20060325.zip to Rotary Auction webroot
+
+Windows Shares
+Share Rotary Auction webroot as 'washrotary' with full access to 'BORGIA/washrotary'
+-----------------------------------------------
+
+---  www.washrot.com for redirects  ----
+www.cogentinnovators.com:~# cat .htaccess
+redirect 301 /scripts http://www.borgia.com/washrotary/scripts
+redirect 301 /auction http://radioauction.washingtonrotary.com
+redirect 301 /radioauction http://radioauction.washingtonrotary.com
+redirect 301 /rotaryradioauction http://radioauction.washingtonrotary.com
+redirect 301 /washingtonrotaryradioauction http://radioauction.washingtonrotary.com
+redirect 301 /rotaryauction http://radioauction.washingtonrotary.com
+redirect 301 /washingtonrotaryauction http://radioauction.washingtonrotary.com
+redirect 301 /washingtonradioauction http://radioauction.washingtonrotary.com
+redirect 301 /washingtonauction http://radioauction.washingtonrotary.com
+-----------------------------------------------------
+
+-----  sanapp.borgia.com needs to mount Windows share for report.cgi and for other scripts  -------
+'Mount \\win2k3\washrotary to /data/vhosts/www.borgia.com/htdocs/washrotary as 'Borgia/washrotary':
+' one time:
+B:sanapp:~# mount -t smbfs -o 'username=washrotary,password=harris' //windb.borgia.com/washrotary /data/vhosts/www.borgia.com/htdocs/washrotary/
+' or auto-mount
+B:sanapp:~# cat /etc/auto.master
+/mnt/samba/windb        /etc/auto.samba.windb   --timeout=360 username=washrotary,password=harris,defaults
+B:sanapp:~# cat /etc/auto.samba.windb
+washrotary      -fstype=smbfs   ://windb/washrotary
+' 2 symlinks
+B:sanapp:~# ls -l /data/vhosts/radioauction.washingtonrotary.com/htdocs /data/vhosts/www.borgia.com/htdocs/washrotary
+lrwxrwxrwx  1 root root 27 Mar 18 23:57 /data/vhosts/radioauction.washingtonrotary.com/htdocs -> /mnt/samba/windb/washrotary/
+lrwxrwxrwx  1 root root 27 Mar 18 20:55 /data/vhosts/www.borgia.com/htdocs/washrotary -> /mnt/samba/windb/washrotary/
+-----------------------------------------------------
+
+----- Apache for Proxy to Win2k3 via :80  ---------
+'Setup proxies to allow radioauction.borgia.com to listen on port 80
+'but redirect to win2k3:80 and not conflict with borgia.com:
+B:sanapp:~# cat radioauction.washingtonrotary.com.conf
+<VirtualHost *:80>
+      ServerName radioauction.washingtonrotary.com
+      <IfModule mod_rewrite.c>
+              RewriteEngine On
+              RewriteLogLevel 1
+              RewriteLog /tmp/radioauction.mod_rewrite.log
+
+              SetEnvIf Referer www\.washingtonrotary\.com washrotary
+              SetEnvIf Referer radioauction\.washingtonrotary\.com washrotary
+              <Proxy http://windb.borgia.com>
+                  Order deny,allow
+                  Deny from all
+                  Allow from 172.16
+                  Allow from env=washrotary
+              </Proxy>
+
+              RewriteRule ^/$ http://windb.borgia.com [P]
+              RewriteRule ^/(.*)$ http://windb.borgia.com/$1 [P]
+      </IfModule>
+</VirtualHost>
+---------------------------------------------------------
+
+----- Easy User URLs  ---------
+B:sanapp:~# cat /data/vhosts/radioauction.washingtonrotary.com/conf
+RewriteRule ^/admin$ http://windb.borgia.com/admin.asp [P]
+RewriteRule ^/tv$ http://windb.borgia.com/tv_main_current_bidding.asp [P]
+RewriteRule ^/operators$ http://windb.borgia.com/operators_main_current_bidding.asp [P]
+RewriteRule ^/report$ http://www.borgia.com/washrotary/scripts/report.cgi
+RewriteRule ^/$ http://windb.borgia.com [P]
+RewriteRule ^/(.*)$ http://windb.borgia.com/$1 [P]
+-----------------------------------------------------
+
+----- User entry for accessing the windb share; windb is on the domain  ---------
+B:sanapp:~# ldapsearch -LLL uid=washrotary
+dn: uid=washrotary,ou=People,dc=borgia,dc=com
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: qmailuser
+objectClass: mamboObject
+cn: washrotary
+cn: washrotary washrotary
+sn: washrotary
+uid: washrotary
+uidNumber: 2490
+gidNumber: 180
+gecos: washrotary washrotary
+homeDirectory: /data/users/other/washrotary
+loginShell: /bin/false
+sambaLogonTime: 0
+sambaLogoffTime: 2147483647
+sambaKickoffTime: 2147483647
+sambaPwdCanChange: 0
+sambaHomeDrive: U:
+sambaPrimaryGroupSID: S-1-5-21-1610794978-3185745046-3968691110-513
+sambaSID: S-1-5-21-1610794978-3185745046-3968691110-5980
+accountStatus: active
+mailHost: borgia.com
+mail: washrotary@borgia.com
+mailMessageStore: /data/users/other/washrotary/Maildir/
+qmailGID: 180
+qmailUID: 2490
+givenName: washrotary
+displayName: washrotary washrotary
+description: washrotary
+shadowLastChange: 13122
+mamboId: 675
+sambaLMPassword: FB38D62D64888F7EAAD3B435B51404EE
+sambaAcctFlags: [U]
+sambaNTPassword: 382FE8F6C78F7640F7E097CF6EB6BF23
+sambaPwdLastSet: 1168626801
+userPassword: harris
+sambaPwdMustChange: 2147483647
+----------------------------------
+----------------------------------
+
+Backup installation:
+tar cvzf /tmp/auction-$(date %Y%m%d).tar.gz /etc/auto.master /etc/auto.samba.windb /data/vhosts/radioauction.washingtonrotary.com/ /data/vhosts/radioauction.washingtonrotary.com/htdocs/*
+----------------------------------
+----------------------------------
+
+Auction use:
+
+Rotary Auction's websites:
+Public:
+http://www.washingtonrotary.com/radioauction
+http://radioauction.washingtonrotary.com
+Internal:
+http://radioauction.washingtonrotary.com/admin
+http://radioauction.washingtonrotary.com/tv
+http://radioauction.washingtonrotary.com/operators
+Reporting:
+http://radioauction.washingtonrotary.com/report
+
+B:sanapp:~$ echo 'select * from memberslogin' | mysql -h mysql -u washingtonrotary -pharris washrotary
+username        password        status
+admin   harris  Administrator
+operator        harris  Operator
+
+----------------------------------
+
+Pre-auction Action items:
+
+1) Update radio stations / phone #s in Website's contactinfo.asp; auction nights in /scripts/report.cgi
+
+2) Broadcast Auction on Charter Documentation
+
+3) Reminder that we need an IP Address, Subnet Mask, and Gateway from
+YHTI in order to have Internet access at Otis Campbell.
+Also ask if PPPoE is required and, if so, what the username and password is.
+
+4) Please make note that for the future (including this year) we'll need
+a 50' network cable which Stefan can and will provide.  Point is, add to
+the "Auction Steps" that we need this information from YHTI, that
+Stefan will provide the 50' network cable, Bob Koch will provide the
+laptop, and that Otis Cambell has no critical need to keep their
+cameras on the Internet while Rotary is there and therefore we can
+unplug the DVR for those four hours.
+
+5) Make live / data-import:
+Download the attachment from Nadine ("Item #", "Item Description", "RValue", "Donar", "Advertisement")
+Open it in MS Excel
+Save to Desktop as "items.2008.txt"; Text (Tab delimited) (*.txt);
+Select Yes to keep this format and lose format features
+Note that there is a header row: "Item #", "Item Description", "R
+Value", "Donar", "Advertisement"
+Close Excel and do not save changes
+Upload "items.2008.txt" to Borgia's sanapp
+Move "items.2008.txt" to Borgia's WinDB dataimport mount point on
+Borgia's sanapp (/mnt/samba/windb/washrotary -> //windb/washrotary;
+washrotary/harris) /dataimport
+cd to Borgia's WinDB scripts mount point on Borgia's sanapp
+(/mnt/samba/windb/washrotary -> //windb/washrotary; washrotary/harris)
+/scripts
+B:sanapp:/mnt/samba/windb/washrotary/scripts# ./FULLDATAREIMPORT.pl
+Skipping first row; assuming a header.
+Processed 537/538 entries from ../dataimport/items.2008.txt
+Add more info: for i in 12 34 56; do ./moreinfo.pl $i (jpg|pdf); done
+B:sanapp:/mnt/samba/windb/washrotary/scripts# ./moreinfo.pl
+Usage: ./moreinfo.pl id {jpg,pdf,html,...}
+B:sanapp:/mnt/samba/windb/washrotary/scripts#
+./PREAUCTIONONLY-resetALLitems-MakeReady.pl
+B:sanapp:/mnt/samba/windb/washrotary/scripts#
+./PREAUCTIONONLY-resetALLbidders-ClearAllBidders.pl
+----------------------------------
+
+During-auction Action items:
+
+' RUN BACKUPS frequently
+B:sanapp:/mnt/samba/windb/washrotary/scripts# ./backup.sh
+2008-03-23--11-48-40
+B:sanapp:/mnt/samba/windb/washrotary/scripts# ls -l ../backups/washrotary.2008-03-23--11-48-40.sql
+-rwxr-xr-x  1 root root 164923 Mar 23 11:48 ../backups/washrotary.2008-03-23--11-48-40.sql*
+' If an item gets messed up and it's best to just start over with it, clear all the bids
+B:sanapp:/mnt/samba/windb/washrotary/scripts# ./clearALLbidsForONEitem.pl
+Usage: ./clearALLbidsForONEitem.pl itemid
+' If an auction becomes overwhelmed and needs to have the other auctioneer take over, swap auctioneers
+' This will give an item # to an auctioneer
+B:sanapp:/mnt/samba/windb/washrotary/scripts# ./swapauctioneers.pl
+Usage: ./swapauctioneers.pl id auctioneer
+' Re-sequence an item by supplying the item # and its new position
+'       LOOP it with ./LOOP-reorder.pl and then just keep typing
+item#<SPACE>newseq#<ENTER>
+item#<SPACE>newseq#<ENTER>
+B:sanapp:/mnt/samba/windb/washrotary/scripts# ./reorder.pl
+Usage: ./reorder.pl id newseq
+' Get the winner for a specific item
+'       LOOP it with ./LOOP-getwinner.pl and then just keep typing item#<ENTER>
+B:sanapp:/mnt/samba/windb/washrotary/scripts# ./report.pl
+Usage: ./report.pl id
+' For fixing bidder names when operators mistype and request correction:
+B:sanapp:/mnt/samba/windb/washrotary/scripts# ./searchBYname.sh searchname
+B:sanapp:/mnt/samba/windb/washrotary/scripts# ./FIX-setNAMEbasedonPHONE.sh 123456789 "Full Name"
+----------------------------------
+
+Knowledgebase:
+
+Links referencing /sporlan are now /operators; this link is for
+internal purposes only and nothing to be advertised to anyone,
+including internal people.
+
+objRS.recordcount cannot be used for technical reasons (Google
+recordcount for more info), -1 is returned as a result of this
+improper use.
+Instead, use a SQL 'count(id) AS max' statement.
+Files affected: admin_items_view.asp, admin_edit_order.asp,
+admin_update_sequence.asp
+
+NOTE: never do this again.  Auctioneers HATE it.
+On Wed, Jan 16, 2008 at 11:16 PM, Stefan Adams <stefan@cog-ent.com> wrote:
+> To do: sort auctioneer screen such that timer items are first, then by
+> longest running.
+
+# echo show tables | mysql -h mysql -u washingtonrotary -pharris washrotary
+Tables_in_washrotary
+bidders
+bidhistory
+items
+memberslogin
+stockitems
+
+Feature add:
+mysql> alter table items add moreinfo tinytext;
+# cat main_current_bidding.asp
+SQLStatement = "SELECT id, name, status, sellername, suggestedprice,
+bid, timer, timeradmin, advertisement, active, moreinfo FROM items
+WHERE (status = 'Bidding' Or status = 'Halt') Order By id"
+ :
+moreinfo = objRS("moreinfo")
+ :
+Response.Write "<tr bgcolor='" & trcolor & "'><td valign='top'
+style='border-left: 1 solid #808080; border-right: 1 solid #808080;
+border-bottom: 1 solid #808080'>"
+if moreinfo <> "" Then
+      Response.Write "<a href='" & moreinfo & "'><b>More Info</b></a> | "
+End If
+Response.Write objRS("id") & ": " & objRS("name") & "</td>"
+
+Bug fix:
+
+Viewing Auctioneer screen results in error in one cell:
+Microsoft VBScript runtime error '800a000d'
+Type mismatch
+/admin_auctioneer_b.asp, line 139
+This cell is a result of:
+              b = "SELECT count(auctioneer) AS b FROM items WHERE
+(status = '..
+              objRS.open b, objConn
+              b = objRS("b")
+              objRS.close
+                     :
+              if b < 8 then
+                      Response.Write "<font size='1'><a
+href='admin_start_auc...
+              else
+                      Response.Write "&nbsp;"
+              end if
+Solution:
+
+Convert b, which is automatically cast as a string via the objRS call,
+into an integer using CInt:
+
+              if CInt(b) < 8 then

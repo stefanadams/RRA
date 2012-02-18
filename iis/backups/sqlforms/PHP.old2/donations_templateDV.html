@@ -1,0 +1,97 @@
+<!-- Edit this file to change the layout of the detail view form -->
+
+<br>
+<table border=1 bordercolor=navy cellpadding=0 cellspacing=0>
+	<tr>
+		<td>
+			<div class=TableTitle><%%DETAIL_VIEW_TITLE%%></div>
+			</td>
+		</tr>
+	<tr>
+		<td>
+			<table>
+				<tr>
+					<td colspan=2></td>
+					<td rowspan=6 valign=top>
+						<div><%%UPDATE_BUTTON%%></div>
+						<div><%%DELETE_BUTTON%%></div>
+						<div><%%DESELECT_BUTTON%%></div>
+						<br>
+						<div><%%INSERT_BUTTON%%></div>
+						</td>
+					</tr>
+				<tr>
+					<td class=TableHeader valign=top>
+						<div class=TableHeader style="text-align:right;">ID</div>
+						</td>
+					<td class=TableBody width=300 valign=top><%%VALUE(id)%%>&nbsp;&nbsp;</td>
+					</tr>
+				<tr>
+					<td class=TableHeader valign=top>
+						<div class=TableHeader style="text-align:right;"><b class="Error"><%%TRANSLATION(*)%%></b> Auction Year</div>
+						</td>
+					<td class=TableBody width=300 valign=top><input size=10 type=text class=TextBox name=donation_year value="<%%VALUE(donation_year)%%>">&nbsp;&nbsp;</td>
+					</tr>
+				<tr>
+					<td class=TableHeader valign=top>
+						<div class=TableHeader style="text-align:right;">Donor</div>
+						</td>
+					<td class=TableBody width=300 valign=top><%%COMBO(contact_id)%%> <%%PLINK(contact_id)%%>&nbsp;&nbsp;</td>
+					</tr>
+				<tr>
+					<td class=TableHeader valign=top>
+						<div class=TableHeader style="text-align:right;">Stock Item</div>
+						</td>
+					<td class=TableBody width=300 valign=top><%%COMBO(stockitem_id)%%> <%%PLINK(stockitem_id)%%>&nbsp;&nbsp;</td>
+					</tr>
+				<tr>
+					<td class=TableHeader valign=top>
+						<div class=TableHeader style="text-align:right;">Item</div>
+						</td>
+					<td class=TableBody width=300 valign=top><input size=40 type=text class=TextBox name=donation_item value="<%%VALUE(donation_item)%%>">&nbsp;&nbsp;</td>
+					</tr>
+				<tr>
+					<td class=TableHeader valign=top>
+						<div class=TableHeader style="text-align:right;">Select text to annouce on the radio regarding this item</div>
+						</td>
+					<td class=TableBody width=300 valign=top><%%COMBO(donation_radiotext_lookup)%%> <%%PLINK(donation_radiotext_lookup)%%>&nbsp;&nbsp;</td>
+					</tr>
+				<tr>
+					<td class=TableHeader valign=top>
+						<div class=TableHeader style="text-align:right;">Type text to annouce on the radio regarding this item</div>
+						</td>
+					<td class=TableBody width=300 valign=top><textarea class=TextBox name=donation_radiotext id=donation_radiotext cols=50 rows=3><%%VALUE(donation_radiotext)%%></textarea>&nbsp;&nbsp;</td>
+					</tr>
+				<tr>
+					<td class=TableHeader valign=top>
+						<div class=TableHeader style="text-align:right;">MSRP</div>
+						</td>
+					<td class=TableBody width=300 valign=top><input size=10 type=text class=TextBox name=donation_msrp value="<%%VALUE(donation_msrp)%%>">&nbsp;&nbsp;</td>
+					</tr>
+				<tr>
+					<td class=TableHeader valign=top>
+						<div class=TableHeader style="text-align:right;">Image to link to on the web</div>
+						</td>
+					<td class=TableBody width=300 valign=top>
+						<img src="<%%TRANSLATION(ImageFolder)%%><%%VALUE(donation_image)%%>" border=0>
+						<%%UPLOADFILE(donation_image)%%>
+						<%%REMOVEFILE(donation_image)%%>
+
+						&nbsp;&nbsp;</td>
+					</tr>
+				<tr>
+					<td class=TableHeader valign=top>
+						<div class=TableHeader style="text-align:right;">URL to link to on the web</div>
+						</td>
+					<td class=TableBody width=300 valign=top><input size=40 type=text class=TextBox name=donation_url value="<%%VALUE(donation_url)%%>">&nbsp;&nbsp;</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	
+	<script>
+		if(document.getElementsByName('donation_year').length){
+			document.getElementsByName('donation_year')[0].focus();
+		}
+	</script>

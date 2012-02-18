@@ -1,0 +1,80 @@
+
+*** Modified files in JOE when it aborted on Tue Jan 30 02:41:00 2007
+*** JOE was aborted by signal 1
+
+*** File '(Unnamed)'
+\ncn: Unknown\n\n
+add: memberUid\nmemberUid: krusec
+ 
+\n
+\n
+\n
+\n
+\nmailForwardingAddress: 
+\nmailForwardingAddress: 
+/data/vhosts/dotproject.borgia.com/htdocs
+
+*** File '(Unnamed)'
+\n
+company
+company_name
+root
+files_show_versions_edit
+{$AppUI->cfg['root_dir']}
+ewing
+ewing\n
+Gilder
+tabindex
+
+*** File '(Unnamed)'
+weights.cgi
+weights.cgi
+weights.cgi
+weights.cgi
+weights.cgi
+weights.cgi
+weights.cgi
+weights.cgi
+/data/vhosts/webmail.borgia.com/htdocs/openwebmail.pl
+/data/vhosts/webmail.borgia.com/htdocs/etc/openwebmail.conf
+/data/vhosts/webmail.borgia.com/htdocs/openwebmail.pl
+
+*** Modified files in JOE when it aborted on Mon Apr  2 14:54:00 2007
+*** JOE was aborted by signal 1
+
+*** File '(Unnamed)'
+bz2
+krietel
+Linda
+Kriete
+hamiltons
+Sue
+Hamilton
+borgmanng
+Borgmann
+Gwen
+
+*** File '(Unnamed)'
+timer
+alfermannc
+Carolyn
+Alfermann
+krietel
+Linda
+Kriete
+krietel
+Kriete
+Linda
+
+*** File '(Unnamed)'
+/data/vhosts/www.borgia.com/htdocs/weights.cgi
+/data/vhosts/www.borgia.com/htdocs/weights.cgi
+/data/vhosts/www.borgia.com/htdocs/weights.cgi
+/data/vhosts/www.borgia.com/htdocs/weights.cgi
+/data/vhosts/www.borgia.com/htdocs/weights.cgi
+/data/vhosts/www.borgia.com/htdocs/weights.cgi
+/tmp/krietel.ldif
+/tmp/krietel.ldif
+/tmp/hamiltons.ldif
+/tmp/borgmanng.ldif
+/etc/profile.d/2-functions.sh

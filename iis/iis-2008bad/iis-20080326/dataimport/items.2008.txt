@@ -1,0 +1,538 @@
+Item #	Item Description	R Value	Donar	Advertisement
+3	Dinner for 4 at Creamery Hill	$100.00	Greg's Distributing	For all your potato chip and candy needs.
+4	$50.00 Mid American Tours Gift Certificate	$50.00	Mid American Coaches	Making your travel dreams a reality.
+5	Men's Swiss Army Watch	$130.00	Promotional Consultants	Assisting you with all of your promotional needs.  Call 636-584-7000
+6	McKenzie pass Tent by Columbia Sportswear Co.	$125.00	"North Pole U.S., LLC"	"2-3 Person Tent with Tub Floor/ sealed and double coated rainfly.  Additional features include:  pocket organizer and shelf unit for easy storage, carry bag has wheels"
+7	McKenzie Pass Tent	$125.00	"North Pole U.S., LLC"	"2-3 Person Tent with Tub Floor/ sealed and double coated rainfly.  Additional features include:  pocket organizer and shelf unit for easy storage, carry bag has wheels"
+8	McKenzie Pass Tent - Columbia Sportswear Co	$125.00	"North Pole U.S., LLC"	"2-3 Person Tent with Tub Floor/ sealed and double coated rainfly.  Additional features include:  pocket organizer and shelf unit for easy storage, carry bag has wheels"
+9	McKenzie Pass Tent by Columbia Sportswear Co	$125.00	"North Pole U.S., LLC"	"2-3 Person Tent with Tub Floor/ sealed and double coated rainfly.  Additional features include:  pocket organizer and shelf unit for easy storage, carry bag has wheels"
+10	Yorkstone Sleeping Bag by Columbia Sportswear	$110.00	"North Pole U.S., LLC"	"Mummy style, Queen Size with 2 detachable pillows, 6lb weight; rated at +30 degrees farenheit.  60""x80"" overall size"
+11	Yorkshire Sleeping Bag by Columbia Sportswear Co	$110.00	"North Pole U.S., LLC"	"Mummy style, Queen Size with 2 detachable pillows, 6lb weight; rated at +30 degrees farenheit.  60""x80"" overall size"
+12	2 Summitcrest Chairs  with columbia Logo	$120.00	"North Pole U.S., LLC"	Portable; mesh panels and lumbar support; 225lbs maximum seating capacity (each chair).
+13	New Yort Giants 10 x 10 Gazebo	$179.99	"North Pole U.S., LLC"	Official NFL product - great for Tailgating
+14	Disney Kid's Sleeping Bag features Mickey	$19.99	"North Pole U.S., LLC"	"Mickey and Donald ""canoe excursion"" theme indoor/outdoor use - Great for slumber parties!  Washable polyester 29"" x 60"" overall size"
+15	Disney Kid's Sleeping Bag - Mickey	$19.99	"North Pole U.S., LLC"	"Mickey and Donald ""canoe excursion"" theme indoor/outdoor use - Great for slumber parties!  Washable polyester 29"" x 60"" overall size"
+16	Disney Kid's Sleeping Bag - Mickey	$19.99	"North Pole U.S., LLC"	"Mickey and Donald ""canoe excursion"" theme indoor/outdoor use - Great for slumber parties!  Washable polyester 29"" x 60"" overall size"
+17	Disney Kid's Sleeping Bag - Mickey	$19.99	"North Pole U.S., LLC"	"Mickey and Donald ""canoe excursion"" theme indoor/outdoor use - Great for slumber parties!  Washable polyester 29"" x 60"" overall size"
+18	Disney Kid's Sleeping Bag features Princesses	$19.99	"North Pole U.S., LLC"	"Fit for your very own little pricess!  Ariel, Belle and Sleeping Beauty adorn this flower covered pink bag.  Indoor/Outdoor use - 29"" x 60"" washable polyester."
+19	Disney Kid's Sleeping Bag - Princesses	$19.99	"North Pole U.S., LLC"	"Fit for your very own little pricess!  Ariel, Belle and Sleeping Beauty adorn this flower covered pink bag.  Indoor/Outdoor use - 29"" x 60"" washable polyester."
+20	Disney Kid's Sleeping Bag - Princesses	$19.99	"North Pole U.S., LLC"	"Fit for your very own little pricess!  Ariel, Belle and Sleeping Beauty adorn this flower covered pink bag.  Indoor/Outdoor use - 29"" x 60"" washable polyester."
+21	Disney Kid's Sleeping Bag - Princesses	$19.99	"North Pole U.S., LLC"	"Fit for your very own little pricess!  Ariel, Belle and Sleeping Beauty adorn this flower covered pink bag.  Indoor/Outdoor use - 29"" x 60"" washable polyester."
+22	$15.00 Gift Card to Cecil Whittaker's Pizza	$15.00	Cecil Whitttaker's Pizza	"Enjoy our """"Buy One - Get One Free Specials"""" everyday!  At Cecil Whittaker's Pizza"
+23	$15.00 Gift Card to Cecil Whittaker's Pizza	$15.00	Cecil Whitttaker's Pizza	"Enjoy our """"Buy One - Get One Free Specials"""" everyday!  At Cecil Whittaker's Pizza"
+24	$15.00 Gift Card to Cecil Whittaker's Pizza	$15.00	Cecil Whitttaker's Pizza	"Enjoy our """"Buy One - Get One Free Specials"""" everyday!  At Cecil Whittaker's Pizza"
+25	$15.00 Gift Card to Cecil Whittaker's Pizza	$15.00	Cecil Whitttaker's Pizza	"Enjoy our """"Buy One - Get One Free Specials"""" everyday!  At Cecil Whittaker's Pizza"
+26	Basket of Men's Hair Products	$45.00	Hair Engineers West Inc	Located in Washington Square - 3909-2022
+27	Men's Haircut by Melanie Norris	$16.00	Hair Engineers West Inc	Located in Washington Square - 390-2022
+28	Men's Hair Cut by Vicky Openauer	$16.00	Hair Engineers West Inc	Located in Washington Square - 390-2022
+29	$25.00 Gift Certificat to Four Seasons Florist	$25.00	Four Seasons Florist	"For beautiful flowers, a special occasion or any day - call Michelle @ Four Seasons Florist!"
+30	$25.00 Gift Certificate to Four Seasons Florist	$25.00	Four Seasons Florist	"For beautiful flowers, a special occasion or any day - call Michelle @ Four Seasons Florist!  Located in Downtown Washington"
+31	Men's Haircut by Newt	$14.00	Newton's Total Care	"Newton's Total Care - 1201 Jefferson """"Behind Aldo's"""""
+32	$30.00 Gift Certificate to Inscriptions Engraved Gifts	$30.00	Inscriptions Engraved Gifts	A full-service engraving shop located with Show-Me Trophies & Awards in Downtown Washington.
+33	$30.00 Gift Certificate to Inscriptions Engraved Gifts	$30.00	Inscriptions Engraved Gifts	A full-service engraving shop located with Show-Me Trophies & Awards in Downtown Washington.
+34	$30.00 Gift Certificate to Inscriptions Engraved Gifts	$30.00	Inscriptions Engraved Gifts	A full-service engraving shop located with Show-Me Trophies & Awards in Downtown Washington.
+35	$30.00 Gift Certificate to Inscriptions Engraved Gifts	$30.00	Inscriptions Engraved Gifts	A full-service engraving shop located with Show-Me Trophies & Awards in Downtown Washington.
+36	$25.00 Gift Certificate for Fischer BP Food Shop	$25.00	Fischer BP Food Shop	Good luck on the Rotary Auction from your friends at Fischer BP Food Shop
+37	$25.00 Gift Certificate for Fischer BP Food Shop	$25.00	Fischer BP Food Shop	Good luck on the Rotary Auction from your friends at Fischer BP Food Shop
+38	$25.00 Gift Certificate for Fischer BP Food Shop	$25.00	Fischer BP Food Shop	Good luck on the Rotary Auction from your friends at Fischer BP Food Shop
+39	$25.00 Gift Certificate for Fischer BP Food Shop	$25.00	Fischer BP Food Shop	Good luck on the Rotary Auction from your friends at Fischer BP Food Shop
+40	"4 Cardinal Tickets for April 15, 2008"	$160.00	HTH Companies	Outfield Box Section 133
+41	1 Hour massage at Roller & Company	$50.00	Roller and Co.	"Encapsulating 12 years of experience focused on you.  1 full hour massage tailored to your needs.  De-Stress, Relax and Enjoy"
+42	1 1/2 Custom Facial at Roller and Co.	$60.00	Roller and Co.	"Be pampered, relaxed and your face rejuvenated during  1 1/2 hour facial extrordinaire"
+43	Lunch for 2 at Basket Case	$25.00	Basket Case Import & Deli	Celebrating our 24th year.  Still the best place for Lunch.  Fresh seafood. Daily specials and great desserts.
+44	Lunch for 4 at Basket Case	$50.00	Basket Case Import & Deli	Celebrating our 24th year.  Still the best place for Lunch.  Fresh seafood. Daily specials and great desserts.
+45	Dinner for 4 at Creamery Hill	$100.00	Robert and Debra Marfisi	"Celebrating our 24th year. Still the best dining in Washington, whether you are hungering for a great meal or a special occasion remember Creamery Hill Café is waiting for you"
+46	Dinner for 2 at Creamery Hill	$50.00	Robert and Debra Marfisi	"Still the best dining in Washinton.  Fresh fish, creative pastas and great service.  Menu changes by the season, also offering imaginative catering for your special occasion."
+47	1 1/2 Hour Custom Facial at Roller & Co.	$60.00	Teton  Consultants	
+48	Lunch for 2 at Basket Case	$25.00	"Stahlhuth & Rudder, LC"	Call your local legal team of attorneys to handle your personal injury or worker's compensation case.
+50	"$50.00 Hillermann Nursery & Florist, Inc.Gift Certificate"	$50.00	"Hochschild, Bloom & Company"	Accounting and tax servies; individual and business tax preparation
+51	Dinner for 4 at Creamery Hill	$100.00	"Hochschild, Bloom & Company"	Accounting and tax services; individual and business tax preparation
+52	Droege's BBQ Rib Feast	$45.00	Oltmann Funeral Home	Celebrating 100 years of family ownership in 2008!
+53	Williams Brothers famous 4 oz filet mignon	$60.00	Oltmann Funeral Home	Celebrating 100 years for family ownership in 2008
+54	2 Sirloin Dinners with buffet and Sundae Bar	$22.00	Ponderosa	
+55	2 Sirloin Dinners with buffet and Sundae Bar	$22.00	Ponderosa	
+56	2 Sirloin Dinners with buffet and Sundae Bar	$22.00	Ponderosa	
+57	2 Sirloin Dinners with buffet and Sundae Bar	$22.00	Ponderosa	
+58	$100.00 Gift Certificate to Krawitz Tire and Auto	$100.00	Krawitz Tire & Auto	Call Joe at 636-239-6668 for excellent service
+59	$50.00 Gift Certificat to Time to Travel	$50.00	Time to Travel	Call Andy at 636-239-3040 for all your travel needs
+60	$50.00 Gift Certificate to Time to Travel	$50.00	Time to Travel	call Andy  @636-239-3040 for all your travel needs
+61	36: Busdwiser Clydesday Pool Table Light	$200.00	Thomas & Kimra Coons	
+62	"4 - 17oz Commuter Mugs in Blue, Red, Green and White"	$32.00	Quick Point	Mede from 100% corn plastic - Eco Friendly
+63	$59.85 YHTI Gift Certificate	$59.85	YHTI	YHTI Internet
+64	$59.85 YHTI Gift Certificate	$59.85	YHTI	YHTI Intenet
+65	$25.00 Gourmet Café Gift Certificate	$0.00	Gourmet Café	
+66	5' Billiard Ball Pool Table Lamp with 3 Glass Shades	$350.00	Tom & Kimra Coons	
+67	In Home Design Consultation	$125.00	Country Manor Decorating	
+68	$50.00 Mid American Tours Gift Certificate	$50.00	Mid American Coaches	Making your travel dreams a reality
+69	Lunch for 2 at Basket Case	$25.00	American Family Insurance	Rely on Bob Coleman - American Family Insurance for all your insurance needs
+70	Droege's Six (6) US choice KC 12 oz strip steaks	$45.00	American Family Insurance	Rob Vossbrink - American Family Insurance.  See Rob for all of your insurance needs.
+71	Dinner for 4 at Creamery Hill	$100.00	Moore Gear Manufacturing	Makers of quality gears and gear racks
+72	Dinner for 4 at Creamery Hill	$100.00	Missouri Occupational Medicine	
+73	One Adult Season Pass to the 2008 Washington Town & Country Fair	$40.00	Ameren UE	
+74	One Adult Season Pass to the 2008 Washington Town & Country Fair	$40.00	Ameren UE	
+75	Williams Bros. Natural Hickory smoked bone-in ham	$60.00	Little Rascals Preschool	Now enrolling for Fall 2008.  Call 239-5629
+76	2nd Night Stay in King Room Free w/ Purchase of 1st Night	$99.00	BRICK INN B AND B	"Located at 516 W. Third Street in Washington, MO  636-390-3264.  Subject to Availability"
+77	4 Cardinals vs. Cubs Tickets for July 4th	$180.00	Dr. H. Groves Cooke	Section 155 Row 13 seats 5-8
+78	$50.00 Gift Certificate to Starcrest Cleaners	$50.00	Starcrest Cleaners	Bright Ideas in dry cleaning
+79	$50.00 Gift Certificate to Starcrest Cleaners	$50.00	Starcrest Cleaners	Bright Ideas in dry cleaning
+80	$25.00 Rainbow International Gift Certificate	$25.00	Rainbow Inter. Carpet	Carpet and upholstery cleaning.
+81	Three Month Full Adult Membership	$129.00	Four Rivers Area YMCA	Can be used for a new or existing membership
+82	Three Month Full Adult Membership	$129.00	Four Rivers Area YMCA	Can be used for a new or existing membership
+83	Three Month Full Family Membership	$192.00	Four Rivers Area YMCA	Can be used for a new or existing membership
+84	Three Month Full Family Membership	$192.00	Four Rivers Area YMCA	Can be used for a new or existing membership
+85	500 Magnetic Business Cards	$160.00	Magnet LLC	
+86	"Swing Dance Class for a Couple June 12-17, 7:00-8:30pm"	$55.00	East Central College	For information on this and many other fun Community Education opportunities call 636-583-5193 x 2410 to get a full schedule mailed to your home
+87	"Summer Fitness Center Membership, June 9th - July 31st."	$55.00	East Central College	Morning and evening hours are available Monday through Thursdays.  To get more information about this and many other 'summer camps for kids' call 636-583-5193 ext 2410 to get a schedule mailed to your home.
+88	$30.00 Schulte's Bakery Gift Certificate	$30.00	Schulte's Bakery	"Family owned, in Washington, for over 45 years."
+89	$30.00 Schulte's Bakery Gift Certificate	$30.00	Schulte's Bakery	"Family owned, in Washington, for over 45 years."
+90	$30.00 Schulte's Bakery Gift Certificate	$30.00	Schulte's Bakery	"Family owned, in Washington, for over 45 years."
+91	$30.00 Schulte's Bakery Gift Certificate	$30.00	Schulte's Bakery	"Family owned, in Washington, for over 45 years."
+92	$25.00 worth of Product from Tom's Barber Shop	$25.00	Tom's Barber Shop	"Tom's' Barber Shop, 203 West Main in Downtown Washington"
+93	Lunch for 4 at Basket Case	$50.00	Wachovia Securities - Andy Beckermann	
+94	$50 Dusty Attic Antiques Gift Certificate towards a purchase of $100 or more	$50.00	Dusty Attic Antiques	Voted #1 Antique Shop in the 2007 Washington Missourian Readers Poll.  Located 6 miles west of Washington on Hwy 100
+95	$50.00 Schroeder Drug Store Gift Certificate	$50.00	Schroeder Drug Store	Your hometown drug store.  Visit our store in Downtown Washington or at Patients First
+96	Williams Brothers famous 4 oz filet mignon	$60.00	Reniassance Financial Inc. - Tim Wunderlich	Serving small business & individual clients with their complete financial planning needs.
+97	$35.00 Aldo's Restaurant Gift Certificate	$35.00	reniassance Financial Inc.-Tim Wunderlich	Serving small business & individual clients with their complete financial planning needs.
+98	"Fas-Trip Gift Basket - gas card, carwash card, Lion's Choice Gift Card and other Misc items"	$100.00	Fas-Trip Convience Store	"For your gas, coffee, and miscellaneous items, come to Fast-Trip C-Stores"
+99	"Fas-Trip Gift Basket - gas card, carwash card, Lion's Choice Gift Card and other Misc items"	$100.00	Fas-Trip Convience Store	"For your gas, coffee, and miscellaneous items, come to Fast-Trip C-Stores"
+100	"Fas-Trip Gift Basket - gas card, carwash card, Lion's Choice Gift Card and other Misc items"	$100.00	Fas-Trip Convience Store	"For your gas, coffee, and miscellaneous items, come to Fast-Trip C-Stores"
+101	Tommy Hilfiger UV Protected Sunwear	$100.00	Obermark Optometry	Obermark Optometry - stop by their 222 West Main Street location in downtown Washington to pick up your UV Protected Tommy Hilfiger Sunwear.  Nice Sunwear!!  Bid Early!!
+102	Sylvan Skills Assessment	$235.00	Sylvan Learning Center	"Sylvan Learning Center - stop by their 6244 Highwy 100 location to pick up your Sylvan Skills Assessment Certificate. ""Catch up, Keep up, Get Ahead""!"
+103	Sylvan Skills Assessment	$235.00	Sylvan Learning Center	"Sylvan Learning Center - stop by their 6244 Highwy 100 location to pick up your Sylvan Skills Assessment Certificate. ""Catch up, Keep up, Get Ahead""!"
+104	One 1 hour Golf Lesson with Sam Goulden	$80.00	Wolf Hollow Golf Course - Sam Goulden	Helping golfers understand their swing and take it to the course
+105	Four (4) Weekend 18 Hole Green Fess with Cart	$168.00	Wolf Hollow Golf Course	Now with the Vector Pro Launch Monitor - the best way to fit clubs to your game.
+106	Eight (8) 18 Hole Green Fees w/Cart  (Mon-Fri)	$216.00	Wolf Hollow Golf Course	Now with the Vector Pro Launch Monitor - the best way to fit clubs to your game.
+107	Two (2) 1/2 hour Golf Lessons with Mike Weirich	$80.00	wolf Hollow Golf Course - Mike Weirich	Start your season off right with lessons from the Professionals at Wolf Hollow
+108	Universal Media Dual Screen Portable DVD System	$399.00	Modern Auto	"Modern Auto is your only full line General Motors dealer in Franklin County.  We sell, service and repair Chevrolet, Buick, Pontiac, GMC, Cadillac and GM medium duty trucks."
+109	Truck Bug Shield	$70.00	Accessories Unlimited LLC	Stop by Accessories Unlimited for all of your automotive accessories.
+110	Four Rams Pre-season Tickets	$200.00	"HAZEL INVESTMENTS, LP"	Good luck to the Washington Rotary Club Radio Auction
+111	Four Rams Pre-season Tickets	$200.00	"HAZEL INVESTMENTS, LP"	Good luck to the Washington Rotary Club Radio Auction
+112	Four Rams Pre-season Tickets	$200.00	"HAZEL INVESTMENTS, LP"	Good luck to the Washington Rotary Club Radio Auction
+113	$50.00 Advanced Sight Center Gift Certificate	$50.00	"Advanced Sight Center, Inc."	come to Advanced Sight Center for your eyecare needs.  Gift certificate can be used towards the purchase of prescription glasses or sunglasses.
+114	$50.00 Advanced Sight Center Gift Certificate	$50.00	"Advanced Sight Center, Inc."	come to Advanced Sight Center for your eyecare needs.  Gift certificate can be used towards the purchase of prescription glasses or sunglasses.
+115	Free Lasik Exam	$200.00	"Advanced Sight Center, Inc."	Come to Advanced Sight Center for your eyecare needs.
+116	$100 off Insurance Deductible at Mobile Glass	$100.00	Mobile Glass Service	In shop replacement only.
+117	$100 off Insurance Deductible at Mobile Glass	$100.00	Mobile Glass Service	In shop replacement only.
+118	$100 off Insurance Deductible at Mobile Glass	$100.00	Mobile Glass Service	In shop replacement only.
+119	$100 off Insurance Deductible at Mobile Glass	$100.00	Mobile Glass Service	In shop replacement only.
+120	Spa Manicure and Pedicure	$54.00	The Body Natural	Daily health rituals & practices can awaken our environment with great purpose & clairty.  Come in & experience plant-based aromatherapy in a relaxing atmosphere.
+121	Spa Manicure and Pedicure	$54.00	The Body Natural	Daily health rituals & practices can awaken our environment with great purpose & clairty.  Come in & experience plant-based aromatherapy in a relaxing atmosphere.
+122	One Hour Massage	$50.00	The Body Natural	Daily health rituals & practices can awaken our environment with great purpose & clairty.  Come in & experience plant-based aromatherapy in a relaxing atmosphere.
+123	One Hour Massage	$50.00	The Body Natural	Daily health rituals & practices can awaken our environment with great purpose & clairty.  Come in & experience plant-based aromatherapy in a relaxing atmosphere.
+124	$900 Commercial Photography Package 1/2 day studio or lacation time and  high res digital images	$900.00	Curt Dennison Photography	"Proper lighting, composition and layout show off your business as professional and successful.  You can have your business, product, or service stand out from the rest by using top-quality photos in all our your advertising."
+125	Lunch for 2 at Basket Case	$25.00	ManPower Services	We lead in the creation and delivery of services that enable our clients to win in the changing world of work.
+126	"8"" Round Frozen Cake"	$17.99	Dairy Queen	"Come in th the Washington Dairy Queen, home of the blizzard, for 2 for $2.00 cheeseburgers or for an ice cream cake."
+127	"8"" Round Frozen Cake"	$17.99	Dairy Queen	"Come in th the Washington Dairy Queen, home of the blizzard, for 2 for $2.00 cheeseburgers or for an ice cream cake."
+128	"8"" Round Frozen Cake"	$17.99	Dairy Queen	"Come in th the Washington Dairy Queen, home of the blizzard, for 2 for $2.00 cheeseburgers or for an ice cream cake."
+129	"8"" Round Frozen Cake"	$17.99	Dairy Queen	"Come in th the Washington Dairy Queen, home of the blizzard, for 2 for $2.00 cheeseburgers or for an ice cream cake."
+130	$150.00 Dog House Woodworking Gift Certificate	$150.00	Dog House Woodworking - Greg Skornia	Call Greg Skornia @ 636-239-7982 for your furniture repair and refinishing or for custom woodworking
+131	$150.00 Dog House Woodworking Gift Certificate	$150.00	Dog House Woodworking - Greg Skornia	Call Greg Skornia @ 636-239-7982 for your furniture repair and refinishing or for custom woodworking
+132	Grant Food Party (100 pieces of Droege's Famous Fried Chicken and sides)	$150.00	Droege's Supermarket	"Call 239-6765 2 weeks in advance to order.  Package includes:  100 pieces of Droege's Famous Fried Chicken, 10# of potato salad, 10# of coleslaw, 50 rolls and butter and 10 Two liter pepsi products."
+133	Accu-Chek Advantage Diabetes Monituring Kit	$87.87	"Hall's Pharmacy, Inc."	Located at Krakow Korners in Washington.  Offering free delivery service and senior discount.  Please call 636-390-2828
+134	"$30.00 Hillermann Nursery & Florist, Inc. Gift Certificate"	$30.00	"Country Living Real Estate, Inc."	
+135	"$30.00 Hillermann Nursery & Florist, Inc. Gift Certificate"	$30.00	"Country Living Real Estate, Inc."	
+136	"$30.00 Hillermann Nursery & Florist, Inc. Gift Certificate"	$30.00	"Country Living Real Estate, Inc."	
+137	"$30.00 Hillermann Nursery & Florist, Inc. Gift Certificate"	$30.00	"Country Living Real Estate, Inc."	
+138	Droege's Famous Fried Chicken Dinner for eight	$40.00	Joanna Eiermann Farmers Insurance Group	Call Joanna for all your insurance needs - 239-1172
+139	2 Weekend 18 hole green fees w/cart at Wolf Hollow	$84.00	American National Insurance - Larry Frick	Call Larry for all your insurance needs.  239-6177
+140	2 Monday-Friday 18 hole green fee w/cart at Wolf Hollow	$50.00	United Mutual Insurance Company	Your Hometown alternative for insurance.   Come Home to United Mutual Insurance.
+141	Droege's BBQ Package	$45.00	United Mutual Insurance Company	Your Hometown alternative for insurance.   Come Home to United Mutual Insurance.
+142	Droege's BBQ Package	$45.00	Dan Yoest Ins. Agency	For all your insurance needs call the Dan Yoest Agency 239-1130 or in Union 583-3822
+143	"2 Cardinal Tickets Section 164, Row 6"	$80.00	Shelter Ins. - Dave Hackman	"For all your insurance needs, call Dave @ 239-3737  211 Jefferson Street in Washington,  Tickets are for a mutually agreed upon date."
+144	$25.00 Gift Certificate to The Art Center	$25.00	The Art Center	Visit the Art Center for framing and art gallery.
+145	2 Adult and 2 Children Tickets to the Town & Country Fair	$130.00	Fair Board and Washington Area Chamber of Commerce	
+146	Whole Hog and Processing	$140.00	"Deppe Farms, Inc."	
+147	8# Sliced Hickory Smoked Home Cured Bacon	$32.00	Voss Market	
+148	8# Sliced Hickory Smoked Home Cured Bacon	$32.00	Voss Market	
+149	1 Night Stay at La Dolce Vita Winery and Bed & Breakfast	$190.00	La Dolce Vita Winery & Bed & Breakfast	la Dolce Vita winery is located in the hostoric Zachariah Foss House on the Washington Riverfront
+150	2 VIP Passes to the Nascar 2008 Craftsman Truck Race at Gateway	$150.00	"Kurt Voss, Attorney at Law"	"Kurt Voss, Attorney at Law"
+151	2 MIZZOU Tickets and a Tailgate Party!	$150.00	"Kurt Voss, Attorney at Law"	Help us cheer the Tigers on to another great year.  Pick a game in September to enjoy and we will provide the tailgate party.  GO TIGERS!!
+152	Oakley Pro M Frame (outfielder sunglasses) Red Frame - Black Lens	$150.00	J & W Cycles	"J & W Cycles, providing the area with motorcycles, ATV's, Utility vehicles and watercraft for over 30 years."
+153	Dinner for 2 at Creamery Hill	$50.00	"Zick, Voss & Politte, P.C."	Located in Historic Downtown Washington
+154	Dinner for 2 at Creamery Hill	$50.00	Town & Country Title	See Wendy Zick at Town and Country Title for your real estate closing needs.
+155	Williams Bros. Beef and Reef pkg	$90.00	Countywide Oral & Maxillofacial Surgery	"Michael J. Pernoud, DDS.  Countywide Oral and Maxillofacial Surgery"
+157	Oral B Electric Toothbrush	$100.00	Dr. Jackie Miller	"Dr. Jackie Miller, Othodontist - We create beautiful smiles."
+158	$50.00 Altemueller Jewelry Store Gift Certificate	$50.00	Altemueller Jewelry Store	"Diamonds, fine jewlry, gifts and collectibles - all with the best selection, service, price and integrity."
+159	$50.00 Altemueller Jewelry Store Gift Certificate	$50.00	Altemueller Jewelry Store	"Diamonds, fine jewlry, gifts and collectibles - all with the best selection, service, price and integrity."
+160	$30.00 Applebee's Bar and Grill Gift Certificate	$30.00	Applebee's Bar and Grill	New Pick 'n' Pair Luncd Combos Now Available
+161	"$30.00 Hillermann Nursery & Florist, Inc. Gift Certificate"	$30.00	Michael Hoelscher CPA	"Located at 1210 Jefferson Street, 239-5005.  Mike is celebrating 30 years in 2008."
+162	"$30.00 Hillermann Nursery & Florist, Inc. Gift Certificate"	$30.00	Michael Hoelscher CPA	"Located at 1210 Jefferson Street, 239-5005.  Mike is celebrating 30 years in 2008."
+163	$35.00 Aldo's Restaurant Gift Certificate	$35.00	"Jackie Hoelcher Bruns, CPA"	"Located at 1210 Jefferson Street, 239-5005."
+164	$35.00 Aldo's Restaurant Gift Certificate	$35.00	"Jackie Hoelscher Bruns, CPA"	"Located at 1210 Jefferson Street, 239-5005."
+165	Williams Bros. Natural Hickory smoked bone-in ham	$60.00	Dr. Albert Marchiando	
+166	Dinner for 4 at Creamery Hill	$100.00	Dr. Greg Potts	
+167	2 Weekend 18 hole green fees w/cart at Wolf Hollow	$84.00	DaCa Machine	In business for over 30 years.  It's a full CNC sheet metal fabricating & machining facility with 3.4 & 5 axis machining capabilities.
+168	"2 - 1 hour massages at Backs, Bodies & More"	$120.00	DaCa Machine	In business for over 30 years.  It's a full CNC sheet metal fabricating & machining facility with 3.4 & 5 axis machining capabilities.
+169	4 TSA approved Red Luggage Security Belts	$52.00	Dawson Security Products	"For practical security solutions and low prices visit dawsonsecurity.com, a registered Federal vendor."
+170	One night stay w/Hot breakfast delivered to Cabin	$125.00	Critter Cottage Bed & Breakfast	"1860's original log cabin on 14 wooded acres complete with jacuzzi tub, full kitchen and antiques."
+171	$35.00 Aldo's Restaurant Gift Certificate	$35.00	Aldo's Restaurant	Aldo's True Italian Pizza & Pasta
+172	$35.00 Aldo's Restaurant Gift Certificate	$35.00	Aldo's Restaurant	Aldo's True Italian Pizza & Pasta
+173	$35.00 Aldo's Restaurant Gift Certificate	$35.00	Aldo's Restaurant	Aldo's True Italian Pizza & Pasta
+174	$35.00 Aldo's Restaurant Gift Certificate	$35.00	Aldo's Restaurant	Aldo's True Italian Pizza & Pasta
+175	Family Sitting and 1-16x20 Portrait	$165.00	Fricke Studio	"Fricke Professional Photography Studio & 1 Hour Photo, Elm Street in downtown Washington & Hermann, MO"
+176	$50.00 Purcell Ellis Tire & Rubber Gift Certificate	$50.00	Purcell Ellis Tire & Rubber	"Purcell Ellis Tire & Rubber - Tires & auto repair at 5th & Elm Streets in Washington, MO 239-2724"
+177	"$50.00 Hillermann Nursery & Florist, Inc.Gift Certificate"	$50.00	Steamboat Finaincial Services	Located in the Steamboat Building in Downtown Washington - call 239-1486 for all your Investment needs
+178	$35.00 Aldo's Restaurant Gift Certificate	$35.00	Steamboat Finaincial Services	Located in the Steamboat Building in Downtown Washington - call 239-1486 for all your Investment needs
+179	"$50.00 Hillermann Nursery & Florist, Inc.Gift Certificate"	$50.00	Steamboat Finaincial Services	Located in the Steamboat Building in Downtown Washington - call 239-1486 for all your Investment needs
+180	$35.00 Aldo's Restaurant Gift Certificate	$35.00	Steamboat Finaincial Services	Located in the Steamboat Building in Downtown Washington - call 239-1486 for all your Investment needs
+181	Full Leather Briecase	$200.00	Office Supplies and Equipment	"Elm Street in Downtown Washington, serving Franklin Conty for over 50 years - Service is our #1 priority"
+182	Droege's 10 lb angus beef prime rib (charcoal grilled)	$100.00	Hellebusch Tool & Die	"Hellebusch Tool & Die, A part of the community for 35 years."
+183	Droege's Surf & Turf package	$100.00	Unnerstall & Unnerstall CPA	Your friendly downtown tax professionals
+184	Droege's Twelve (12) 16 oz of angus beef ribeye steak	$100.00	Unnerstall & Unnerstall CPA	your friendly downtown tax professionals
+185	18 Holes of Golf with Cart for Four (4) and Lunch	$120.00	Franklin County Country Club	"Valid Monday - Friday and expires Dec 31, 2008"
+186	$100.00 Series E Bond	$50.00	Bank of Washington	Oldest and largest bank in Franklin County in support of the Rotary Club and the community.
+187	$100.00 Series E Bond	$50.00	Bank of Washington	Oldest and largest bank in Franklin County in support of the Rotary Club and the community.
+188	$100.00 Series E Bond	$50.00	Bank of Washington	Oldest and largest bank in Franklin County in support of the Rotary Club and the community.
+189	$100.00 Series E Bond	$50.00	Bank of Washington	Oldest and largest bank in Franklin County in support of the Rotary Club and the community.
+190	$250.00 Downtown Washington Gift Certificates	$250.00	Bank of Washington	Visit our Schnucks Branch which is open 7 days a week
+191	$250.00 Downtown Washington Gift Certificates	$250.00	Bank of Washington	Visit our Schnucks Branch which is open 7 days a week
+192	$250.00 Downtown Washington Gift Certificates	$250.00	Bank of Washington	Visit our Schnucks Branch which is open 7 days a week
+193	$250.00 Downtown Washington Gift Certificates	$250.00	Bank of Washington	Visit our Schnucks Branch which is open 7 days a week
+194	Williams Brothers famous 4 oz filet mignon	$60.00	Eckelkamp Electric	"Now in our fourth generation of serving the area's business and industrial needs, with over 50 years of experience to offer our customers."
+195	30 Large Center Cut Pork Steaks and BBQ Sauce	$50.00	DROEGE'S FOOD SERVICE COMPANY	"Hwy 100 East Washington, MO"
+196	4 Chicken & Fish Dinners	$30.00	Elks Lodge #1559	Enjoy a delicious meal with all the trimmings at the Elks Lodge on West 5th Street
+197	4 - $15.00 Wimpy's Gift Certificates	$60.00	Wimpy's Sandwich Shop	For the best sandwiches in town go to Wimpy's on 521 Jefferson St
+198	52 Automatic Car Washes (1 per week for a year)	$234.00	J & M Car Wash	"For a great car washington experience go to J&M car wash, Jefferson & Market - new equipment"
+199	2 Cardinal Tickets - Box Seats Behind Homeplate	$100.00	Dill Plumbing	for all your plumbing needs - new or repairs - see Dill Plumbing 719 S Jefferson 239-3400.  Mutually agreed upon date
+200	10 Large Buckets of Balls	$60.00	Big Driver	The Best Driving Range in Washington.  Mini Golf improve your game come to Big Driver & see Tom at Big Driver.  Grand Avenue across from Lions Lake
+201	"Party of 4, 2 Rounds free with the purchase of 2 rounds."	$100.00	Warrenton Golf Course	"enjoy a round of golf at the Warrenton Golf Course, one of the oldest & finest courses around."
+202	Party for up to 50 people at the Old Droeg'e Clubhouse	$900.00	Party for up to 50 People - Old Droege's Clubhous	"Donated by Red Noelker, Dan Neidre, Rick Wunderlich, Tim Wunderlich, Chuck Marquart, Herb Alferman, Butch Droege, Steve Lochirco, Steve Forget, and Herb Dill"
+203	Lunch for 2 at Basket Case	$25.00	ASAP Appraisals	Dan & Lela Tulley want to say thanks from ASAP Appraisals
+204	Lunch for 2 at Basket Case	$25.00	ASAP Appraisals	Dan & Lela Tulley want to say thanks from ASAP Appraisals
+206	Dinner for 2 at Chico's	$25.00	Edward Jones - Debbie Skornia	How much will you need to retire?  Lets talk.   See Debbi Skornia with Edward Jones in Krakow.  Edward Jones…making sense of investing.  Member SIPC.
+207	Dinner for 2 at Chico's	$25.00	Edward Jones - Debbie Skornia	How much will you need to retire?  Lets talk.   See Debbi Skornia with Edward Jones in Krakow.  Edward Jones…making sense of investing.  Member SIPC.
+208	$25.00 Williams Brothers Gift Certificate	$25.00	Edward Jones - Debbie Skornia	How much will you need to retire?  Lets talk.   See Debbi Skornia with Edward Jones in Krakow.  Edward Jones…making sense of investing.  Member SIPC.
+209	$25.00 Williams Brothers Gift Certificate	$25.00	Edward Jones - Debbie Skornia	How much will you need to retire?  Lets talk.   See Debbi Skornia with Edward Jones in Krakow.  Edward Jones…making sense of investing.  Member SIPC.
+210	$25.00 Designer Threads Gift Certificate	$25.00	Designer Threads	Go see Designer Threads to get your personalized items for every member of the family.
+211	2 Tickets to the 2008 Brewfest	$40.00	WASHINGTON JAYCEES	2008 Brewfest is October 18th. Log onto washingtonjaycees.com for all of the great Jaycee events.
+212	2 Tickets to the 2008 Brewfest	$40.00	WASHINGTON JAYCEES	2008 Brewfest is October 18th. Log onto washingtonjaycees.com for all of the great Jaycee events.
+213	2 Adult Tickets each to the June and September Demo Derby	$32.00	WASHINGTON JAYCEES	June Demo Derby is June 7th and the Sept date is September 6th.  Washingtonjaycees.org
+214	2 Adult Tickets each to the June and September Demo Derby	$32.00	WASHINGTON JAYCEES	June Demo Derby is June 7th and the Sept date is September 6th.  Washingtonjaycees.org
+215	2 Tickets to the 2008 Art Fair & Winefest	$40.00	"Downtown Washington, Inc."	The 27th Annual Art Fair & Winefest will be May 16-18.  Your tickets give you entrance to the tasting pavillion and commemorative wine glasses.
+216	2 Tickets to the 2008 Art Fair & Winefest	$40.00	"Downtown Washington, Inc."	The 27th Annual Art Fair & Winefest will be May 16-18.  Your tickets give you entrance to the tasting pavillion and commemorative wine glasses.
+217	$50.00 Conoco Gift Certificates	$50.00	Unnerstall Oil CO.	Buy Conoco Gas
+218	$50.00 Paint N Place Gift Certificate	$50.00	"Paint N Place, Inc."	
+219	Dinner for 4 at Chico's	$40.00	RE/MAX FIRST GOLD	Get hooked on great service - call John Fischer at Re/Max First Gold 239-4742 for all your real estate needs.
+220	$25.00 Williams Brothers Gift Certificate	$25.00	RE/MAX FIRST GOLD	Get hooked on great service - call John Fischer at Re/Max First Gold 239-4742 for all your real estate needs.
+221	4 Cardinal Tickets for Wed. April 2nd on the Casino Queen Porch	$148.00	Show Me Trophies & Awards	Your complete recognition store in Historic Downtown Washington.
+222	Memory Foam Neck Pillow	$49.99	"Sleep Center Matress CO., LLC"	Sleep center mattress company for all your bedding needs.
+223	$25.00 Wal-Mart Gift Card	$25.00	Murphy U.S.A.	Murphy U.S.A. - 5 cents off a gallon when you use your Wal-Mart gift card or credit card at Murphy U.S.A.
+224	Seasonal opening of your In-Ground pool	$225.00	Ozark Pool & Spa	Ozark Pool & Spa offers a full line of chemicals and service on all pools & spas and service for most pools and spas.
+225	"7"" Philips Portable DVD Player"	$89.88	Wal Mart Super Center	Our purpose at Wal-Mart is saving people money so they can live better.  Open 24 hours.
+226	"2 MIZZOU Football Tickets for September 6, 2008"	$80.00	Dog House Woodworking - Greg Skornia	Call Greg @ 636-239-7982 for your furniture repair and refininsing or for custom woodworking.
+227	3 Months of 5 Meg High Speed Internet	$132.00	Charter Communications	"For great television, telephone and internet bundling go to 1 place - Charter Communications"
+228	$10.00 Glik's Gift Card	$10.00	Glik's	"For your teenage apparel, come to Glik's, in Washington Square.  Skate hard goods available at Glik's."
+229	Coffee of the Day for 10 Days	$10.00	Not Just Cut n Dried	"For the only fresh roasted coffee in town, and for gifts and more, come to Not Just Cut n Dried, in Downtown Washington."
+230	$25.00 Gift Certificate to the Shop Around the Corner	$25.00	The Shop Around the Corner	"The Shop Around the Corner, Washington's favorite setail store for ladies accessories and home furnishings.  Get the best prices at The Shop Around the Corner."
+231	$35.00 Aldo's Restaurant Gift Certificate	$35.00	Nate Hagedorn Construction	Nate Hagedorn Construction wishes the Rotary Good Luck with the Auction.
+232	Lunch for 2 at Basket Case	$25.00	"Hodges Badge Company, Inc."	
+233	Shrimp Boil for 8 on the Missouri River	$800.00	"John Lochirco, Jeff Hastings and Jim Dierking"	"A great day on the Missouri River.  Boat ride, shrimp, corn on the cob, polish sausage, potatoes & lots of beverages.  Hosted by John & Missy Lochirco, Jeff & Jennifer Hastings and Jim & Karen Dierking."
+234	$50.00 Hawthorne Inn Gift Certificate	$50.00	Hawthorne Inn - Labadie	"Voted """"Favorite Restaurant"""" 3 years in a row by Missourian readers. Located in downtwon Labadie!"
+235	$50.00 Hawthorne Inn Gift Certificate	$50.00	Hawthorne Inn - Labadie	"Voted """"Favorite Restaurant"""" 3 years in a row by Missourian readers. Located in downtwon Labadie!"
+236	$50.00 Hawthorne Inn Gift Certificate	$50.00	Hawthorne Inn-Union	"Come try the new Hawthorne Inn II in Union, enjoy the same great food as their Labadie location."
+237	$50.00 Hawthorne Inn Gift Certificate	$50.00	Hawthorne Inn-Union	"Come try the new Hawthorne Inn II in Union, enjoy the same great food as their Labadie location."
+238	2 Mesh Camp Chairs with Aluminum Frame	$149.98	ALPS	Outdoor Camping and Hiking Supplies & Equipment
+239	"$30.00 Hillermann Nursery & Florist, Inc. Gift Certificate"	$30.00	A.G. Edwards & Sons Inc.	Call the financial consultants at AG Edwards a division of Wachovia Securities for your investment needs.  The local office is at 1351 S. Jefferson.
+240	"$30.00 Hillermann Nursery & Florist, Inc. Gift Certificate"	$30.00	A.G. Edwards & Sons Inc.	Call the financial consultants at AG Edwards a division of Wachovia Securities for your investment needs.  The local office is at 1351 S. Jefferson.
+241	"$30.00 Hillermann Nursery & Florist, Inc. Gift Certificate"	$30.00	A.G. Edwards & Sons Inc.	Call the financial consultants at AG Edwards a division of Wachovia Securities for your investment needs.  The local office is at 1351 S. Jefferson.
+242	"$30.00 Hillermann Nursery & Florist, Inc. Gift Certificate"	$30.00	A.G. Edwards & Sons Inc.	Call the financial consultants at AG Edwards a division of Wachovia Securities for your investment needs.  The local office is at 1351 S. Jefferson.
+243	$25.00 3 Brothers Gift Certificate	$25.00	3 Brothers Restaurant	The 3 Brothers Restaurant in downtown Labadie offers great food and great presentation in a relaxing atmosphere.
+244	$25.00 3 Brothers Gift Certificate	$25.00	3 Brothers Restaurant	The 3 Brothers Restaurant in downtown Labadie offers great food and great presentation in a relaxing atmosphere.
+245	$25.00 3 Brothers Gift Certificate	$25.00	3 Brothers Restaurant	The 3 Brothers Restaurant in downtown Labadie offers great food and great presentation in a relaxing atmosphere.
+246	$25.00 3 Brothers Gift Certificate	$25.00	3 Brothers Restaurant	The 3 Brothers Restaurant in downtown Labadie offers great food and great presentation in a relaxing atmosphere.
+247	Williams Brothers famous 4 oz filet mignon	$60.00	Dr. Raymond Kerr	
+248	Lunch for 4 at Basket Case	$50.00	Rieser Family Dental LLC	"""A family of Dentists for your Family Dentistry"""
+249	Sonicare Toothbrush	$110.00	Demko Orthodontics	
+250	Magnavox DVD Player	$35.00	EZ Care Cellular & Satellite	If you're tired of the high cost of cable TV or cannot get high speed internet call EZ Care Cellular & Satellite 636-239-3899
+251	Wireless Mouse	$30.00	EZ Care Cellular and Satellite	"For high speed internet that works anywhere and everywhere call EZ Care Cellular & Satellite for Hughes Net, Wild Blue or other wireless solutions"
+252	Wireless Mouse	$30.00	EZ Care Cellular & Satellite	"For high speed internet that works anywhere and everywhere call EZ Care Cellular & Satellite for Hughes Net, Wild Blue or other wireless solutions"
+253	Wireless Mouse	$30.00	EZ Care Cellular & Satellite	"For high speed internet that works anywhere and everywhere call EZ Care Cellular & Satellite for Hughes Net, Wild Blue or other wireless solutions"
+254	$40.00 A.R.T. Concrete & Tool Supply Gift Certificate	$40.00	"A.R.T. Concrete & Tool Supply Co., INC."	"For all your construction supplies, Bobcat rental, dump trailer rental, mini excavator rental & much more.  6549 Meyer Drive by Shaw's Cabinet off Highway A."
+255	$40.00 A.R.T. Concrete & Tool Supply Gift Certificate	$40.00	"A.R.T. Concrete & Tool Supply Co., INC."	"For all your construction supplies, Bobcat rental, dump trailer rental, mini excavator rental & much more.  6549 Meyer Drive by Shaw's Cabinet off Highway A."
+256	Droege's Six (6) US choice KC 12 oz strip steaks	$45.00	Washington Metal Fabricators	Good luck with the Radio auction from your friends at Washington Metal Fabricators
+257	Droege's Six (6) US choice KC 12 oz strip steaks	$45.00	Washington Metal Fabricators	Good luck with the Radio auction from your friends at Washington Metal Fabricators
+258	"2 Cardinal Bleacher seats vs. Brewers July 21, 2008"	$28.00	Washington Square Dental	Dental Services include zoom laser whitening and invisalign tooth straightening system.
+259	"2 Cardinal Bleacher Seats vs. Mets, July 2, 2008"	$28.00	Washington Square Dental	Washington Square Dental family dentistry
+260	$20.00 Gift Certificate to Klondike Café at Montelle Winery	$20.00	Montelle Winery	Montelle Winery - Augusta Missouri
+261	"$30.00 Hillermann Nursery & Florist, Inc. Gift Certificate"	$30.00	"AAA Insurance, Curt Holzem"	See Curt Hozem at AAA Insurance for all you insurance needs.
+262	Private Wine Tasting for 10 People	$100.00	Augusta Winery	Augusta Winery in Downtown Augusta Missouri.
+263	$150.00 Cassidy Cleaners Shoe/Boot/Leather Repair Gift Certificate	$150.00	Cassidy Cleaners	"Gift Certificate good for any combination of shoe, boot, or leather repair, up to a $150.00 value.  Cassidy Cleaners - we deal with spots. 390-2909.  2008 Phoenix Center Drive"
+264	"$50.00 Hillermann Nursery & Florist, Inc.Gift Certificate"	$50.00	"AAA Insurance, Curt Holzem"	See Curt Holzem of AAA Insurance for all your insurance needs.
+265	Cassidy Cleaners Wedding Dress Package	$195.00	Cassidy Cleaners	"Dress will be cleaned, spotted, pressed, boxed and preserved.  Cassidy Cleaners - we deal with spots. 390-2909.  2008 Phoenix Center Drive"
+266	Cassidy Cleaners Wedding Dress Package	$195.00	Cassidy Cleaners	"Dress will be cleaned, spotted, pressed, boxed and preserved.  Cassidy Cleaners - we deal with spots. 390-2909.  2008 Phoenix Center Drive"
+267	One Year of Dry Cleaning and/or Laundry (up to $30/month)	$360.00	Cassidy Cleaners	Cassidy Cleaners - we deal with spots. 390-2909.  2008 Phoenix Center Drive
+268	"AAA Travel Bag, Atlas, Photo Album, Camera"	$30.00	AAA Travel Agency	AAA Travel Agency...for all your travel needstravel with someone you trust.  Located at 1053 Washington Square in Washington
+269	Cassidy Cleaners Gift Certificate for 1 Fur Garment (up to $40.00)	$40.00	Cassidy Cleaners	"Garment will be cleaned, glazed and pressed.  Cassidy Cleaners - we deal with spots. 390-2909.  2008 Phoenix Center Drive"
+270	Cleaning of 1 Leather or Suede Coat	$36.95	Cassidy Cleaners	Cassidy Cleaners - we deal with spots. 390-2909.  2008 Phoenix Center Drive
+271	10 Cubic foot poly lawn cart	$130.00	Sears of Washington	Demea & James wouldlike to thank the community for for your continued patronage.
+272	Cleaning of 1 Leather or Suede Coat	$36.95	Cassidy Cleaners	Cassidy Cleaners - we deal with spots. 390-2909.  2008 Phoenix Center Drive
+273	$30.00 A Beautiful You Gift Certificate	$30.00	A Beautiful You - Lindsay Schuck	"Get your hair looking fresh for spring with a new cut, style or color.  Call Lindsay Schuck at 390-0373."
+274	50% off 1 Night Whirlpool King Suite	$70.00	Sleep Inn	Get ready for your weekend getaway at Sleep Inn & Suites in Washington
+275	$30.00 A Beautiful You Gift Certificate	$30.00	A Beautiful You - Lindsay Schuck	"Get your hair looking fresh for spring with a new cut, style or color.  Call Lindsay Schuck at 390-0373."
+276	$30.00 A Beautiful You Gift Certificate	$30.00	A Beautiful You - Lindsay Schuck	"Get your hair looking fresh for spring with a new cut, style or color.  Call Lindsay Schuck at 390-0373."
+277	$30.00 A Beautiful You Gift Certificate	$30.00	A Beautiful You - Lindsay Schuck	"Get your hair looking fresh for spring with a new cut, style or color.  Call Lindsay Schuck at 390-0373."
+278	Oil Change	$28.00	Liesmann Auto Sales	For your preowned car needs call Liesmann Sales for individual attention.
+279	4 Weekend 18 hole green fees with cart at Wolf Hollow	$168.00	Clemco Industries	Good luck to the Washington Rotary Club
+280	Oil Change	$28.00	Liesmann Auto Sales	For your preowned car needs call Liesmann Sales for individual attention.
+281	Oil Change	$28.00	Liesmann Auto Sales	For your preowned car needs call Liesmann Sales for individual attention.
+282	Oil Change	$28.00	Liesmann Auto Sales	For your preowned car needs call Liesmann Sales for individual attention.
+283	500 One color business cards	$42.00	Washington Printing Press	For all your business printing and sign needs call Washington Printing Press 636-239-3649 or 1-800-449-7302.
+284	$30.00 Marquart's Landing Gift Certificate	$30.00	Marquart's Landing	Meet me at The Landing!!
+285	$30.00 Marquart's Landing Gift Certificate	$30.00	Marquart's Landing	Meet me at The Landing!!
+286	$30.00 Marquart's Landing Gift Certificate	$30.00	Marquart's Landing	Meet me at The Landing!!
+287	$30.00 Marquart's Landing Gift Certificate	$30.00	Marquart's Landing	Meet me at The Landing!!
+288	$30.00 Marquart's Landing Gift Certificate	$30.00	Marquart's Landing	Meet me at The Landing!!
+289	500 Once Color Business Cards	$42.00	Washington Printing Press	For all your business printing and sign needs call Washington Printing Press 636-239-3649 or 1-800-449-7302.
+290	Williams Brothers famous 4 oz filet mignon	$60.00	"Bennett Packaging, Inc."	"Serving the ara industry with corrugatd boxes, die cuts, and packaging materials"
+291	Vinyl Mailbox	$110.00	Washington Fence Co. Inc.	We will fence you in.  Call Washington Fence for all your fencing needs.  239-5580
+292	3 Cases of 8 1/2 X 11 Quality Copy Paper	$105.00	"Bennett Packaging, Inc."	We carry and deliver a large line of all sizes and colors of qyuality copy paper.
+293	3 Cases of 8 1/2 X 11 Quality Copy Paper	$105.00	"Bennett Packaging, Inc."	We carry and deliver a large line of all sizes and colors of qyuality copy paper.
+294	1/2 Hog Fully Processed to your Order	$140.00	Williams Bros. Meat Market	"Locally raised beef and pork award winning ham, sausage and bacon.  Your old fashion service meat market"
+295	Dinner for 2 at Creamery Hill	$40.00	Weiskopf Cabinets	
+296	4 Weekend 18 hole green fees with cart at Wolf Hollow	$168.00	Stork Fabricators Inc.	Best of luck to the Washington Rotary Club.
+297	2 Weekend 18 hole green fees w/cart at Wolf Hollow	$84.00	Rabco Midwest Inc.	Best of Luck to the Washington Rotary Club
+298	"Black & Gold ""Viper"" Brand Pool Cue"	$85.00	Spitball Charlie's Billiard & Game Room	"Come by to see ""Spitball Charlie"" for all your billiard, dart, poker and gameroom needs!  Also, foosball and air hockey.  Lessons available.  Located at 1752 E. Fifth Street"
+299	"$30.00 Hillermann Nursery & Florist, Inc. Gift Certificate"	$30.00	Rabco Midwest Inc.	Best of Luck to the Washington Rotary Club
+300	"20 -- 4 OZ Fillets, Williams Bros"	$60.00	Parmentier Auto Body	We do car detailing
+301	Droege's Famous Fried Chicken Dinner for eight	$40.00	Dr. Bruce Crane	
+302	Dinner for 2 at Creamery Hill	$50.00	Patients First Urgent Care	"When you can't wait to feel better, Patient's First Urgent Care is there for you."
+303	Dinner for 2 at Creamery Hill	$50.00	Patients First Urgent Care	"When you can't wait to feel better, Patient's First Urgent Care is there for you."
+304	Dinner for 2 at Creamery Hill	$50.00	Patients First Urgent Care	"When you can't wait to feel better, Patient's First Urgent Care is there for you."
+305	Dinner for 2 at Creamery Hill	$50.00	Patients First Urgent Care	"When you can't wait to feel better, Patient's First Urgent Care is there for you."
+306	"4 Cardinal vs. Giants Tickets in Redbird Club on April 19, 2008"	$184.00	Citizen's Bank	"Community owned indpeendent bank, New Haven, Gerald, Pacific , Washington and Marthasville.  Tickets are Section 244 Row 13."
+307	Dinner for 2 at Basket Case	$50.00	Nancy Walkenhorst & Betsy Hazel of Coldwell Banker	"Coldwell Banker Premier ""Team with experience"".  Working together for over 19 years making your move a happy move.  Premier Service for you."
+308	"4 Cardinal vs. Pirates Tickets on May 14, 2008."	$184.00	citizen's Bank	"Community owned indpeendent bank, New Haven, Gerald, Pacific , Washington and Marthasville.  Tickets are Section 244 Row 13."
+309	Williams Brothers famous 4 oz filet mignon	$60.00	Keeven Heating and Cooling	"Family owned - Service all brands, Install commercial and residential - Geothermal"
+310	"Spa Manicure & Pedicure Package at Backs, Bodies & More"	$55.00	Nancy Walkenhorst & Betsy Hazel of Cldwell Banker	"Coldwell Banker Premier ""Team with experience"".  Working together for over 19 years making your move a happy move.  Premier Service for you"
+311	Williams Brothers hickory smoked slab bacon	$40.00	Keeven Heating and Cooling	"Family owned - Service all brands, Install commercial and residential - Geothermal"
+312	4 Monday-Friday 18 hole green fee w/cart at Wolf Hollow	$168.00	Motor Appliance Corp	
+313	Side by Side 1/2 Hour Massage & Express Facial for 2 in our Dual Room Oasis	$130.00	Daydreams Day Spa & Salon	
+314	Dinner for 2 at Basket Case	$50.00	Super 8	Good luck to the Washington Rotary Club
+315	$25.00 Hillermann Nursery and Florist Gift Card	$25.00	Monarch Mortgage	"Monarch Mortgage Ins. Exceeding your expectations.  6244 Hwy 100, Suite 100 in Washington 239-1400"
+316	Lunch for 2 at Basket Case	$25.00	The Vineyard at River Bend Chapel	"Located at 4247 Old Hwy 100, Phone 390-8600.  All the elgance your deserve,, yet all the convenience you need."
+317	Droege's BBQ Package	$45.00	Patients First Health Care -- Orthopedic Division	"Doctors Matthews, Chalk, Lusardi and Rotramel.  Serving Washington and surrounding areas for over 19 years."
+318	Lunch for 2 at Basket Case	$25.00	The Vineyard at River Bend Chapel	"Located at 4247 Old Hwy 100, Phone 390-8600.  All the elgance your deserve,, yet all the convenience you need."
+319	$30.00 Little Sicily Restaurant Gift Certificate	$30.00	D & D'S Little Sicily Restaurant	"Great Italian food, open 7 nights a week - at the corner of 5th and Stafford.  **Bigger Banquet Facility now available**"
+320	Droege's BBQ Package	$45.00	Patients First Health Care -- Orthopedic Division	"Serving the ara industry with corrugatd boxes, die cuts, and packaging materials"
+322	Droege's Six (6) US choice 12oz ibeye steaks	$45.00	Coldwell Banker Premier Group	"Coldwell Banker Premier Group, call us at 800-748-7844 to list or sell your home or property today!   Coldwell Banker, the largest real estate company in Franklin County."
+323	Lunch for 2 at Basket Case	$25.00	Debbie Pick & Letitia Marlow of Coldwell Banker	Pick the Prmier Team for all your real estate needs.
+324	Lunch for 2 at Basket Case	$25.00	Debbie Pick & Letitia marlow of Coldwell Banker	Pick the Premier Team for all your real estate needs.
+325	Lunch for 2 at Basket Case	$25.00	Bark Schwentker of Coldwell Banker Premier Group	Call Barb to list or sell your home or property.  I want to make your move a good move!
+326	Lunch for 2 at Basket Case	$25.00	Cindy Johanning - Coldwell Banker Premier	"When thinking of buying or selling a home, call Cindy Johanning @ 314-708-0204 & she will make it easy for you."
+327	$50.00 Moments of Serenity Gift Certificate	$50.00	First Bank	Call John Freitag or Renee Kerpash for all your banking needs.  Bank First.  Be First
+328	Happy hour for 6 at Chico's	$75.00	First Bank	Call John Freitag or Renee Kerpash for all your banking needs.  Bank First.  Be First
+329	Lunch for 4 at Basket Case	$50.00	First Bank	Call John Freitag or Renee Kerpash for all your banking needs.  Bank First.  Be First
+330	Coffee Gift Basket	$65.00	First Bank	Call John Freitag or Renee Kerpash for all your banking needs.  Bank First.  Be First
+331	Williams Brothers famous 4 oz filet mignon	$60.00	First Bank	Call John Freitag or Renee Kerpash for all your banking needs.  Bank First.  Be First
+332	Droege's Six (6) US choice 12oz ibeye steaks	$50.00	"Robert F. Weber., Custom Builder, Inc."	For all your construction needs call Robert F. Weber Custom Builder at 239-2399 Tim Dean and Robert Weber
+333	1 Pair of Klogs (shoes)	$75.00	"Foam Engineers, LLC"	High performance spray foam instillations
+334	Fas-Trip 66-5 Triple shine washes	$40.00	Washington Dermatology - Dr. Karen Eshraghi	
+335	Residential Radon Inspection	$100.00	"All Clear Home Inspection, LLC"	Dennis Hartmann owner/inspector
+336	The Quality Coach Supervisory Series (12 sessions)	$840.00	The Quality Coach!	Because every business is a people business
+337	Lunch for 2 at Basket Case	$25.00	Washington Tractor	"Located at Hwy 47 South, Washington MO"
+338	$35.00 Aldo's Restaurant Gift Certificate	$35.00	Washington Tractor	"Located at Hwy 47 South, Washington, MO"
+339	Williams Bros. BBQ Package for 10	$80.00	Bank of Franklin County	"A real community bank with 4 locations to serve you.  Washington, Krakow, New Haven"
+340	Dinner at Little Sicilys & Movie at Cinema 1 Plus	$75.00	Bank of Franklin County	"A real community bank with 4 locations to serve you.  Washington, Krakow, New Haven"
+341	"$30.00 Hillermann Nursery & Florist, Inc. Gift Certificate"	$30.00	"Franklin Mortgage Company, LLC"	Experience you can trust.  Sharon Monzyk & Gina Scego
+342	Fas-Trip 66-5 Triple shine washes	$40.00	"Franklin Mortgage Company, LLC"	Experience you can trust.  Sharon Monzyk & Gina Scego
+343	2 Free Date Nights	$60.00	Kids Ahoy Learn & Care Center	"Kid's Ahoy is a 24 hr./7 day a week center and parents love to be able to go on a date night. 1st., 2nd, and 3rd shift available."
+345	Williams Brothers famous 4 oz filet mignon	$60.00	Dr. Jon Lebsack	Washington Maxillofacial Surgery - Located in the Mercy Doctor's Building
+346	Williams Bros. Natural Hickory smoked bone-in ham	$60.00	Dr. Kevin Walde	
+347	J&M Car Wash-10 Automatic car wash package	$45.00	Four Rivers Insurance Agency	Give Mark Michels or Tom Hillermann a call for your insurance needs.
+348	J&M Car Wash-10 Automatic car wash package	$45.00	Four Rivers Insurance Agency	Give Mark Michels or Tom Hillermann a call for your insurance needs.
+349	J&M Car Wash-10 Automatic car wash package	$45.00	Four Rivers Insurance Agency	Give Mark Michels or Tom Hillermann a call for your insurance needs.
+350	J&M Car Wash-10 Automatic car wash package	$45.00	Four Rivers Insurance Agency	Give Mark Michels or Tom Hillermann a call for your insurance needs.
+351	4 Hour Bus Trip/Charter/Field Trip	$208.00	First Student	Formerly Laidlaw - If you can't do it safely - Don't do it!
+352	3 Hours of Personal Life Coaching	$210.00	Amy Williams - MSLC Master Spiritual Life Coach	"Helping you to live your best life 636-433-5977.  19375 Charrette Creek Road, Marthsville, MO  63357"
+353	1 Case Mona Vie - Juice from the Amazon	$240.00	Amy and Roger Williams	19 Different Fruits 636-433-5977
+354	DHL Credit for Shipping Overnight	$50.00	Freight Savers Express - Rick Bouse	DHL authorized selling partner
+355	DHL Credit for Shipping Overnight	$50.00	Freight Savers Express - Rick Bouse	DHL authorized selling partner
+356	Orreck Cordless Iron	$129.00	Roettering Appliance	Take this iron anywhere - Great for all types of craft projects
+357	Lube & Oil Change	$30.00	Riechers Tire and Auto	We are here to keep you safe on the road
+358	"$50.00 Hillermann Nursery & Florist, Inc.Gift Certificate"	$50.00	Hillermann Nursery & Florist	We are growing for you!  Exciting NEW changes in our store for Spring 08!
+359	"$50.00 Hillermann Nursery & Florist, Inc.Gift Certificate"	$50.00	Hillermann Nursery & Florist	"Hillermann's was named ""National"" Revolutionary Garden Center Winner for 2008"
+360	"$50.00 Hillermann Nursery & Florist, Inc.Gift Certificate"	$50.00	Hillermann Nursery & Florist	57 Years and growing for the community!  2008 Revolutionary Garden Center Winner
+361	4'x5' Area Rug of your Choice	$99.00	"Straatmann Carpet Service, Inc."	We've got your floors covered
+362	3'x5' Area Rug of your Choice	$79.00	"Straatmann Carpet Service, Inc."	Use area rug on the floor or as a wall hanging - We've got you covered!
+363	Carpet Cleaning Supplies	$11.59	"Straatmann Carpet Service, Inc."	Visit our large showroom on Villa West Drive in Villa Ridge
+364	Executive Wine Collector Set	$50.00	Advertising Unlimited	"Opener, foil cutter, drip ring, thermometer, pourer, 2 Wine stoppers"
+365	Monitor Computer Calendar (100) with your advance copy	$125.00	The Chest	Place your advertising where people spend their time --  start calendar with any month.
+366	"Laptop Computer Calendars ""100"" with your advertising copy"	$100.00	The Chest	Place your advertising where people are spending their time.  Start calendar with any month.
+367	"Black & Decker Circular Saw 7 1/4"""	$75.00	S-K CONTRACTING	See us for all your construction needs - Residential and Commerical
+368	Aldo's Restaurant Gift Certificate	$35.00	CRIDER HEALTH CENTER	"""Full, Productive, Healthy lives for everyone"""
+369	Aldo's Gift Certificate	$35.00	Realty Net Advantage	"""You'll Be Sold on Us"""
+370	$500 Credit Towards Closing Costs	$500.00	Equity One Mortgage	
+371	2 Gallons Matte Interior Wall Paint	$43.00	Sherwin Williams	
+372	"Forney 4 1/2"" Angle Grinder"	$46.00	John Hall Lumber Co.	Come see the friendly folks at John Hall Lumber on Hwy A for all your lumber needs.
+373	"4 Infield Fieldbox Seats (Section 148 Row 10) at Cardinal's Game.  Date to be determined.Approx. 30 rows behind home plate, 1st base side."	$180.00	"Ince Homes, Inc."	Designer and builder of fine custom and estate homes.
+374	Hillermann Nursery Gift Certificate	$30.00	Washington Chiropractic Clinic	Washington Chiropractic Clinic - Dr. Larry Gerstein & Co.
+375	Six golf lessons - Wolf Hollow Pro.	$300.00	G & H Tool & Mold	"G & H Tool, a first class company providing great jobs and community leadership to the Washington area."
+376	$150.00 Gift Certificate to Ed's Meat Market	$150.00	Niebery Vitt Funeral Home	Serving the Washington Area from Historic Downtown Washington.
+377	5 Rides within city limits of Washington.	$45.00	"Millenium Taxi, Inc."	"Local and long distance transportation, whatever your transportation needs, let us be your designated driver."
+378	$50.00 Savings Bond (US)	$50.00	US Bank	Visit any one of the 3 Washington locations for all of your financial needs.
+379	$50.00 US Savings Bond	$50.00	US Bank	Visit any one of the 3 Washington locations for all of your banking and financial needs.
+380	"""Dine Around Washington""  G.C. to 13 area restaurants"	$570.00	The Rotary Auction Committee	"The Rotary Auction Committee would like to thank all our volunteers, bidders and buyers for your support : Aldo's, Am. Bounty, Basket Case, Café Mosaic, Chicos, Cowans, Dairy Delight, Hawthorn's, Los Cabos, The Landing, Miller's Grill, Smokehouse, Wimpy's"
+381	$50.00 US Savings Bond	$50.00	US Bank	Visit any one of the 3 Washington locations for all of your banking and financial needs.
+382	$50.00 US Savings Bond	$50.00	US Bank	Visit any one of the 3 Washington locations for all of your banking and financial needs.
+383	"""I Didn't Know That"" Book - Facts about Washington, MO"	$25.00	Washington Historial Society	Stop by 4th & Market to visit us-Tues.-Sat 10:00-4:00 PM & Sunday 12:00-4PM
+384	Gift Certificate Ed's Meath market	$30.00	Ed's Meat Market	National & State Champion smoked meats.
+385	"""I Didn't Know That"", book,  Facts about Washington, MO"	$25.00	Washington Historial Society	Stop by 4th & Market to visit us-Tues.-Sat 10:00-4:00 PM & Sunday 12:00-4PM
+386	Gift Certificate to Ed's Meat Market	$30.00	Ed's Meat Market	National & State Champion smoked meats.
+387	2008 Desk Folder Calendar - Nice Padded Folder	$40.00	Ginny Brinker/A Centery Advertising	For all your promotional product needs.  Call Ginny at 636/239-0630
+388	Droege's Brat Feast	$45.00	The Catalog Group -- John Miller	"Need a catalog?  Anything from one page to a thousand pages, we do it all -- design -- layout -- printing.  Give us a call 636-390-8080"
+389	"$30.00 Hillermann Nursery & Florist, Inc. Gift Certificate"	$30.00	St. Elizabeth Adult Day Care Center	Providing care for elderly and disabled adults - 5 days a week.
+390	Gift Certificate to Aldo's Restaurant	$20.00	Missouri Merschaum	Check out our different pipes for gifts or your personal smoking requirements
+391	Droege's Brat Feast	$45.00	The Catalog Group -- John Miller	"Need a catalog?  Anything from one page to a thousand pages, we do it all -- design -- layout -- printing.  Give us a call 636-390-8080"
+392	Lunch for 2 at Chico's	$25.00	"Straatmann Toyota - 1498 High St. Washington, MO"	Celebrating 25 years of customer satisfaction in Washington.
+393	One tandem load of rock delivered w/in 3 miles of Washington	$150.00	K. J. Unnerstall Construction	"Your local escavaor, builder, commercial contractor serving greater Franklin County."
+394	Lunch for 2 at Basket Case	$25.00	"Straatmann Toyota - 1498 High St., Washington, MO"	Celebrating 25 years of customer satisfaction in Washington.
+395	$20.00 Gift Certificate	$20.00	Urban Accents	Distinctive Home Décor - Downtown Washington
+396	$20.00 Gift Certificate	$20.00	Urban Accents	Distinctive Home Décor - Downtown Washington
+397	Wine Gift basket - Mt. Pleasant Norton (1 Bottle) and Cuvee Blanc (1 bottle) and 2 wine glasses	$53.00	Mount Pleasant Winery	"Located at 5634 High Street, Augusta, MO  800/467-WINE, or www.mountpleasant.com"
+398	Bone In Ham (Williams Bros)	$60.00	Burke and Associates Inc.	"Call Burke & Associates land Surveyors for your subdivision, farm, lot and construciton layout needs 239-0172.   Over 40 years residential and commercial experience."
+399	5 QT. Oil Change (Diesel extra)	$30.00	Carriage Care	See Carriage Care for all your auto needs.
+400	20 -- 4 oz filets (Williams Bros)	$60.00	Dr. Roger Walkenhorst DDS	Dr. Walkenhorst has been serving Washington and the surrounding area for over 32 years.
+401	Lunch for 2 at Basket Case	$25.00	Joyce Schatz of Coldwell Banker Premier Group	"Make """"Joyce Your Choice"""" in helping to make your dreams come true. Whether buying or selling a home give her a call at 314-707-4400 or 239-0631x13"
+402	5 Qt. Oil Change (Diesel extra)	$30.00	Carriage Care	See Carriage Care for all your auto needs.
+403	Moen Kitchen Faucet	$133.00	Washinton Lumber Do It Center	Full-service Lumber and Hardware Store
+404	Dinner for 2 at Chico's	$25.00	Joyce Schatz of Coldwell Banker Premier Group	"Make """"Joyce Your Choice"""" in helping to make your dreams come true. Whether buying or selling a home give her a call at 314-707-4400 or 239-0631x13."
+405	Dinner for 4 at Creamery Hill	$100.00	Boland Fence	
+406	Dinner for 2 at Chico's	$25.00	Joyce Schatz of Coldwell Banker Premier Group	"Make """"Joyce Your Choice"""" in helping to make your dreams come true. Whether buying or selling a home give her a call at 314-707-4400 or 239-0631x13."
+407	2 Weekend 18 Hole Green Fees with Care at Wolf Hollow	$84.00	St. John's Mercy Corporate Health Division	Your best source for all your health needs.  We are here for you and proud to be Mercy.
+408	$50 off travel Gift Certificate	$50.00	www.gobudman.com	$50 off round trip ticket when purchased through www.budman.com
+409	1 Hour Therapeutic Massage	$50.00	St. John's Mercy Rehabilitation Services	"St. John's Mercy - here for you 24 hours a cay, 7 days a week, 365 days a year."
+410	1 Dozen Michelob Ultra golf balls	$45.00	Missouri Eagle LLC	Missouri Eagle serving the community
+411	"BBQ Package from Droeges, 25 - 10 oz. pork steaks"	$45.00	"Sturm's Towing, LLC"	Call Sturm Towing at 636/239-3636.  Located at 1808 E. Fifth St. in Washington.
+412	10 Ultimate Car Washes	$90.00	Baywash Car Wash	
+413	"Natural Hickory smoked bone-in ham, spiral cut from Williams Bros."	$60.00	Medicine Shoppe	"Where you get fast, friendly, convenient service."
+414	Lunch for 4 at Basket Case	$50.00	Mark Kluesner & Steve Dobsch Bldg. & Remodeling	"Mark & Steve, supporting Rotary and the community."
+415	BBQ Package for 10 people from Williams Bros.	$85.00	"Kathy Lentz, MD, Opthamologist"	
+416	Dinner for 2 at Creamery Hill	$50.00	Mark Kluesner & Steve Dobsch Bldg. & Remodeling	"Mark & Steve, supporting Rotary and the community."
+417	"1 Month of laundry service:  wash, dry and fold"	$300.00	Cassidy Cleaners	"Mother's day is coming, take care of Mom!  Wash, dry & fold laundry for a month, that is about 7 loads per week for one month.   Cassidy Cleaners --  we deal with spots. Loocated in the Phoenix Center, 390-2909"
+418	"4 Cardinal Tickets, Saturday April 26th vrs. Houston.  Infield Redbird Club, Sec. 245, Row 13, Seats 13-16"	$184.00	Bank of Franklin County	"A real community bank with 4 locations to serve you, Washington, Krakow, and New Haven."
+419	One free medium pizza	$15.00	Washington Pizza Hut	Up to 3 toppings or any specialty pizza.  Washington Pizza Hut - 1905 East Fifth St. 636-239-4088
+420	GC for 1 area rug cleaning worth up to $125	$125.00	Cassidy Cleaners	"Includes spot cleaning, sanitizing and deoderizing.  Cassidy Cleaners -- We deal with spots.   Located in the Phoenix Center, 390-2909"
+421	Ice Cream Party Pack	$20.00	Dairy Delight	"Come to Dairy Delight, 723 Jefferson @ 8th Street for great burgers, fries and ice cream treats"
+422	2 Large Two Topping Pizzas per month for a year	$324.00	Domino's Pizza	
+423	One Hour Massage at Back Bodies and More	$60.00	Ziglin Graphics & Signs	For all your sign needs.
+424	$30 Gift Certificate to Rothschild's	$30.00	Rothschild's Family Restaurant	"Voted best breakfast 4 years in a row.  Serving breakfast, lunch and dinner."
+425	Droege's 6 KC Strip Steaks	$45.00	Mike Dempsey	Courtesy of Bayland Billington & Dempsey PC
+426	Lunch for 2 at Basket Case	$25.00	Ginger Brinker & Matt McClelland	Call Matt McClelland or Ginger Brinker for outstanding real estate service.  Visit our website at www.TheMcClellandTeam.com
+427	$30 Gift Certificate to Rothschild's	$30.00	Rothschild's Family Restaurant	"Voted best breakfast 4 years in a row.  Serving breakfast, lunch and dinner."
+428	Lunch for 2 at Basket Case	$25.00	Ginger Brinker & Matt McClelland	Call Matt McClelland or Ginger Brinker for outstanding real estate service. Visit our website at www.TheMcClellandTeam.com
+429	"4 Cardinal Tickets vs. Milwaukee, 17 April, Section 149, Infield Box"	$350.00	FIRST STATE COMMUNITY BANK	"Your hometown banking center with locations now in Washington, Sullivan, Owensville, Warrenton & Wright City."
+430	Dinner for 2 at Chico's	$25.00	"Don Kluba, Re/Max First Gold"	"Don Kluba, Agent, specializing in USDA home purchases."
+431	Lunch for 2 at Basket Case	$25.00	"Don Kluba, Re/Max First Gold"	"Don Kluba, agent, specializing in USDA Home Purchases."
+432	$30.00 Gift Certificate	$30.00	BOB EVANS RESTAURANT	Serving homestyle meals for over 40 years.
+433	Tuxedo Rental with Shoes	$110.00	Wedding Creations	Wedding Creations is PERFECT for Prom!  Remember us for all of your wedding and prom needs!
+434	"4 Cardinal Baseball Tickets - Section 163, Row 25, Field Box, for April 30, 2008"	$160.00	COCHRAN ENGINEERING & SURVEYING	"Cochran provides all of your engineering needs, including civil engineering, land surveying, architecture, site development, geotechnical engineering and material testing and inspection."
+435	Gift Certificate 3 free entrées and soft drinks	$30.00	Qdoba Mexican Grill	Qdoba combines fresh ingredients with a combination of sauces and salsa to create fast-causal Mexican fare.  Located at the Phoenix Center
+436	Williams Brothers Hickory Smoked slab bacon	$40.00	Dan Gildehaus Remodeling	"Specializing in basement finishing, workout rooms, wet bars, and additions."
+437	$100.00 Williams Brothers Gift Certificate	$100.00	Quality Reward Travel	
+438	"Droege's BBQ Package, 25 - 10 oz. center cut pork steaks"	$45.00	Dan Gildehaus Remodeling	"Speciallzing in basement finishing, work out rooms, wet bars, and additions."
+439	Droege's Surf & Turf package	$100.00	Quality Reward Travel	
+440	"Holiday Dinner for 15, Williams Bros."	$128.00	Quality Reward Travel	
+441	4 Tickets to an American Catfist and Chicken Dinner	$36.00	"VFW Post 2661 - Washington, MO"	The VFW in Washington is proud to serve All American Catfish.  Dinners are served buffet style.  Tickets are good for any dinner throughout the year.
+442	Dinner for 4 at Creamery Hill	$100.00	Quality Reward Travel	
+443	Gift Certificate - Haslag Steel	$50.00	"Haslag Steel Sales, Inc."	For all your steel and fabrication needs see your friends at Haslag Steel in Krakow.
+444	"Emco Storm Door, Creamy Tan, left hinge, brass trim"	$400.00	"Midwest Exterior, Inc."	"Midwest Exteriors has maintence free energy efficient home exterior products such as windows, doors, siding, soffit & facia, gutters, vinyl decks, railing & fencing.  Midwest Exteriors is locally owned & operated.  Take advantage of the IRS rebates for 07"
+445	Basket Case Gift Certificate	$50.00	Sidney Thayer Attorney at Law	"For your legal needs see Sid Thayer at 113 Jefferson St., Washington, MO  239-4765"
+446	Droege's 6 KC Strip Steaks	$45.00	"Richard Dempsey, Attorney at Law"	"For all your legal needs see Richard Dempsey, 311 East 5th St., Washington, 239-3800"
+447	20 Williams Brothers 4 oz. Filet Mignon	$60.00	"Gordon Upchurch, Attorney at Law"	"For all your legal needs see Gordon at 206 E. Locust St., Union, MO  583-9991"
+448	St. Francis Borgia - All Sports Pass and $25 Spirit Shop Certificate	$50.00	St. Francis Borgia Regional HS	
+449	St. Francis Borgia - All Sports Pass and $25 Spirit Shop Certificate	$50.00	St. Francis Borgia Regional HS	
+450	Four Gun Pistol Pack (Range Bag for shooters)	$80.00	Elite Survival Systems	"Get the gear used by the US Secret Service, FBI, Border Patrol and law enforcement professional worldwide."
+451	Large Flight Bag	$70.00	Elite Survival Systems	"Get the gear used by the US Secret Service, FBI, Border Patrol and law enforcement professional worldwide."
+452	Mission Backpack	$180.00	Elite Survival Systems	"Get the gear used by the US Secret Service, FBI, Border Patrol and law enforcement professional worldwide."
+453	$35 GC Aldo's Restaurant	$35.00	Liz Stemmley -- Remax First Gold	"Selling Franklin County, one yard at a time!"
+454	Contour Nec Pillow	$45.00	Spilker Chiropratic	Low Back Disc Specialist
+455	$75 toward eye exam and glasses or contacts	$75.00	Eyecare of Washington	Eyecare Washington-1090 Washington Square-next to Subway - 239-2020. Dr. Peter M. Gubany & Dr. Patrick Pasierb
+456	$75 toward eye exam and glasses or contacts	$75.00	Eyecare of Washington	Eyecare Washington-1090 Washington Square-next to Subway - 239-2020. Dr. Peter M. Gubany & Dr. Patrick Pasierb
+457	$75 toward eye exam and glasses or contacts	$75.00	Eyecare of Washington	Eyecare Washington-1090 Washington Square-next to Subway - 239-2020. Dr. Peter M. Gubany & Dr. Patrick Pasierb
+458	$75 toward eye exam and glasses or contacts	$75.00	Eyecare of Washington	Eyecare Washington-1090 Washington Square-next to Subway - 239-2020. Dr. Peter M. Gubany & Dr. Patrick Pasierb
+459	"36"" floor creeper, fully cushioned/4 castor model"	$40.00	NAPA Auto Parts	"""Get the Good Stuff at Napa""  1361 High Street in Washington"
+460	5 piece Hex Key wrench set (allen wrench set)	$32.00	NAPA Auto Parts	"""Get the Good Stuff at Napa""  1361 High Street in Washington"
+461	Oil change & multo point maintenance check	$50.00	Thomas Auto Care Inc.	433 Elm Street in Washington
+462	Oil change & multo point maintenance check	$50.00	Thomas Auto Care Inc.	433 Elm Street in Washington
+463	$50 Downtown Washington GC	$50.00	Wiemann & Pues Ins.	"The agency of service, 200 Jefferson St. in Washington"
+464	$50 Downtown Washington GC	$50.00	Wiemann & Pues Ins.	"The agency of service, 200 Jefferson St. in Washington"
+465	$50 Downtown Washington GC	$50.00	Wiemann & Pues Ins.	"The agency of service, 200 Jefferson St. in Washington"
+466	$63 GG	$63.00	Donna Hudson & Mane Klipper	Come in and get your new spring cut today!
+467	30 minute massage (new clients only)	$35.00	Washington Wellness Center & Dr. Simmons	"Your non-drug, non-surgical solution to health problems."
+468	$30 GC to the Inn	$30.00	The Inn	"Good drinks, great food served all hours."
+469	"BBQ for 10, Williams Bros Package"	$85.00	Fisher Chiropractic	Fisher Chiropractic and Dr. Al Fisher wishes to thanks Rotary for your service to the community
+470	River Dinner Cruise & Moonlight return to Washington for 4.  Mutually agreed upon date	$600.00	Lochirco Fruits & Produce & Happy Apple	Thanks to Rotary for your contributions to the community
+471	6 US Choice 12 oz Stip Steaks (Droeges)	$40.00	Ron Tobben Insurance	"Ron Tobben Insurance Agency for individual & group insurance, including health,  life and supplemental/major meidcal insurances."
+472	Lunch for 2 at Basket Case	$25.00	Remax Today	"Remax today ---  Elisha, Michelle, Steve & Rachele ---  ""Everywhere you want to live"""
+473	Lunch for 2 at Basket Case	$25.00	Missouri Land Sales & Michelle Stone	"Franklin County's only accredited land oonsultant, located at Krakow Korners."
+474	Dinner for 4 at Creamery Hill	$100.00	"MENTZ FOUNDATIONS, INC."	"When building your new home's basement foundation, give Mentz Foundation a call"
+475	J & M Car Wash Package	$45.00	Primerica Financial Services --  Bryan Bogue	Primerica --  call 239-5453 for a free financial needs anslysis which gives yoyu a detailed overview of your current financial situation.   Www.primerica.com
+476	"2 Cardinal Tickets, Friday , April 18t.  Section CQ3 (party Porch).   Cards vs. Giants,"	$74.00	State Farm Ins. & Matt Tobben	Like a good neighbor --  State Farm is there.  We protect more families than anyone does.
+477	"2 Cardinal Tickets, Saturday,  April 5th.  Section CQ3 (party Porch).   Cards vs. Nationals"	$74.00	State Farm Ins. & Matt Tobben	State Farm protects more families than any other company.  The #1 auto insurer in Missouri for 60 years.
+478	$20 GC to Imo's	$20.00	IMO's Pizza	Imo's pizza for a fast and delicious pizza
+479	4 Foot Party Sub	$40.00	Quiznos	"Dine in or carry, delicious subs"
+480	Happy hour for 6 at Chico's	$70.00	Wendell's Service Station	Come see us for all your automotive service needs.
+481	2 -- 40 Lb bags of Dura Life Dog Food	$27.00	Orschlens Farm and Home	"Orschlens in Washington, for all your farm and home needs."
+482	$25 Gift Certificate	$25.00	"QUALITY COPY SERVICE, INC."	"101 W. 5th (Washington), 200 S. Oak (Union), for all your copy and printing needs"
+483	"4 Cardinal Tickets --  Field Box Seats, Section 148, row 10, behing home plate --  great seats!"	$180.00	Mark & Lynn Becker	Call for a mutually agreed upon date
+484	$30 GC	$30.00	Zuzu's Petals Gifts LLC	"An eclectic mix of unique gifts, gourmet foods and of course fine wines!"
+486	Pepsi Cola Headed Sweatshirt	$30.00	Pepsi Cola Bottling Co of New Haven	Provided by the Pepsi Cola Bottling Co of New Haven
+487	Dinner for 4 at Chico's	$40.00	Prestige Mortgage & Tim Jones	Fantastic interest rates for refinance or new home loans
+488	Gift Certificate to Aldo's Restaurant	$35.00	Prestige Mortgage & Tim Jones	Fantastic interest rates for refinance or new home loans
+489	Gift Basket	$30.00	I.B. Nuts & Fruits	"Easter bunnies, Easter gifts & our gourmet line of chocolates, nuts, snack mixes, dried fruit and other fine foods."
+490	Gift Basket from I.B. Nuts	$35.00	"HORN, ARCHITECTS, P.C., ROBERT A."	Serving Franklin County with excellent Architectural Design for 17 years.
+491	1 Residential Real Estate Listing	"$2,995.00"	"ASSIST-2-SELL, SMART CHOICE REALTY  Jamie Fletcher"	Assist 2 Sell  offers full service with savings.  Call Jamie Fletcher at 636-239-5595  ---WE STILL NEED MORE INFO TO SET A TIME LIMIT FOR THIS ---  RODNEY HAS A CALL INTO JAMIE
+492	Williams Bros. Steak lovers pkg	$125.00	Melton Machine & Control Co.	"Melton Machine & Control Co. Washington, Missouri"
+493	Williams Bros. Steak lovers pkg	$125.00	Melton Machine & Control Co.	"Melton Machine & Control Co. Washington, Missouri"
+494	Frick's Supertrim Whole Bone In Ham	$40.00	Fricks Meat Products	Tastes like ham used to taste
+495	Frick's Supertrim Whole Bone In Ham	$40.00	Fricks Meat Products	Tastes like ham used to taste
+496	Frick's Supertrim Whole Bone In Ham	$40.00	Fricks Meat Products	Tastes like ham used to taste
+497	Frick's Supertrim Whole Bone In Ham	$40.00	Fricks Meat Products	Tastes like ham used to taste
+498	6 -- 12 OZ ribeye steaks from Droege's	$45.00	Buescher & Ditch	"Wastewater treatment, stormwater control, urban & rural land surveying, subdivision design, commercial & industrial site engineering."
+499	6 -- 12 OZ ribeye steaks from Droege's	$45.00	Buescher & Ditch	"Wastewater treatment, stormwater control, urban & rural land surveying, subdivision design, commercial & industrial site engineering."
+500	Lunch for 2 at Basket Case	$25.00	Buescher & Ditch	"Wastewater treatment, stormwater control, urban & rural land surveying, subdivision design, commercial & industrial site engineering."
+501	Dinner for 4 at Creamery Hill	$100.00	Dr. James Mace	Thank you Rotary for your contributions to the community from Dr. James Mace
+502	Lube Oil & Filter	$30.00	Unnerstall Tire Co	Call Tom or Keith for your Tire and Car needs
+503	Lube Oil & Filter	$30.00	Unnerstall Tire Co	Call Tom or Keith for your Tire and Car needs
+504	Lube Oil & Filter	$30.00	Unnerstall Tire Co	Call Tom or Keith for your Tire and Car needs
+505	Lube Oil & Filter	$30.00	Unnerstall Tire Co	Call Tom or Keith for your Tire and Car needs
+506	Broege's BBQ Package	$45.00	Jim's Heating and Cooling	Turn to the experts at Jim's Heating & Cooling for all your heating & cooling needs
+507	BBQ Rib Feast from Droege's	$45.00	Jim's Heating and Cooling	Turn to the experts at Jim's Heating & Cooling for all your heating & cooling needs
+508	"Spa Manicure & Pedicure Package at Backs, Bodies & More"	$55.00	"Mark, Beckie & Alex Piontek"	Best wishes for a successful auction.
+509	"2 - 1 hour massages at Backs, Bodies & More"	$120.00	"Mark, Beckie & Alex Piontek"	Best wishes for a succesful auction.
+510	"2 - 1 hour massages at Backs, Bodies & More"	$120.00	"LEWIS,RICE, & FINGERSH, LC"	"Lewis, Rice, & Fingersh, LC Attorneys at law."
+511	Ertl Die-cast John Deere 8530 Toy Tractor	$75.00	Schweissguth Bros. Farm Equip	For all your lawn care needs.
+512	Yearly exam & vaccines for a dog.	$91.50	Animal Hospital of Washington	Includes rabies and distemper vaccines and a heartworm test  & worm test.  Dr. Dan Smith of the Animal Hospital of Washington.
+513	Microship Indentification for a dog or cat.	$39.00	Animal Hospital of Washington	This is an A.V.I.D. Microchip & includes registration. Dr. Dan Smith of the Animal Hospital of Washington.
+514	Yearly exam & vaccines for a cat.	$67.50	Animal Hospital of Washington	Includes rabies and distemper vaccines and a heartworm test. Dr Dan Smith of the Animal Hospital of Washington.
+515	"2 Millers First - Bag Chairs, golf towels and a sunvisor and ball cap"	$40.00	Millers First Insurance Company	Call Karen Swederska @ 239-6708 for your auto and homeowners insurance needs
+516	$100 Premier Carpet Cart Gift Certificate for Carpet Cleanining in Washington	$100.00	Premier Carpet  Care - James Murray	"Carpet, Cleanin, Tile and Grout, air duct, flood damage - 24 hour emergency service."
+517	$20.00 Balducci Vineyards Gift Certficate	$20.00	Balducci Vineyards	Great Wine and Great Times
+518	Wine Basket with $25.00 Gift Certificate toward any Wine	$50.00	Blumenhoff Vinyards	"Fine people, fabulous wine, fun times."
+519	$25.00 Gift Certificate to Gary R. Lucy Gallery	$25.00	Gary R. Lucy Gallery	
+520	2 Weekend 18 hole green fees w/cart at Wolf Hollow	$84.00	Linmark Machine Products	Best of luck to the Washington Rotary Club from Linmark Machine Products
+521	Cardinals vs. Reds - April 29 - 4 seats - Outfield Boxes	$136.00	R.D. Laboratories Inc.	best of luck to the Washington Rotary Club from R. D. Labs
+522	$30.00 Cowan's Gift Card	$30.00	Cowan's Restaurant	Oldest Restaurant in Washington and still the place to meet.
+523	Yearly Exam and Vaccines for a Dog	$61.00	"Animal Care Clinic of Washington, Dr. James Hale"	"Includes wellness examination, rabies and distemper vaccines and a heartworm test"
+524	Carry out Dinners for Four - Once a Month for 6 Months	$250.00	Cafe  Mosaic	For fast and fresh breakfast or lunch visit Café Mosaic centrally located in the Patients First of Washington Building.  Also offering customized catering for groups of any size.
+525	Pro Form XP 420 Raxor Elliptical Machine	$500.00	Patients First Health Care	Improving the quality of healthcare for families.  Patients First Healthcare - now offering 14 offices throughout East Central Missouri
+526	BBQ Accessory Kit	$50.00	Missouri Natural Gas	
+527	Happy hour for 6 at Chico's	$75.00	Bank of Franklin County	"A real community bank with 4 locations to better serve you, Washington, Krakow and New Haven"
+528	"$50.00 Hillermann Nursery & Florist, Inc.Gift Certificate"	$50.00	Schroepfer Bauer Insurance Agency	
+529	Dinner for 4 at Chico's	$40.00	Schroepfer Bauer Insurance Agency	
+530	Washington High School Men's Polo - White - XL	$25.00	Legacy Embroidery & Screen Printing	
+531	Borgia - Gear Brand Polo - Ladies - Large	$30.00	Legacy Embroidery & Screen Printing	
+532	Washington High School Fleece Pullover - Large	$30.00	Legacy Embroidery & Screen Printing	
+533	Borgia Ladies Scoop Neck Shirt - Medium	$20.00	Legacy Embroidery & Screen Printing	
+534	St. Louis Blues Autographed Hockey Stick	$150.00	Developmental Services of Franklin County	
+535	Mans Titanium Seiko Watch (SGG711)	$169.99	Brune Jewelers	"Located at Washington Corners.  Tue, Wed, Sat 9-5 and Thu, Fri 9-8.  Watch  inclued personal fitting at Brune Jewelers"
+536	Droege's Famous Fried Chicken Dinner for eight	$40.00	Sahm Welding	
+537	Droege's Six (6) US choice 12oz Ribeye steaks	$45.00	Sahm Welding	
+538	Fas-Trip 66-5 Triple shine washes	$40.00	Sahm Welding	
+539	Williams Brothers famous 4 oz filet mignon	$60.00	Miller Funeral Home	
+540	Droege's Six (6) US choice 12oz Ribeye steaks	$45.00	Miller Funeral Home	
+541	Droege's Six (6) US choice 12oz Ribeye steaks	$45.00	Miller Funeral Home	
+542	Williams Brothers famous 4 oz filet mignon	$0.00	Miller Funeral Home	
+543	"Beach Bag, Beach towel, Photo Album and Camera"	$35.00	Hillsboro Title Co	Hillsboro Title Company - 239-9229
+544	$30.00 ZuZu's Gift Certificate	$30.00	Zuzu's Petals Gifts LLC	
+545	$50.00 Brown Shoe Gift Card	$50.00	Brown's Enterprises	Brown's for all your footwear needs.

@@ -1,0 +1,70 @@
+<!-- Edit this file to change the layout of the detail view form -->
+<script type="text/javascript">
+function plusone(x)
+{
+var y=document.getElementById(x).value;
+document.getElementById(x).value=y+1;
+document.getElementById('insert_button').disabled=true;
+}
+</script>
+
+<br>
+<table border=1 bordercolor=navy cellpadding=0 cellspacing=0>
+	<tr>
+		<td>
+			<div class=TableTitle><%%DETAIL_VIEW_TITLE%%></div>
+			</td>
+		</tr>
+	<tr>
+		<td>
+			<table>
+				<tr>
+					<td colspan=2></td>
+					<td rowspan=6 valign=top>
+						<div><%%UPDATE_BUTTON%%></div>
+						<div><%%DELETE_BUTTON%%></div>
+						<div><%%DESELECT_BUTTON%%></div>
+						<br>
+						<div><%%INSERT_BUTTON%%></div>
+						</td>
+					</tr>
+				<tr>
+					<td class=TableHeader valign=top>
+						<div class=TableHeader style="text-align:right;">ID</div>
+						</td>
+					<td class=TableBody width=300 valign=top><%%VALUE(ID)%%>&nbsp;&nbsp;</td>
+					</tr>
+				<tr>
+					<td class=TableHeader valign=top>
+						<div class=TableHeader style="text-align:right;">Name</div>
+						</td>
+					<td class=TableBody width=300 valign=top><input disabled=true size=40 type=text class=TextBox name=Name value="<%%VALUE(Name)%%>">&nbsp;&nbsp;</td>
+					</tr>
+				<tr>
+					<td class=TableHeader valign=top>
+						<div class=TableHeader style="text-align:right;">ItemDescription</div>
+						</td>
+					<td class=TableBody width=300 valign=top><input size=40 type=text class=TextBox name=ItemDescription value="<%%VALUE(ItemDescription)%%>">&nbsp;&nbsp;</td>
+					</tr>
+				<tr>
+					<td class=TableHeader valign=top>
+						<div class=TableHeader style="text-align:right;">suggestedvalue</div>
+						</td>
+					<td class=TableBody width=300 valign=top><input size= 11 type=text class=TextBox name=suggestedvalue value="<%%VALUE(suggestedvalue)%%>">&nbsp;&nbsp;</td>
+					</tr>
+				<tr>
+					<td class=TableHeader valign=top>
+						<div class=TableHeader style="text-align:right">Cost</div>
+						</td>
+					<td class=TableBody width=300 valign=top><input id="cost" onchange="plusone(this.id)" size= 11 type=text class=TextBox name=Cost value="<%%VALUE(Cost)%%>">&nbsp;&nbsp;</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	
+	<script>
+		if(document.getElementsByName('Name').length){
+			document.getElementsByName('Name')[0].focus();
+		}
+	</script>

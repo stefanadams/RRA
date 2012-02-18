@@ -1,0 +1,22 @@
+BODY
+{
+    FONT-SIZE: 11pt;
+    FONT-FAMILY: Verdana
+}
+A
+{
+    COLOR: black;
+    FONT-FAMILY: Verdana;
+    TEXT-DECORATION: none
+}
+A:hover
+{
+    COLOR: black;
+    FONT-FAMILY: Verdana;
+    TEXT-DECORATION: underline
+}
+TABLE
+{
+    FONT-SIZE: 11pt;
+    FONT-FAMILY: Verdana
+}

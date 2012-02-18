@@ -1,0 +1,34 @@
+<VirtualHost *:80>
+	ServerName radioauction.washingtonrotary.com
+	DocumentRoot /data/vhosts/radioauction.washingtonrotary.com/htdocs
+	DirectoryIndex default.asp
+	<Directory /data/vhosts/radioauction.washingtonrotary.com/htdocs>
+		Options All ExecCGI FollowSymLinks
+		AllowOverride All
+		<IfModule mod_access.c>
+			Order deny,allow
+			Allow from all
+		</IfModule>
+	</Directory>
+	<IfModule mod_rewrite.c>
+		RewriteEngine On
+		RewriteLogLevel 1
+		RewriteLog /tmp/radioauction.mod_rewrite.log
+
+		SetEnvIf Referer www\.washingtonrotary\.com washrotary
+		SetEnvIf Referer radioauction\.washingtonrotary\.com washrotary
+		<Proxy http://windb.borgia.com>
+			Order allow,deny
+			Allow from all
+			Allow from 172.16
+			Allow from env=washrotary
+		</Proxy>
+
+		RewriteRule ^/admin$ http://windb.borgia.com/admin.asp [P]
+		RewriteRule ^/tv$ http://windb.borgia.com/tv_main_current_bidding.asp [P]
+		RewriteRule ^/operators$ http://windb.borgia.com/operators_main_current_bidding.asp [P]
+		RewriteRule ^/report$ http://www.borgia.com/washrotary/scripts/report.cgi
+		RewriteRule ^/$ http://windb.borgia.com [P]
+		RewriteRule ^/(.*)$ http://windb.borgia.com/$1 [P]
+	</IfModule>
+</VirtualHost>

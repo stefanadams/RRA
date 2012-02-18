@@ -1,0 +1,39 @@
+Item	Retail	Cost
+Lunch for 2 at Basket Case	$25.00	$20.00
+Lunch for 4 at Basket Case	$50.00	$45.00
+Dinner for 2 at Creamery Hill	$50.00	$45.00
+Dinner for 4 at Creamery Hill	$100.00	$90.00
+Happy hour for 6 at Chico's	$75.00	$70.00
+Dinner for 2 at Chico's	$25.00	$20.00
+Dinner for 4 at Chico's	$40.00	$35.00
+Six golf lessons from Gordon Ziegler at Elmwood	$210.00	$150.00
+Five weekday rounds of golf at Elmwood	$40.00	$35.00
+2 Monday-Friday 18 hole green fee w/cart at Wolf Hollow	$50.00	$35.00
+4 Monday-Friday 18 hole green fee w/cart at Wolf Hollow	$100.00	$65.00
+2 - 1/2 hour golf lesson with Scott Brauer at Wolf Hollow	$80.00	$50.00
+2 Weekend 18 hole green fees w/cart at Wolf Hollow	$70.00	$55.00
+4 Weekend 18 hole green fees with cart at Wolf Hollow	$140.00	$110.00
+J&M Car Wash-10 Automatic car wash package	$45.00	$30.00
+Fas-Trip 66-5 Triple shine washes	$37.50	$25.00
+"$30.00 Hillermann Nursery & Florist, Inc. Gift Certificate"	$30.00	$24.00
+$35.00 Aldo's Restaurant Gift Certificate	$35.00	$30.00
+1 Hour massage at The Body Natural	$50.00	$45.00
+1 1/2 Hour Custom Facial at Roller & Company	$60.00	$50.00
+1 Hour massage at Roller & Company	$50.00	$40.00
+"Droege's BBQ Package - 25 10oz. Center cut pork steaks (uncooked), 10 lbs. Best Choice charcoal, 1 qt. Charcoal lighter and 2 bottles Maull's BBQ sauce"	$37.95	$33.95
+"Droege's BBQ Feast - 15 Center cut pork steaks (BBQ'd), 2 lbs. baked beans, 2 lbs. creamy coleslaw, 1 loaf of Droege's French Bread"	$39.95	$35.95
+"Droege's BBQ Rib Feast - 3 large slabs of baby back ribs (BBQ'd), 2 lbs. red potato salad, 2 lbs. poppy seed coleslaw, 1 loaf of Droege's French Bread"	$39.95	$35.95
+"Droege's Large fancy deli platter for 20 people with sliced baked ham, roast beef, turkey and 2 cheeses."	$40.00	$36.00
+Droege's Six (6) US choice KC 12 oz strip steaks	$39.95	$35.95
+Droege's Six (6) US choice 12oz Ribeye steaks	$39.95	$35.95
+Droege'sTwenty (20) boneless pork chops	$35.00	$31.50
+"Droege's Dinner for eight - 24 pieces of Droege's famous fried chicken, three side salads, rolls, a 12pk of soda, plates, utensils."	$37.95	$33.95
+Williams Brothers Steak lovers pkg-12 top choice Ribeye steaks approximately 10-12 oz each	$99.00	$95.00
+Williams Brothers Beef and Reef pkg-4 choice 12 oz.Ribeye steaks and 4 - 8oz Lobster tails 	$90.00	$87.00
+"Williams Brothers BBQ Package for 10 people includes sliced smoked beef brisket and BBQ pulled pork, homemade potato salad, sweet and sour slaw and rolls"	$80.00	$75.00
+"Williams Brothers Natural Hickory smoked bone-in ham, spiral cut with apple honey glaze."	$60.00	$50.00
+"Williams Brothers hickory smoked slab bacon, Ten 1 lb packages"	$40.00	$35.00
+Williams Brothers famous 4 oz filet mignon 20 filets wrapped two per package	$50.00	$46.00
+"Williams Brothers Holiday dinner for 15 includes 1/2 of a spiral cut ham, new potatoes w/butter and chive sauce,  green bean casserole, pasta salad, dinner rolls, 1 apple and 1 cherry pie."	$128.00	$115.00
+$50.00 Williams Brothers Gift Certificate	$50.00	$45.00
+$100.00 Williams Brothers Gift Certificate	$100.00	$95.00

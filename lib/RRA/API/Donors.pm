@@ -82,14 +82,27 @@ sub items_POST : Runmode {
 	return $self->to_json($json);
 }
 
-sub packet_POST : Runmode {
+sub packet_GET : Runmode {
 	my $self = shift;
+	my @leaders = ();
+	my $rotarians = {};
 	my @rotarians = ();
 	my $donors = {};
 	my $items = {};
-	my $sth = $self->dbh->prepare("select concat_ws(', ', rotarians.lastname,rotarians.firstname) rotarian,donors.donor,concat_ws(' | ',donors.contact1,donors.contact2) contact,donors.address,donors.city,donors.phone,donors.email,donors.advertisement,items.year,items.number,items.item,items.value,max(bids.bid) highbid,if(max(bids.bid)>=items.value,'(BELLRINGER)','') bellringer,if(items.stockitem_id,'(STOCKITEM)','') stockitem from rotarians left join donors using (rotarian_id) left join items using (donor_id) left join bids using (item_id) where donors.solicit=1 group by donor_id,bids.item_id order by rotarian asc, donors.donor asc, items.year desc, items.value desc");
-	$sth->execute;
-	while ( my $row = $sth->fetchrow_hashref ) {
+	my $sthl = $self->dbh->prepare("select concat(l.lastname,', ',l.firstname) leader, concat(r.lastname,', ',r.firstname) rotarian from rotarians l join rotarians r on l.rotarian_id=r.leader_id");
+	$sthl->execute;
+	while ( my $row = $sthl->fetchrow_hashref ) {
+		push @{$rotarians->{$row->{leader}}}, {
+			rotarian => $row->{rotarian},
+		} unless grep { $_->{rotarian} eq $row->{rotarian} } @{$rotarians->{$row->{leader}}};
+		push @leaders, {
+			leader => $row->{leader},
+			rotarians => $rotarians->{$row->{leader}},
+		} unless grep { $_->{leader} eq $row->{leader} } @leaders;
+	}
+	my $sthr = $self->dbh->prepare("select concat_ws(', ', rotarians.lastname,rotarians.firstname) rotarian,donors.donor,concat_ws(' | ',donors.contact1,donors.contact2) contact,donors.address,donors.city,donors.phone,donors.email,donors.advertisement,items.year,items.number,items.item,items.value,max(bids.bid) highbid,if(max(bids.bid)>=items.value,'(BELLRINGER)','') bellringer,if(items.stockitem_id,'(STOCKITEM)','') stockitem from rotarians left join donors using (rotarian_id) left join items using (donor_id) left join bids using (item_id) where donors.solicit=1 group by donor_id,bids.item_id order by rotarian asc, donors.donor asc, items.year desc, items.value desc");
+	$sthr->execute;
+	while ( my $row = $sthr->fetchrow_hashref ) {
 		push @{$items->{$row->{donor}}}, {
 			year => $row->{year},
 			number => $row->{number},
@@ -114,7 +127,7 @@ sub packet_POST : Runmode {
 			donors => $donors->{$row->{rotarian}},
 		} unless grep { $_->{rotarian} eq $row->{rotarian} } @rotarians;
 	}
-	return $self->to_json({rotarians=>[@rotarians]});
+	return $self->to_json({leaders => [@leaders], rotarians => [@rotarians]});
 }
 
 1;

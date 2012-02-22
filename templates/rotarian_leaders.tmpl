@@ -1,0 +1,183 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" />
+<title>Rotarian Leaders</title>
+<link rel="stylesheet" type="text/css" media="screen" href="../css/redmond/jquery-ui-1.8.10.custom.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="../css/ui.jqgrid.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="../css/jquery.autocomplete.css" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery-jtemplates.js"></script>
+<script src="../js/i18n/grid.locale-en.js" type="text/javascript"></script>
+<script src="../js/jquery.jqGrid.min.js" type="text/javascript"></script>
+<script src="../js/jquery.autocomplete.js" type="text/javascript"></script>
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+<style type="text/css">
+	* {
+		font-family: Verdana;
+		font-size: 11px;
+	}
+	table,td,tr {
+		padding: 0px;
+		margin: 0px;
+		spacing: 0px;
+		vertical-align: top;
+		border-collapse:collapse;
+	}
+	table.rotarians {
+		border-left: 1px solid black;
+		border-top: 1px solid black;
+		border-right: 1px solid black;
+	}
+	table.donors {
+		border: 1px solid black;
+	}
+	table.donors td.donor {
+		padding: 3px;
+		border-right: 1px solid black;
+	}
+	table.donors td.advertisement {
+		padding: 10px;
+		vertical-align: middle;
+		width: 300px;
+	}
+	table.items td {
+		padding: 3px;
+		border: 1px solid black;
+	}
+	tr.row {border: 1px solid black}
+
+	.scroll {width:100%;height:80%;overflow:scroll}
+	#sortable5 li, #sortable1 li, #sortable2 li, #sortable3 li, #sortable4 li { margin: 0 2px 2px 2px; padding: 2px; font-size: 12px; width: 100%; }
+
+	@media print {
+		table.donors {page-break-after:always}
+	}
+</style>
+<script type="text/javascript">
+$(document).ready(function(){
+	// attach the template
+	$("#result1").setTemplateElement("template", null, {runnable_functions: true});
+			
+	// process the template
+	$("#result1").processTemplateURL("pl/api/rotarianleaders", null, {
+		type: 'GET',
+	});
+
+	var baseurl = 'pl/api/rotarianleaders/group';
+	$( "#sortable5, #sortable1, #sortable2, #sortable3, #sortable4" ).sortable().disableSelection();
+
+	var $tabs = $( "#tabs" ).tabs();
+
+	var $tab_items = $( "ul:first li", $tabs ).droppable({
+		accept: ".connectedSortable li",
+		hoverClass: "ui-state-hover",
+		tolerance: "pointer",
+		drop: function( event, ui ) {
+			var $item = $( this );
+			var $list = $( $item.find( "a" ).attr( "href" ) )
+				.find( ".connectedSortable" );
+			ui.draggable.hide( "slow", function() {
+				$tabs.tabs( "select", $tab_items.index( $item ) );
+				$( this ).appendTo( $list ).show( "slow" );
+			});
+		}
+	});
+
+	$("#sortable5").sortable({
+		update: function() {
+			$.post(baseurl, 'setnight=5&'+$(this).sortable('serialize'));
+			//$("#summary").load(baseurl, 'summary=5');
+		},
+	});
+	$("#sortable1").sortable({
+		update: function() {
+			$.post(baseurl, 'setnight=1&'+$(this).sortable('serialize'));
+			//$("#summary").load(baseurl, 'summary=1');
+		},
+	});
+	$("#sortable2").sortable({
+		update: function() { $.post(baseurl, 'setnight=2&'+$(this).sortable('serialize')); },
+	});
+	$("#sortable3").sortable({
+		update: function() { $.post(baseurl, 'setnight=3&'+$(this).sortable('serialize')); },
+	});
+	$("#sortable4").sortable({
+		update: function() { $.post(baseurl, 'setnight=4&'+$(this).sortable('serialize')); },
+	});
+	//$("#summary").load(baseurl, 'summary=5');
+});
+function UpdateLeader(id) {
+	$.post("pl/api/rotarianleaders", {id: id});
+}
+</script>
+</head>
+<body>
+	<!-- Template content -->
+	<textarea id="template" style="display:none">
+        <table>
+            {#foreach $T.rows as r}
+            <tr>
+                <td class="rotarian">{$T.r.rotarian}</td>
+                <td><input type="checkbox" onclick="UpdateLeader('{$T.r.rotarian_id}')" {($T.r.lead == 1) ? "CHECKED" : ""} /></td>
+            </tr>
+            {#/for}
+        </table>
+	</textarea>
+
+	<!-- Output elements -->
+	<table>
+		<tr>
+			<td><div id="result1" class="jTemplatesTest"></div></td>
+            <td>
+              <div id="summary"></div>
+              <div id="tabs">
+                  <ul>
+                      <li><a href="#tabs-5">Not assigned</a></li>
+                      <li><a href="#tabs-1">Night 1</a></li>
+                      <li><a href="#tabs-2">Night 2</a></li>
+                      <li><a href="#tabs-3">Night 3</a></li>
+                      <li><a href="#tabs-4">Night 4</a></li>
+                  </ul>
+                  <div id="tabs-5">
+                      <ul id="sortable5" class="scroll connectedSortable ui-helper-reset">
+                          <tmpl_while night5.fetchrow_hashref>
+                          <li id="id_<tmpl_var _.id>" class="ui-state-default"><tmpl_var _.name></li>
+                          </tmpl_while>
+                      </ul>
+                  </div>
+                  <div id="tabs-1">
+                      <ul id="sortable1" class="scroll connectedSortable ui-helper-reset">
+                          <tmpl_while night1.fetchrow_hashref>
+                          <li id="id_<tmpl_var _.id>" class="ui-state-default"><tmpl_var _.name></li>
+                          </tmpl_while>
+                      </ul>
+                  </div>
+                  <div id="tabs-2">
+                      <ul id="sortable2" class="scroll connectedSortable ui-helper-reset">
+                          <tmpl_while night2.fetchrow_hashref>
+                          <li id="id_<tmpl_var _.id>" class="ui-state-default"><tmpl_var _.name></li>
+                          </tmpl_while>
+                      </ul>
+                  </div>
+                  <div id="tabs-3">
+                      <ul id="sortable3" class="scroll connectedSortable ui-helper-reset">
+                          <tmpl_while night3.fetchrow_hashref>
+                          <li id="id_<tmpl_var _.id>" class="ui-state-default"><tmpl_var _.name></li>
+                          </tmpl_while>
+                      </ul>
+                  </div>
+                  <div id="tabs-4">
+                      <ul id="sortable4" class="scroll connectedSortable ui-helper-reset">
+                          <tmpl_while night4.fetchrow_hashref>
+                          <li id="id_<tmpl_var _.id>" class="ui-state-default"><tmpl_var _.name></li>
+                          </tmpl_while>
+                      </ul>
+                  </div>
+              </div>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

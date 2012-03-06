@@ -1,0 +1,30 @@
+Ring Central
+http://ringcentral.com
+Email address on file: auction@washingtonrotary.com (Rodney, Steve, Nadine, Stefan)
+Phone number on file: 314-276-6094 (Stefan's Mobile)
+Security Code: In what city were you born?  Washington
+Phone number: (877) 707-2345
+Numeric Password: 13579
+
+Google Apps
+http://mail.washingtonrotary.com
+admin / harris123
+
+Inexpensive Domains (DNS Registrar)
+http://inexpensivedomains.com
+washingtonrotary / harris
+
+Linux Server
+ssh://local:harris@washingtonrotary.com:4226
+
+MySQL
+root / secret
+washingtonrotary / harris
+
+Auction Website
+admin / harris
+operator / harris
+auctioneer / harris
+
+Windows Server
+Administrator / harris

@@ -95,7 +95,7 @@ $(document).ready(function(){
 		colModel:[
 			{name:'chamberid',label:'C-ID',width:30,hidden:true,editable:true,editrules:{number:true,minValue:1,maxValue:9999}},
 			{name:'phone',label:'Phone',width:70,editable:true,editoptions:{dataInit:phoneMask},editrules:{required:true},formoptions:{elmsuffix:'(*)'},formatter:'phoneFmatter'},
-			{name:'category',label:'Category',width:40,editable:true,edittype:'select',editoptions:{multiple:false,value:categories},formatter:'categoryFmatter'},
+			{name:'donorcat',label:'Category',width:40,editable:true,edittype:'select',editoptions:{multiple:false,value:categories},formatter:'categoryFmatter'},
 			{name:'donor',label:'Donor',width:200,editable:true,editrules:{required:true},formoptions:{elmsuffix:'(*)'}},
 			{name:'contact',label:'Contact',width:100,editable:true,editrules:{required:true},formoptions:{elmsuffix:'(*)'}},
 			{name:'address',label:'Address',width:100,search:false,editable:true,editrules:{required:true},formoptions:{elmsuffix:'(*)'}},
@@ -103,7 +103,7 @@ $(document).ready(function(){
 			{name:'state',label:'State',width:60,editable:true,hidden:true,editrules:{edithidden:true}},
 			{name:'zip',label:'Zip',width:60,editable:true,hidden:true,editrules:{edithidden:true}},
 			{name:'email',label:'Email',width:60,search:false,editable:true,hidden:true,editrules:{email:true,edithidden:true,required:false}},
-			{name:'url',label:'URL',width:60,search:false,editable:true,hidden:true,editrules:{url:true,edithidden:true,required:false}},
+			{name:'donorurl',label:'URL',width:60,search:false,editable:true,hidden:true,editrules:{url:true,edithidden:true,required:false}},
 			{name:'advertisement',label:'Advertisement',hidden:true,search:false,editable:true,edittype:'textarea',editrules:{edithidden:true}},
 			{name:'solicit',label:'Solicit',width:25,editable:true,edittype:'select',editoptions:{multiple:false,value:selectBool},formatter:'boolFmatter'},
 			{name:'items',label:'LY#',width:25,editable:false},
@@ -130,6 +130,7 @@ $(document).ready(function(){
 		recreateForm: true,
 		altRows: true,
 		rownumbers: true,
+		rownumWidth: 50,
 		scroll: true,
 		rowNum: 50,
 		rowList: [10, 20, 50, 100, 500, 1000, 5000, 10000],
@@ -164,17 +165,13 @@ $(document).ready(function(){
 		},
 		{
 			url: "pl/api/donors/search",
-			caption: "Search Donor",
+			caption: "Search Donor"
 		},
 		{
 			url: "pl/api/donors/view",
-			caption: "View Donor",
+			caption: "View Donor"
 		}
 	);
-	// Increase column width of the rownumbers column
-	$("#list1_rn").width(50);
-	$('table#list1 tbody tr td:first-child').width(50);
-//	$('table#list1 tbody tr td[aria-describedby="list1_rn"]').width(50);
 });
 </script>
 </head> 

@@ -1,0 +1,8 @@
+# Check syntax of a module
+perl -c -Mlib=lib lib/RRA/API/Donors.pm 
+
+# Run CGI::App from CLI
+REQUEST_METHOD=GET
+PATH_INFO=api/donors/packet
+CONFIG=/data/vhosts/washingtonrotary.com/dev/htdocs/rra.cfg
+perl -I/data/vhosts/washingtonrotary.com/dev/htdocs/rra/lib -MRRA::Dispatch -e 'RRA::Dispatch->dispatch' q=Wash; echo

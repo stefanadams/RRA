@@ -2,6 +2,15 @@ MYSQLHOST=mysql.washingtonrotary.com
 MYSQLUSER=washingtonrotary
 MYSQLPASS=harris
 
+rra ()
+{
+    CONFIG=/data/vhosts/washingtonrotary.com/dev/htdocs/rra.cfg
+    export REQUEST_METHOD="$1" PATH_INFO="$2"
+    shift
+    shift
+    env CONFIG=/data/vhosts/washingtonrotary.com/dev/htdocs/rra.cfg perl -I/data/vhosts/washingtonrotary.com/dev/htdocs/rra/lib -MRRA::Dispatch -e 'RRA::Dispatch->dispatch' "$@"; echo
+}
+
 ajax () 
 { 
     if [ "$1" = "on" ]; then

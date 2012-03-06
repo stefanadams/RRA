@@ -141,13 +141,15 @@ sub cgiapp_prerun {
 		$DATA->{path_info} = [split m!/!, $self->param('dispatch_url_remainder')];
 	}
 	if ( $self->query->path_info ) {
-		$DATA->{app} = (split m!/!, $self->query->path_info)[1];
-		$DATA->{rm} = (split m!/!, $self->query->path_info)[2];
+		$DATA->{app} ||= (split m!/!, $self->query->path_info)[1];
+		$DATA->{rm} ||= (split m!/!, $self->query->path_info)[2];
 	}
 	if ( $DATA->{me} = $ENV{REQUEST_URI} ) {
 		$DATA->{me} =~ s!/$_$!! if local $_ = $self->param('dispatch_url_remainder');
 	}
 	$self->param($_, $DATA->{$_}) foreach keys %{$DATA};
+
+	print STDERR Dumper($DATA);
 
 	$self->param('t0', [gettimeofday]);
 }
@@ -209,7 +211,7 @@ sub login_before_forbid : Runmode {
 ######
 ######
 
-sub sOper { ('eq' => '=?', 'ne' => '<>?', 'lt' => '<?', 'le' => '<=?', 'gt' => '>?', 'ge' => '>=?', 'bw' => " LIKE '?%'", 'ew' => " LIKE '%?'", 'cn' => " LIKE '%?%'") }
+sub sOper { ('eq' => '=', 'ne' => '<>', 'lt' => '<', 'le' => '<=', 'gt' => '>', 'ge' => '>=', 'bw' => " LIKE '%'", 'ew' => " LIKE '%'", 'cn' => " LIKE '%%'") }
 
 sub dbx { 
 	my $self = shift;

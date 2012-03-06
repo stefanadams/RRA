@@ -1,3 +1,12 @@
+# show create function X;
+# show function status where db='rra_master';
+# select name,param_list,returns,body from mysql.proc where db='rra_master'\G
+# select * from information_schema.routines where ROUTINE_SCHEMA='rra_master'\G
+# select TABLE_NAME,VIEW_DEFINITION from information_schema.views where table_schema='rra_master'\G
+show grants for washingtonrotary@'%';
+grant select on mysql.proc to washingtonrotary@'%';
+
+
 # echo 'select name,param_list,returns,body from proc where db="rra_master"' | /usr/bin/mysql -u root -psecret mysql | perl -pi -e 'chomp;s/\\n| +/ /g; @_=split/\t/;$_="CREATE FUNCTION $_[0] ($_[1]) RETURNS $_[2] $_[3]//\n"'
 CREATE FUNCTION auction () RETURNS varchar(255) CHARSET utf8 BEGIN  DECLARE ynl VARCHAR(255);  SELECT CONCAT_WS('::', year,night,live) INTO ynl FROM auctions WHERE now() BETWEEN start AND end ORDER BY live DESC LIMIT 1;  RETURN ynl; END//
 CREATE FUNCTION auction_live () RETURNS smallint(1) BEGIN  DECLARE l SMALLINT(1);  SELECT live INTO l FROM auctions WHERE now() BETWEEN start AND end ORDER BY live DESC LIMIT 1;  RETURN l; END//

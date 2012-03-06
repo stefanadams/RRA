@@ -1,0 +1,9 @@
+Solicitation Aids
+Still to do on this page: drag a Rotarian from one Leader grouping to another.
+
+Manage Items
+Edit advertisement, need to refresh the page for it to be recognized for subsequent items.
+
+Sequence Items
+Running total of # of items and total value
+

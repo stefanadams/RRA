@@ -2,6 +2,7 @@ package RRA::API;
 use base 'RRA::Base';
 
 use Switch;
+use SQL::Interp ':all';
 
 sub resttest_GET : Runmode { # Authen Authz('auctioneer') {
 	my $self = shift;
@@ -228,30 +229,25 @@ sub ac_GET : Runmode { # Ajax
 	$self->param('donor_id', $1||'') if $self->param('donor') && $self->param('donor') =~ /:(\d+)$/;
 	$self->param('stockitem_id', $1||'') if $self->param('stockitem') && $self->param('stockitem') =~ /:(\d+)$/;
 	my $limit = $self->param('limit') || 10;
-	switch ( $for) {
+	my ($sql, @bind);
+	switch ( $for ) {
 		case 'city' {
-			# jquery ac_city dictates that the response must be a text list of cities, written as City|State|Zip
-			$ac = $self->dbh->selectall_arrayref("SELECT concat_ws('|',city,state,zip) a FROM donors WHERE city LIKE ? GROUP BY city ORDER BY city LIMIT $limit", {}, "$q%");
+			($sql, @bind) = sql_interp 'SELECT ac FROM ac_city_vw WHERE city LIKE',\"$q%",'LIMIT', \$limit;
 		}
 		case 'donor' {
-			# jquery ac_donor dictates that the response must be a text list of cities, written as City|State|Zip
-			$ac = $self->dbh->selectall_arrayref("SELECT concat(donor,':',donor_id,'|',advertisement) a FROM donors LEFT OUTER JOIN items USING (donor_id) WHERE donor LIKE ? OR donors.donor_id = ? GROUP BY donor_id ORDER BY donor LIMIT $limit", {}, "$q%", $q);
+			($sql, @bind) = sql_interp 'SELECT ac FROM ac_donor_vw WHERE donor LIKE',\"$q%",'OR', {donor_id=>$q}, 'LIMIT', \$limit;
 		}
 		case 'item_stockitem' {
-			# jquery ac_stockitem dictates that the response must be a text list of cities, written as City|State|Zip
-			$ac = $self->dbh->selectall_arrayref("SELECT concat('(',value,') ',stockitem,':',stockitem_id,'|',stockitem,'|',value) a FROM stockitems_cy WHERE stockitem LIKE ? GROUP BY stockitem ORDER BY stockitem LIMIT $limit", {}, "$q%");
+			($sql, @bind) = sql_interp 'SELECT ac FROM ac_item_stockitem_vw WHERE stockitem LIKE',\"%$q%",'LIMIT', \$limit;
 		}
 		case 'item' {
-			# jquery ac_item dictates that the response must be a text list of cities, written as City|State|Zip
-			$ac = $self->dbh->selectall_arrayref('SELECT concat_ws("|",item,description,value,url) a FROM items WHERE donor_id = ? AND item LIKE ? GROUP BY item ORDER BY item LIMIT $limit', {}, $self->param('donor_id'), "$q%");
+			($sql, @bind) = sql_interp 'SELECT ac FROM ac_item_vw WHERE',{number=>$q},'OR item LIKE',\"%$q%",'OR donor LIKE',\"$q%",'OR',{donor_id=>$q},'OR',{item_id=>$q},'LIMIT', \$limit;
 		}
 		case 'advertisement' {
-			# jquery ac_advertisement dictates that the response must be a text list of cities, written as City|State|Zip
-			$ac = $self->dbh->selectall_arrayref('SELECT advertisement FROM items WHERE donor_id = ? AND advertisement LIKE ? GROUP BY advertisement ORDER BY advertisment LIMIT $limit', {}, $self->param('donor_id'), "$q%");
+			($sql, @bind) = sql_interp 'SELECT ac FROM ac_advertisement_vw WHERE',{donor_id=>$q},'OR advertisement LIKE',\"%$q%",'LIMIT', \$limit;
 		}
 		case 'stockitem' {
-			# jquery ac_item dictates that the response must be a text list of cities, written as City|State|Zip
-			$ac = $self->dbh->selectall_arrayref("SELECT concat(stockitem,':',stockitem_id,'|',stockitem,'|',value) a FROM stockitems WHERE stockitem LIKE ? GROUP BY stockitem ORDER BY stockitem LIMIT $limit", {}, "$q%");
+			($sql, @bind) = sql_interp 'SELECT ac FROM ac_stockitem_vw WHERE stockitem LIKE',\"%$q%",'LIMIT', \$limit;
 		}
 		case 'pay' {
 			my $term = $self->query->param('term');
@@ -297,6 +293,8 @@ sub ac_GET : Runmode { # Ajax
 			return join "\n", @ac;
 		}
 	}
+	print STDERR "\n\n\n\n\n$sql\n\n\n\n\n\n";
+	$ac = $self->dbh->selectall_arrayref($sql, {}, @bind);
 	return join "\n", map { @$_ } @$ac;
 }
 

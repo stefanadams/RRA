@@ -11,10 +11,16 @@ $(document).ready(function(){
 	$("#result1").setTemplateElement("template", null, {runnable_functions: true});
 			
 	// process the template
-	$("#result1").processTemplateURL("pl/api/donors/packet", null, {
+	$("#result1").processTemplateURL("pl/api/donors/solicitationaids", null, {
 		type: 'GET',
 	});
 });
+function UpdateCompliance(id) {
+    $.post("pl/api/donors/rotariancompliance", {id: id});
+}
+function UpdateLeader(id) {
+    $.post("pl/api/donors/rotarianleaders", {id: id});
+}
 </script>
 <style type="text/css">
 	* {
@@ -25,6 +31,13 @@ $(document).ready(function(){
 		padding: 0px;
 		margin: 0px;
 		spacing: 0px;
+		vertical-align: top;
+		border-collapse:collapse;
+	}
+	table.spread,td.spread,tr.spread {
+		padding: 5px;
+		margin: 5px;
+		spacing: 5px;
 		vertical-align: top;
 		border-collapse:collapse;
 	}
@@ -67,25 +80,44 @@ $(document).ready(function(){
 <body>
 	<!-- Template content -->
 	<textarea id="template" style="display:none">
+		<h1>Rotarian Compliance</h1>
+		<table class="spread">
+		<tr class="spread">
 		{#foreach $T.leaders as l}
+		<td class="spread">
 		<table class="leaders"><tr><td class="leader">{$T.l.leader}</td></tr></table>
 		<table class="leadermembers">
 			{#foreach $T.l.rotarians as r}
+			{#if $T.r.rotarian}
 			<tr class="">
-				<td class="">{$T.r.rotarian}</td>
+				<td class="" width=150>{$T.r.rotarian}</td>
+                <td><input type="checkbox" onclick="UpdateCompliance('{$T.r.rotarian_id}')" {($T.r.compliance == 1) ? "CHECKED" : ""} /></td>
 			</tr>
+			{#else}
+			<tr class="">
+				<td class="" width=150>None assigned</td>
+			</tr>
+			{#/if}
 			{#/for}
 		</table>
-		<br />
+		</td>
+		{#if (1+$T.l$index) % 6 == 0}</tr><tr class="spread">{#/if}
 		{#/for}
+		</tr>
+		</table>
 		<hr />
+		<h1>Solicitation Packets</h1>
 		{#for t = 65 to 90}
 		<a href="#{String.fromCharCode($T.t)}">{String.fromCharCode($T.t)}</a>
 		{#/for}
 		<hr />
 		{#foreach $T.rotarians as r}
 		<a name="{$T.r.rotarian.substring(0,1)}" />
-		<table class="rotarians"><tr><td class="rotarian">{$T.r.rotarian}</td></tr></table>
+		<table class="rotarians">
+			<tr>
+				<td class="rotarian">{$T.r.rotarian} <input type="checkbox" onclick="UpdateLeader('{$T.r.rotarian_id}')" {($T.r.lead == 1) ? "CHECKED" : ""} /></td>
+			</tr>
+		</table>
 		<table class="donors">
 			{#foreach $T.r.donors as d}
 			<tr class="row">

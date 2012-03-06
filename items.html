@@ -17,7 +17,7 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
-	var categories = ":;food:Food;gc:Gift Certificates;travel:Travel;personal care:Personal Care;auto:Auto;apparel:Apparel;sports:Sports;event tickets:Event Tickets;baskets:Baskets;wine:Wine;misc:Misc;garden:Garden;one per:One Per";
+	var categories = ":;food:Food;gc:Gift Certificates;travel:Travel;personal care:Personal Care;auto:Auto;apparel:Apparel;sports:Sports;event tickets:Event Tickets;baskets:Baskets;wine:Wine;misc:Misc;garden:Garden;one per:One Per;restaurant:Restaurant;catering:Catering;floral:Floral & Landscape;spa:Salon & Spa;golf:Golf;meat:Steak & Meat;car wash:Car Wash;droege:Droege's;kr:K & R";
 
 	function alertAddedItemNumber(response,postdata) {
 		// Reference in .navGrid {add} object afterSubmit: property
@@ -43,17 +43,19 @@ $(document).ready(function(){
 			if (data) {
 				$('#item').val(data[1]);
 				$('#value').val(data[2]);
+				$('#itemcat').val(data[3]);
 			}
 		}); 
 		return true;
 	}
 	function ac_item(elem){
-		$(elem).autocomplete('pl/api/ac/item', {minChars: 3, extraParams: {donor: function(){ return $('#donor').val(); }}});
+		$(elem).autocomplete('pl/api/ac/item', {minChars: 3, limit: 20, extraParams: {donor: function(){ return $('#donor').val(); }}});
 		$(elem).result(function(event, data, formatted){
 			if (data) {
 				$('#description').val(data[1]);
 				$('#value').val(data[2]);
 				$('#url').val(data[3]);
+				$('#itemcat').val(data[4]);
 			}
 		}); 
 		return true;
@@ -125,16 +127,16 @@ $(document).ready(function(){
 		serializeGridData: function (postData) { return $.toJSON(postData); },
 		caption: "Items",
 		colModel:[
-			{name:'year',label:'Year',width:30,editable:false},
-			{name:'number',label:'Number',width:30,editable:false},
-			{name:'donor',label:'Donor',width:200,editable:true,editoptions:{size:50,dataInit:ac_donor},editrules:{required:true,custom:true,custom_func:hasFK},formatter:hideFK,unformat:showFK},
+			{name:'year',label:'Year',width:30,editable:false,hidden:true},
+			{name:'number',label:'Number',width:20,editable:false},
+			{name:'donor',label:'Donor',width:150,editable:true,editoptions:{size:50,dataInit:ac_donor},editrules:{required:true,custom:true,custom_func:hasFK},formoptions:{elmsuffix:'(*)'},formatter:hideFK,unformat:showFK},
 			{name:'stockitem',label:'Stock Item',width:100,editable:true,hidden:true,editoptions:{size:50,dataInit:ac_stockitem},editrules:{edithidden:true,required:false,custom:true,custom_func:hasFK},formatter:hideFK,unformat:showFK},
-			{name:'category',label:'Category', width:100,editable:true,edittype:'select',editoptions:{multiple:true,value:categories},formatter:'categoryFmatter'},
-			{name:'item',label:'Item', width:200,editable:true,editoptions:{size:50,dataInit:ac_item},editrules:{required:true}},
+			{name:'item',label:'Item', width:200,editable:true,editoptions:{size:50,dataInit:ac_item},editrules:{required:true},formoptions:{elmsuffix:'(*)'}},
 			{name:'description',label:'Description', width:100,editable:true,hidden:true,edittype:'textarea',editoptions:{rows:4,cols:40},editrules:{edithidden:true}},
-			{name:'value',label:'Value', width:80, align:"right", align:"right",editable:true,editoptions:{size:10},editrules:{required:true,number:true,minValue:0},formatter:'currency',formatoptions:{decimalSeparator:".", thousandsSeparator: ",", decimalPlaces: 0, prefix: "$"}},
+			{name:'value',label:'Value', width:25, align:'right',editable:true,editoptions:{size:10},editrules:{required:true,number:true,minValue:0},formoptions:{elmsuffix:'(*)'},formatter:'currency',formatoptions:{decimalSeparator:".", thousandsSeparator: ",", decimalPlaces: 0, prefix: "$"}},
+			{name:'itemcat',label:'Category', width:50,align:'center',editable:true,edittype:'select',editoptions:{multiple:true,value:categories},formatter:'categoryFmatter'},
 			{name:'advertisement',label:'Advertisement',hidden:true,editable:true,edittype:'textarea',editrules:{edithidden:true},editoptions:{rows:4,cols:40,dataInit:ac_advertisement}},
-			{name:'url',label:'More Info URL', width:100,editable:true,hidden:true,editoptions:{size:50},editrules:{edithidden:true}},
+			{name:'itemurl',label:'More Info URL', width:100,editable:true,hidden:true,editoptions:{size:50},editrules:{edithidden:true}}
 		],
 		cellEdit: true,
 		cellurl: 'pl/api/items/cell',
@@ -151,6 +153,7 @@ $(document).ready(function(){
 		recreateForm: true,
 		altRows: true,
 		rownumbers: true,
+		rownumWidth: 50,
 		scroll: true,
 		rowNum: 50,
 		rowList: [10, 20, 50, 100, 500, 1000, 5000, 10000],
@@ -180,22 +183,19 @@ $(document).ready(function(){
 		{
 			url: "pl/api/items/del",
 			caption: "Delete Item",
-			msg: "Deleted selected items(s)?",
+			msg: "Deleted selected item(s)?",
 			afterSubmit: checkUpdate
 		},
         { 
             url: "pl/api/items/search",
-            caption: "Search Donor",
+            caption: "Search Item",
 			multipleSearch:false
         },
         { 
             url: "pl/api/items/view",
-            caption: "View Item",
+            caption: "View Item"
         }
 	);
-	// Increase column width of the rownumbers column
-	$("#list1_rn").width(50);   
-	$('table#list1 tbody tr td:first-child').width(50);
 });
 </script>
 </head> 

@@ -43,6 +43,7 @@ use base 'CGI::Application';
 use Apache2::RequestIO ();
 use CGI::Application::Plugin::ConfigAuto (qw/cfg cfg_file/);
 use CGI::Application::Plugin::AutoRunmode;
+use CGI::Application::Plugin::Redirect;
 use CGI::Application::Plugin::Session;
 use CGI::Application::Plugin::DBH qw/dbh_config dbh/;
 use CGI::Application::Plugin::AnyTemplate;

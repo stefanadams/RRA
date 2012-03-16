@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" />
-<title>Sequence Items</title>
+<title>Schedule Ads</title>
 
 <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" />
 
@@ -13,7 +13,7 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
-	var baseurl = 'pl/api/items/sequence';
+	var baseurl = 'pl/api/ads/schedule';
 	$( "#sortable0, #sortable1, #sortable2, #sortable3, #sortable4" ).sortable().disableSelection();
 	$( "#sortable0, #sortable1, #sortable2, #sortable3, #sortable4, #sortable9999" ).setTemplateElement("template", null, {runnable_functions: true});
 
@@ -133,15 +133,15 @@ $(document).ready(function(){
 </style>
 </head> 
 <body> 
-	There is one known bug in the item sequencer: when you drag an item to a new tab, the tab information will not recalculate and no sorting will be initiated.  You MUST reorder within the tab that you dragged the item to.
+	There is one known bug in the ad scheduler: when you drag an ad to a new tab, the tab information will not recalculate and no sorting will be initiated.  You MUST reorder within the tab that you dragged the ad to.
 	<div id="tabs">
 		<ul>
-			<li><a href="#tabs-0">Not assigned</a></li>
+			<li><a href="#tabs-0">All nights</a></li>
 			<li><a href="#tabs-1">Night 1</a></li>
 			<li><a href="#tabs-2">Night 2</a></li>
 			<li><a href="#tabs-3">Night 3</a></li>
 			<li><a href="#tabs-4">Night 4</a></li>
-			<li><a href="#tabs-9999">All items</a></li>
+			<li><a href="#tabs-9999">All ads</a></li>
 		</ul>
 		<div id="tabs-0">
 			<ul id="sortable0" class="scroll connectedSortable ui-helper-reset jTemplatesTest">
@@ -164,7 +164,7 @@ $(document).ready(function(){
 			</ul>
 		</div>
 		<div id="tabs-9999">
-			This list is not for sorting, just for showing a full list of items in case you're looking for a specific item.
+			This list is not for sorting, just for showing a full list of ads in case you're looking for a specific ad.
 			<ul id="sortable9999" class="scroll ui-helper-reset jTemplatesTest">
 			</ul>
 		</div>
@@ -173,7 +173,7 @@ $(document).ready(function(){
 	<!-- Template content -->
 	<textarea id="template" style="display:none">
 		{#foreach $T.rows as r}
-			<li id="id_{$T.r.item_id}" class="ui-state-default">{$T.r.item}</li>
+			<li id="id_{$T.r.ad_id}" class="ui-state-default">{$T.r.ad}</li>
 		{#/for}
 	</textarea>
 </body> 

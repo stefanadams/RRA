@@ -18,6 +18,8 @@ sub edit_POST : Runmode {
 	my $self = shift;
 	$self->param('donor_id', $1||'') if $self->param('donor') && $self->param('donor') =~ /:(\d+)$/;
 	$self->param('stockitem_id', $1||'') if $self->param('stockitem') && $self->param('stockitem') =~ /:(\d+)$/;
+	$self->param('url', $self->param('itemurl')||'');
+	$self->param('category', $self->param('itemcat')||'');
 	my @items = qw/category item description value url donor_id stockitem_id/;
 	my ($sql, @bind) = sql_interp 'UPDATE items SET', {map {$_=>$self->param($_)} @items}, 'WHERE', {item_id => $self->param('id')};
 	return $self->to_json({sc=>'false',msg=>"Editing disabled"}) if $self->cfg('NOEDIT');
@@ -32,6 +34,8 @@ sub add_POST : Runmode {
 	my $self = shift;
 	$self->param('donor_id', $1||'') if $self->param('donor') && $self->param('donor') =~ /:(\d+)$/;
 	$self->param('stockitem_id', $1||'') if $self->param('stockitem') && $self->param('stockitem') =~ /:(\d+)$/;
+	$self->param('url', $self->param('itemurl')||'');
+	$self->param('category', $self->param('itemcat')||'');
 	my @items = qw/number category item description value url donor_id stockitem_id scheduled/;
 	my ($sql, @bind) = sql_interp 'INSERT INTO items', {map {$_=>$self->param($_)} @items};
 	return $self->to_json({sc=>'false',msg=>"Editing disabled"}) if $self->cfg('NOADD');

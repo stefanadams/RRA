@@ -1,0 +1,24 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" />
+<title>Backup Database and Application</title>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<style type="text/css">
+	* {
+		font-family: Verdana;
+		font-size: 11px;
+	}
+</style>
+<script type="text/javascript">
+$(document).ready(function(){
+	$.get('pl/backup', function(data) {
+		$('#result1').html(data);
+	});
+});
+</script>
+</head>
+<body>
+	<div id="result1"></div>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" />
+<title>Bellringer Items</title>
+
+<link rel="stylesheet" type="text/css" media="screen" href="css/smoothness/jquery-ui-1.8.16.custom.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="css/jquery.autocomplete.css" />
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="js/i18n/grid.locale-en.js"></script>
+<script type="text/javascript" src="js/jquery.jqGrid.min.js"></script>
+<script type="text/javascript" src="js/jquery.json-2.3.min.js"></script>
+<script type="text/javascript" src="js/jquery.autocomplete.js"></script>
+<script type="text/javascript" src="js/jquery.maskedinput.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	var categories = ":;food:Food;gc:Gift Certificates;travel:Travel;personal care:Personal Care;auto:Auto;apparel:Apparel;sports:Sports;event tickets:Event Tickets;baskets:Baskets;wine:Wine;misc:Misc;garden:Garden;one per:One Per;restaurant:Restaurant;catering:Catering;floral:Floral & Landscape;spa:Salon & Spa;golf:Golf;meat:Steak & Meat;car wash:Car Wash;droege:Droege's;kr:K & R";
+
+	// Reference in .jqGrid {options} colModel {name:...} property with formatter:'___Fmatter' property
+	function hideFK(cellvalue, options, rowdata) {
+		if ( cellvalue ) {
+			var re = /^(.*?):([0-9]+)$/.exec(cellvalue);
+			return re[1] + '<span style="display: none">:' + re[2] + '</span>';
+		}
+		return '';
+	}
+	function showFK(cellvalue, options) {
+		if ( cellvalue ) return cellvalue;
+		return '';
+	}
+	function hasFK(value, colname) {
+		var RE = /:[0-9]+$/;
+		if ( RE.test(value) ) return [true,""];
+		return [false,colname+": Please make a selection from the suggestion menu"];
+	}
+
+	function checkUpdate(response,postdata) {  
+		// Reference in .navGrid {add/edit/del} object afterSubmit: property
+		var json=response.responseText;
+		var result=eval("("+json+")");
+		return [result.sc,result.msg,null];
+	}
+
+	jQuery.extend($.fn.fmatter , {
+			// Reference in .jqGrid {options} colModel {name:...} property with formatter:'___Fmatter' property
+			categoryFmatter : function(cellvalue, options, rowdata) {
+					if ( cellvalue ) return cellvalue.charAt(0).toUpperCase() + cellvalue.slice(1);
+					return '&nbsp;';
+			}
+	});
+
+	$("#list1").jqGrid({
+		url: 'pl/api/stockbellringers',
+		postData: {debug: 1},
+		mtype: 'POST',   
+		datatype: 'json',
+		jsonReader: {repeatitems: false, id: "stockbellringer_id"},
+		ajaxGridOptions: { contentType: "application/json; charset=utf-8" },  
+		serializeGridData: function (postData) { return $.toJSON(postData); },
+		caption: "Bellringer Items",
+		colModel:[
+			{name:'stockbellringer',label:'Bellringer Item', width:200,editable:true,editoptions:{size:50},editrules:{required:true},formoptions:{elmsuffix:'(*)'}},
+		],
+		cellEdit: true,
+		cellurl: 'pl/api/stockbellringers/cell',
+		recreateForm: true,
+		altRows: true,
+		rownumbers: true,
+		rownumWidth: 50,
+		scroll: true,
+		rowNum: 50,
+		rowList: [10, 20, 50, 100, 500, 1000, 5000, 10000],
+		pager: $('#pager1'),
+		sortname: 'stockbellringer_id',
+		viewrecords: true,
+		height: "75\%",
+		autowidth: true
+	}).navGrid('#pager1',
+		{edit:true,add:true,del:true},
+		// {edit}, {add}, {del}, {search}, {view}
+		{
+			url: "pl/api/stockbellringers/edit",
+			editCaption: "Edit Bellringer Item",
+			width: 700,
+			closeOnEscape: true,
+			//closeAfterEdit: true,
+			afterSubmit: checkUpdate
+		},
+		{
+			url: "pl/api/stockbellringers/add",
+			addCaption: "Add Bellringer Item",
+			width: 700,
+			closeOnEscape: true,
+			afterSubmit: checkUpdate
+		},
+		{
+			url: "pl/api/stockbellringers/del",
+			caption: "Delete Bellringer Item",
+			msg: "Deleted selected Bellringer item(s)?",
+			afterSubmit: checkUpdate
+		},
+        { 
+            url: "pl/api/stockbellringers/search",
+            caption: "Search Bellringer Item",
+			multipleSearch:false
+        },
+        { 
+            url: "pl/api/stockbellringer/view",
+            caption: "View Bellringer Item"
+        }
+	);
+});
+</script>
+</head> 
+<body> 
+<table id="list1" class="scroll"></table> 
+<div id="pager1" class="scroll" style="text-align:center;" />
+</body> 
+</html>

@@ -151,55 +151,6 @@ sub bid_POST : Runmode { # Authen Authz('operators') {
 	return $self->to_json({error=>0});
 }
 
-sub ad_GET : Runmode { # {
-	my $self = shift;
-
-	my $adsroot = "$ENV{ASSETS}/ads";
-	print STDERR "Ads directory does not exist: $adsroot\n" unless -d $adsroot;
-
-	return;
-	# ALTER TABLE washrotary.ads ADD COLUMN rotation int and modify code to only update display count when the file exists and to rotate based on rotate and not display
-	# Should update rotate every attempt for ad selection, only display when actually displayable and count when clicked
-	# When an ad can't be found, instead of display the default, go on to the next (increased failed rotate but not display)
-	# So, display becomes rotate and a new display is added that works like click
-	my $ads = $self->dbh->selectrow_hashref("SELECT count(*) count FROM ads_vw");
-	$ads = $ad->{count};
-	if ( $self->param('ad_id') ) {
-		my $ad = $self->dbh->selectrow_hashref("SELECT url FROM ads_vw WHERE ad_id = ?", undef, $self->param('ad_id'));
-		$self->dbh->do("INSERT INTO ad_count (ad_id, year, night) VALUES (?, auction_year(), auction_night()) ON DUPLICATE KEY UPDATE click=click+1", undef, $self->param('ad_id')) if $self->param('auction') eq 'Live' && $ad->{url};
-		return $self->redirect($ad->{url}||'http://www.washingtonrotary.com');
-	} else {
-		my $ad = {};
-		foreach ( 1..$ads ) {
-			$ad = $self->dbh->selectrow_hashref("SELECT ads_vw.ad_id ad_id, ads_vw.donor_id donor_id FROM ads_vw LEFT JOIN ad_count USING (ad_id) ORDER BY rotate ASC LIMIT 1") if $self->param('auction') eq 'Live';
-			$ad = $self->dbh->selectrow_hashref("SELECT ads_vw.ad_id ad_id, ads_vw.donor_id donor_id FROM ads_vw LEFT JOIN ad_count USING (ad_id) ORDER BY RAND() LIMIT 1") if ref $ad ne 'HASH' || $self->param('auction') eq 'Dev'; # This should actually RAND() from ads; ad_count may be empty!
-			$self->dbh->do("INSERT INTO ad_count (ad_id, year, night) VALUES (?, auction_year(), auction_night()) ON DUPLICATE KEY UPDATE rotate=rotate+1", undef, $ad->{ad_id});
-			$ad->{img} = (glob("$adsroot/".$self->param('year')."/$ad->{donor_id}-$ad->{ad_id}.*"))[0] || (glob("$adsroot/".$self->param('year')."/$ad->{donor_id}.*"))[0] if $ad->{donor_id} && $ad->{ad_id};
-			$ad->{url} = "api/ad/$ad->{ad_id}" if $ad->{ad_id};
-			$ad->{url} && $ad->{img} && -e $ad->{img} && -f _ && -r _ and last;
-		}
-		if ( $ad->{url} && $ad->{img} && -e $ad->{img} && -f _ && -r _ ) {
-			$self->dbh->do("INSERT INTO ad_count (ad_id, year, night) VALUES (?, auction_year(), auction_night()) ON DUPLICATE KEY UPDATE display=display+1", undef, $ad->{ad_id}) if $self->param('auction') eq 'Live' && $ad->{ad_id};
-		} else {
-			$ad = {img=>"$adsroot/washrotary.jpg",url=>'http://washingtonrotary.com'};
-		}
-		return $self->to_json({map { $_ => $ad->{$_} } qw/url img/});
-	}
-#	# eval { } or $@ && return a Rotary Ad / Rotary Link
-#	my $ad = {};
-#	if ( $self->param('auction') eq 'Live' ) {
-#		$ad = $self->dbh->selectrow_hashref("SELECT ads_vw.ad_id ad_id, ads_vw.donor_id donor_id FROM ads_vw LEFT JOIN ad_count USING (ad_id) WHERE year=auction_year() AND night=auction_night() ORDER BY display ASC LIMIT 1");
-#		unless ( ref $ad eq 'HASH' ) {
-#			$ad = $self->dbh->selectrow_hashref("SELECT ads_vw.ad_id ad_id, ads_vw.donor_id donor_id FROM ads_vw LEFT JOIN ad_count USING (ad_id) WHERE year=auction_year() AND night=auction_night() ORDER BY RAND() LIMIT 1");
-#		}
-#	} elsif ( $self->param('auction') eq 'Dev' ) {
-#		$ad = $self->dbh->selectrow_hashref("SELECT ads_vw.ad_id ad_id, ads_vw.donor_id donor_id FROM ads_vw LEFT JOIN ad_count USING (ad_id) WHERE year=auction_year() AND night=auction_night() ORDER BY RAND() LIMIT 1");
-#	}
-#	$ad->{file} = (glob("ads/".$self->param('year')."/$ad->{donor_id}-$ad->{ad_id}.*"))[0] || (glob("ads/".$self->param('year')."/$ad->{donor_id}.*"))[0] if $ad->{donor_id};
-#	$self->dbh->do("INSERT INTO ad_count (ad_id, year, night) VALUES (?, auction_year(), auction_night()) ON DUPLICATE KEY UPDATE display=display+1", undef, $ad->{ad_id}) if $self->param('live') eq 'Live' && $ad->{ad_id};
-#	return $ad;
-}
-
 # jqGrid colModel editoptions dataUrl dictates that the response must be HTML
 sub buildselect_GET : Runmode { #Ajax Authen Authz('admins') {
 	my $self = shift;
@@ -237,11 +188,17 @@ sub ac_GET : Runmode { # Ajax
 		case 'donor' {
 			($sql, @bind) = sql_interp 'SELECT ac FROM ac_donor_vw WHERE donor LIKE',\"$q%",'OR', {donor_id=>$q}, 'LIMIT', \$limit;
 		}
+		case 'advertiser' {
+			($sql, @bind) = sql_interp 'SELECT ac FROM ac_advertiser_vw WHERE advertiser LIKE',\"$q%",'OR', {advertiser_id=>$q}, 'LIMIT', \$limit;
+		}
 		case 'item_stockitem' {
 			($sql, @bind) = sql_interp 'SELECT ac FROM ac_item_stockitem_vw WHERE stockitem LIKE',\"%$q%",'LIMIT', \$limit;
 		}
 		case 'item' {
 			($sql, @bind) = sql_interp 'SELECT ac FROM ac_item_vw WHERE',{number=>$q},'OR item LIKE',\"%$q%",'OR donor LIKE',\"$q%",'OR',{donor_id=>$q},'OR',{item_id=>$q},'LIMIT', \$limit;
+		}
+		case 'ad' {
+			($sql, @bind) = sql_interp 'SELECT ac FROM ac_ad_vw WHERE',{number=>$q},'OR ad LIKE',\"%$q%",'OR advertiser LIKE',\"$q%",'OR',{advertiser_id=>$q},'OR',{ad_id=>$q},'LIMIT', \$limit;
 		}
 		case 'advertisement' {
 			($sql, @bind) = sql_interp 'SELECT ac FROM ac_advertisement_vw WHERE',{donor_id=>$q},'OR advertisement LIKE',\"%$q%",'LIMIT', \$limit;

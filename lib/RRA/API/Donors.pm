@@ -16,6 +16,8 @@ sub cell_POST : Runmode {
 
 sub edit_POST : Runmode {
 	my $self = shift;
+	$self->param('url', $self->param('donorurl')||'');
+	$self->param('category', $self->param('donorcat')||'');
 	my ($sql, @bind) = sql_interp 'UPDATE donors SET', {map {$_=>$self->param($_)} $self->param('celname')}, 'WHERE', {donor_id=>$self->param('id')};
 	return $self->to_json({sc=>'false',msg=>"Editing disabled"}) if $self->cfg('NOEDIT');
 	$self->dbh->do($sql, {}, @bind) or return $self->to_json({sc=>'false',msg=>"Error: ".$self->dbh->errstr});
@@ -24,6 +26,8 @@ sub edit_POST : Runmode {
 
 sub add_POST : Runmode {
 	my $self = shift;
+	$self->param('url', $self->param('donorurl')||'');
+	$self->param('category', $self->param('donorcat')||'');
 	my @donor = qw/donor_id chamberid phone donor category contact1 contact2 address city state zip email url advertisement solicit comments rotarian_id/;
 	my ($sql, @bind) = sql_interp 'INSERT INTO donors', {map {$_=>$self->param($_)} @donor};
 	return $self->to_json({sc=>'false',msg=>"Editing disabled"}) if $self->cfg('NOADD');

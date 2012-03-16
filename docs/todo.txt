@@ -5,5 +5,20 @@ Manage Items
 Edit advertisement, need to refresh the page for it to be recognized for subsequent items.
 
 Sequence Items
-Running total of # of items and total value
+Lock Seq link
+When locked, when seq attempted, give error message
+Allow moving to Not Assigned
 
+Manage Winners
+Assign Bellringer
+Mark as Contacted
+
+Manage Bidders
+By Item or All Together
+
+Clear Bids
+All Items or Single Item Or Single Item Last Bid
+
+Manage Bellringers
+
+Authentication and Authorization

@@ -27,6 +27,7 @@ sub sequence_POST : Runmode { #: Runmode Authen Authz('admins') {
 	my $night = $self->param('dispatch_url_remainder');
 	my @item_id = map { /_(\d+)$/; $1 } @{$self->param('item_id')};
 	my ($sql, @bind) = sql_interp 'UPDATE items, auctions SET scheduled=cast(start AS date),seq = FIND_IN_SET(item_id, ', \join(',', @item_id), ') WHERE auctions.year=auction_year() AND', {night=>$night}, 'AND item_id IN', \@item_id;
+	return $self->to_json({sc=>'false',msg=>"Sequencing Disabled"}) if $self->cfg('NOSEQ');
 	return $self->to_json({sc=>'false',msg=>"Editing disabled"}) if $self->cfg('NOEDIT');
 	$self->dbh->do($sql, {}, @bind) or return $self->to_json({sc=>'false',msg=>"Error: ".$self->dbh->errstr});
 #return $self->to_json({sc=>'true',msg=>""});

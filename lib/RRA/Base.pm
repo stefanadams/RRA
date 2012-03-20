@@ -131,11 +131,11 @@ sub cgiapp_prerun {
 	if ( $DATA->{me} = $ENV{REQUEST_URI} ) {
 		$DATA->{me} =~ s!/$_$!! if local $_ = $self->param('dispatch_url_remainder');
 	}
+	$self->param('t0', [gettimeofday]);
+
 	$self->param($_, $DATA->{$_}) foreach keys %{$DATA};
 
-	print STDERR Dumper($DATA);
-
-	$self->param('t0', [gettimeofday]);
+	#print STDERR Dumper($DATA);
 }
 
 sub cgiapp_postrun {
@@ -239,14 +239,16 @@ sub login_before_forbid : Runmode {
 	}
 }
 
-sub about_GET : Runmode RequireAjax {
+sub about {
 	my $self = shift;
 	my ($dbname) = ($self->dbh->{Name} =~ /^([^;]+)/);
-	return $self->to_json({
+	return {
 		name => 'Washington Rotary Radio Auction',
 		version => $VERSION,
 		database => $dbname,
 		dev => $dbname =~ /_dev$/ ? 1 : 0,
+		time => join(' - ', $$, scalar localtime),
+		rm_time => tv_interval($self->param('t0'), [gettimeofday]),
 		username => $self->authen->username,
 		year => $self->param('year'),
 		night => $self->param('night'),
@@ -254,21 +256,13 @@ sub about_GET : Runmode RequireAjax {
 		year_next => $self->param('year_next') || undef,
 		night_next => $self->param('night_next') || undef,
 		date_next => $self->param('date_next') || undef,
- 		listen => {
-			radio => [
-				{name => 'KFAV FM 99.9', link => undef},
-				{name => 'KLPW AM 1220', link => 'http://lightningstream.surfernetwork.com/Media/player/view/klpw4.asp?call=klpw'},
-			]
-		},
-		bid => {
-			chat => [
-				{name => 'Web Chat', link => 'http://chat.washingtonrotary.com/client.php?locale=en&style=simplicity', id=>"mibew"},
-			],
-			phone => [
-				'877-707-2345',
-			],
-		},
-	});
+		play => $self->cfg('PLAY'),
+	};
+}
+
+sub about_GET : Runmode RequireAjax {
+	my $self = shift;
+	return $self->to_json($self->about);
 }
 
 ######

@@ -25,20 +25,22 @@ $(document).ready(function(){
 </head>
 <body>
 
+		[% about = c.about %]
+		[% IF about.username %]Logged in as [% about.username %][% END %]
 		<div id="headergroup">
 			<div id="header">
 <table live="[% c.param('live') %]" user="[% c.auth.username %]" [% IF c.authz.authorize('admins') %]admin="admin"[% END %]>
 	<tr>
 		<td class="mast">
             <table id="mast">
-                <tr><td class="title">Washington Rotary Radio Auction [% IF c.param('year') %]<span class="year">[% c.param('year') %]</span>[% END %][% IF c.param('year') && c.param('night') %], [% END %][% IF c.param('night') %]Night <span class="night">[% c.param('night') %]</span>[% END %]</td></tr>
+                <tr><td class="title">Washington Rotary Radio Auction [% IF about.year %]<span class="year">[% about.year %]</span>[% END %][% IF about.year && about.night %], [% END %][% IF about.night %]Night <span class="night">[% about.night %]</span>[% END %]</td></tr>
                 <tr>
                     <td class="play">
                         <span class="listen">Listen:
                             <span class="radio">
-                            [% FOREACH station IN listen.radio %]
+                            [% FOREACH station IN about.play.listen.radio %]
                                 [% IF station.link %]
-                                    <span class="nolive"><label class="mast hidden">[% station.name %]</label><a class="mast" href="javascript:callLTR='KLPW';grptuner='';file='';title='';ListenLive();" target="_self">[% station.name %]</a></span>
+                                    <span class="nolive"><label class="mast hidden"><a class="mast" href="[% station.link %]" target="blank">[% station.name %]</a></label></span>
                                 [% ELSE %]
                                     [% station.name %]
                                 [% END %]
@@ -48,18 +50,18 @@ $(document).ready(function(){
                             [% END %]
                             </span>
                         </span>
-                        <img class="arrowsep" src="images/right_arrow_button.gif" />
+                        <img class="arrowsep" src="img/right_arrow_button.gif" />
                         <span class="bid">Bid:
-                            [% FOREACH phone IN bid.phone %]
+                            [% FOREACH phone IN about.play.bid.phone %]
                                 [% phone %]
                                 [% UNLESS loop.last %]
                                     <span class="choicesep">/</span>
                                 [% END %]
                             [% END %]
                             <span class="choicesep">/</span>
-                            [% FOREACH online IN bid.chat %]
+                            [% FOREACH online IN about.play.bid.chat %]
                                 [% IF online.name %]
-                                    <span class="nolive"><label class="mast hidden">[% online.name %]</label><a id="[% online.id %]" class="mast" href="[% online.link %]" target="new">[% online.name %]</a></span>
+                                    <span class="nolive"><label class="mast hidden"><a id="[% online.id %]" class="mast" href="[% online.link %]" target="new">[% online.name %]</a></label></span>
                                 [% ELSE %]
                                     [% online.name %]
                                 [% END %]
@@ -68,7 +70,7 @@ $(document).ready(function(){
                                 [% END %]
                             [% END %]
                         </span>
-                        <img class="arrowsep" src="images/right_arrow_button.gif" />
+                        <img class="arrowsep" src="img/right_arrow_button.gif" />
                         <span class="pay">Pay:
                             <a id="paypal" class="modal">PayPal</a>
                         </span>

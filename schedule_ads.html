@@ -11,6 +11,8 @@
 <script type="text/javascript" src="js/jquery-jtemplates.js"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
 
+<script type="text/javascript" src="js/env.js"></script>
+
 <script type="text/javascript">
 $(document).ready(function(){
 	var baseurl = 'pl/api/ads/schedule';
@@ -133,6 +135,8 @@ $(document).ready(function(){
 </style>
 </head> 
 <body> 
+	<div id="loggedin"></div>
+	<a href="bookmarks.html">Back to Bookmarks</a>
 	There is one known bug in the ad scheduler: when you drag an ad to a new tab, the tab information will not recalculate and no sorting will be initiated.  You MUST reorder within the tab that you dragged the ad to.
 	<div id="tabs">
 		<ul>

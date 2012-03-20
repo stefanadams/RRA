@@ -62,7 +62,7 @@ sub dispatch_args {{
 		'xls/:rm'			=> { app => 'XLS' },
 		'login'				=> { app => 'Base', rm => 'login' },
 		'logout'			=> { app => 'Base', rm => 'logout' },
-		'env'				=> { app => 'Base', rm => 'env' },
+		'about'				=> { app => 'Base', rm => 'about' },
 		'bookmarks'			=> { app => 'Bookmarks', rm => 'bookmarks' },
 		'backup'			=> { app => 'Backup', rm => 'backup' },
 		'template/*'			=> { app => 'Template', rm => 'template' },

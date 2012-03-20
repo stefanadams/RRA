@@ -1,5 +1,7 @@
 package RRA::Base;
 
+our $VERSION = '0.01';
+
 our %users = (
 	#username => 'password',
 	admin => 'harris',
@@ -122,6 +124,17 @@ sub cgiapp_init {
 
 sub cgiapp_prerun {
 	my $self = shift;
+
+	my ($year, $night, $live) = $self->dbh->selectrow_array('SELECT * FROM current_auction_vw');
+	$self->param('year', $year);
+	$self->param('night', $night);
+	$self->param('live', $live);
+	unless ( $live ) {
+		my ($year, $night, $date) = $self->dbh->selectrow_array('SELECT * FROM next_auction_vw');
+		$self->param('year_next', $year);
+		$self->param('night_next', $night);
+		$self->param('date_next', $date);
+	}
 
 	# Split contact into two contacts
 	if ( $self->query->param('contact') ) {
@@ -261,9 +274,36 @@ sub login_before_forbid : Runmode {
 	}
 }
 
-sub env_GET : Runmode {
+sub about_GET : Runmode RequireAjax {
 	my $self = shift;
-	return $self->to_json({username=>$self->authen->username});
+	my ($dbname) = ($self->dbh->{Name} =~ /^([^;]+)/);
+	return $self->to_json({
+		name => 'Washington Rotary Radio Auction',
+		version => $VERSION,
+		database => $dbname,
+		dev => $dbname =~ /_dev$/ ? 1 : 0,
+		username => $self->authen->username,
+		year => $self->param('year'),
+		night => $self->param('night'),
+		live => $self->param('live'),
+		year_next => $self->param('year_next') || undef,
+		night_next => $self->param('night_next') || undef,
+		date_next => $self->param('date_next') || undef,
+ 		listen => {
+			radio => [
+				{name => 'KFAV FM 99.9', link => undef},
+				{name => 'KLPW AM 1220', link => 'http://lightningstream.surfernetwork.com/Media/player/view/klpw4.asp?call=klpw'},
+			]
+		},
+		bid => {
+			chat => [
+				{name => 'Web Chat', link => 'http://chat.washingtonrotary.com/client.php?locale=en&style=simplicity', id=>"mibew"},
+			],
+			phone => [
+				'877-707-2345',
+			],
+		},
+	});
 }
 
 ######

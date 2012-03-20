@@ -52,7 +52,7 @@ $(document).ready(function(){
 	// process the template
 	$("#result1").processTemplateURL("pl/bookmarks", null, {
 		type: 'GET',
-	}).fail(function(){
+	}).ajaxError(function(){
 		window.location = "login.html?referer=bookmarks.html";
 	});
 });
@@ -60,6 +60,7 @@ $(document).ready(function(){
 </head>
 <body>
 	<div id="loggedin"></div>
+	<a href="bookmarks.html">Back to Bookmarks</a>
 	<!-- Template content -->
 	<textarea id="template" style="display:none">
 		{#foreach $T.rows as r}

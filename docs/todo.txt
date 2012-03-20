@@ -3,22 +3,52 @@ Still to do on this page: drag a Rotarian from one Leader grouping to another.
 
 Manage Items
 Edit advertisement, need to refresh the page for it to be recognized for subsequent items.
+Remove highbid_id, change to a _vw_ss
 
 Sequence Items
 Lock Seq link
 When locked, when seq attempted, give error message
 Allow moving to Not Assigned
+Only show items Ready
 
 Manage Winners
 Assign Bellringer
 Mark as Contacted
+Unsell
 
 Manage Bidders
 By Item or All Together
 
-Clear Bids
+Clear Bids and Reset Items
 All Items or Single Item Or Single Item Last Bid
+Reset = scheduled, timer, sold, cleared, contacted = NULL
 
 Manage Bellringers
 
-Authentication and Authorization
+#Authentication and Authorization
+#A static html page that calls Ajax which requires authen/authz but fail result in those Ajax calls being 404.  Need JS handling of the 404s -- redirect to login page.
+#Logins happen by presence of authen_username and authen_password parameters.
+#Logouts happen by presence of authen_logout parameter.
+#Login/Logout runmodes are necessary for generating the HTML, NOT for actually performing the login/logout.
+#How to redirect an anonymous user on any page nicely to a login page?
+#Redirect to login.html on logout
+
+RequireAjax
+Rather than croak, make the runmode 404
+
+#RequireSSL
+#Doesn't play well with AutoRunmode (I guess?), copy the code from RequireAjax (copied from AutoRunmode (I think?))
+#Need to get SSL on rra.
+#RequireSSL on login page only: That is the login form needs to POST to SSL (So really, RequireSSL isn't needed anywhere)
+
+----------
+
+Show All
+
+Show Recent Years
+
+Show This Year Only, All/No nights
+
+Show This Year, Tonight only
+
+Show This Year, All nights up to an including tonight

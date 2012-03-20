@@ -4,44 +4,44 @@ use base 'RRA::Base';
 use Switch;
 use SQL::Interp ':all';
 
-sub resttest_GET : Runmode { # Authen Authz('auctioneer') {
+sub resttest_GET : Runmode RequireAjax Authen Authz('auctioneer') {
 	my $self = shift;
 	return 'resttest_GET: '.$self->authen->username;
 }
-sub resttest_POST : Runmode { # Authen Authz('operators') {
+sub resttest_POST : Runmode RequireAjax Authen Authz('operators') {
 	my $self = shift;
 	return 'resttest_POST: '.$self->authen->username;
 }
-sub resttest_DELETE : Runmode { # Authen Authz('auctioneers') {
+sub resttest_DELETE : Runmode RequireAjax Authen Authz('auctioneers') {
 	my $self = shift;
 	return 'resttest_DELETE: '.$self->authen->username;
 }
-sub resttest_PUT : Runmode { # Authen Authz('backend') {
+sub resttest_PUT : Runmode RequireAjax Authen Authz('backend') {
 	my $self = shift;
 	return 'resttest_PUT: '.$self->authen->username;
 }
 
-sub bidding_GET : Runmode { # {
+sub bidding_GET : Runmode RequireAjax {
 	my $self = shift;
 	return $self->dbx_json("SELECT item_id id,number,itemurl,name,description,value,highbid,startbid,minbid,bidder,bellringer,timermin timer,donor,donorurl,message FROM items_vw WHERE (status='Bidding' OR status='Sold') ORDER BY number");
 }
 
-sub ondeck_GET : Runmode { # {
+sub ondeck_GET : Runmode RequireAjax {
 	my $self = shift;
 	return $self->dbx_json("SELECT item_id id,number,itemurl,name,description,value,donor,donorurl,message FROM items_vw WHERE status='OnDeck' ORDER BY number");
 }
 
-sub start_GET : Runmode { # Authen Authz('admins') {
+sub start_GET : Runmode RequireAjax Authen Authz('admins') {
 	my $self = shift;
 	return $self->dbx_json("SELECT item_id id,number,itemurl,name,description,value,donor,donorurl FROM items_vw WHERE status='Ready' ORDER BY seq LIMIT 10");
 }
 
-sub timer_GET : Runmode { # Authen Authz('admins') {
+sub timer_GET : Runmode RequireAjax Authen Authz('admins') {
 	my $self = shift;
 	return $self->dbx_json("SELECT item_id id,number,itemurl,name,description,value,highbid,startbid,minbid,bidage,bidder,auctioneer,bellringer,cansell,timermin timer,donor,donorurl,notify,auctioneer FROM items_vw WHERE status='Bidding' ORDER BY auctioneer,seq");
 }
 
-sub auction_GET : Runmode { # Authen Authz('auctioneers') {
+sub auction_GET : Runmode RequireAjax Authen Authz('auctioneers') {
 	my $self = shift;
 	return $self->to_json({
 		bidding => $self->dbx("SELECT item_id id,number,itemurl,name,description,value,highbid,bidder,donor,donorurl,message,notify,timermin timer,status,bellringer FROM items_vw WHERE (status='Bidding' OR status='Sold') AND auctioneer=? ORDER BY number", undef, $api{'auctioneer'}),
@@ -49,28 +49,28 @@ sub auction_GET : Runmode { # Authen Authz('auctioneers') {
 	});
 }
 
-sub placebids_GET : Runmode { # Authen Authz('operators') {
+sub placebids_GET : Runmode RequireAjax Authen Authz('operators') {
 	my $self = shift;
 	return $self->dbx_json("SELECT item_id id,number,itemurl,name,description,value,highbid,startbid,minbid,bellringer,timermin timer FROM items_vw WHERE status='Bidding' ORDER BY number");
 }
 
-sub dev_POST : Runmode { # Authen Authz('root') {
+sub dev_POST : Runmode RequireAjax Authen Authz('root') {
 	my $self = shift;
 	$self->dbh->do("INSERT INTO auctions (year, night, start, end, live) VALUES (?, ?, now(), date_add(now(), INTERVAL ? HOUR), 0)", undef, (((localtime)[5])+1900, 1, $self->param('hours'))) if $self->param('hours');
 	return $self->to_json({error=>0});
 }
-sub dev_DELETE : Runmode { # Authen Authz('root') {
+sub dev_DELETE : Runmode RequireAjax Authen Authz('root') {
 	my $self = shift;
 	$self->dbh->do("DELETE FROM auctions WHERE year=auction_year() AND live=0");
 	return $self->to_json({error=>0});
 }
 
-sub alert_GET : Runmode { # {
+sub alert_GET : Runmode RequireAjax {
 	my $self = shift;
 	my $alert = $self->param('alert') || $self->authen->username || 'public';
 	return $self->to_json($self->dbh->selectrow_hashref('SELECT msg FROM alerts WHERE alert=? LIMIT 1', {Slice=>{}}, $alert));
 }
-sub alert_POST : Runmode { # Authen Authz('admins') {
+sub alert_POST : Runmode RequireAjax Authen Authz('admins') {
 	my $self = shift;
 	my $alert = $self->param('alert') || $self->authen->username || 'public';
 	my $msg = $self->query->param('msg');
@@ -78,13 +78,13 @@ sub alert_POST : Runmode { # Authen Authz('admins') {
 	return $self->to_json({error=>0});
 }
 
-sub clearlastbid_DELETE : Runmode { # Authen Authz('admins') {
+sub clearlastbid_DELETE : Runmode RequireAjax Authen Authz('admins') {
 	my $self = shift;
 	$self->dbh->do("DELETE FROM bids_vw WHERE item_id=? ORDER BY bid DESC LIMIT 1", undef, $self->param('item'));
 	return $self->to_json({error=>0});
 }
 
-sub resetitem_DELETE : Runmode { # Authen Authz('admins') {
+sub resetitem_DELETE : Runmode RequireAjax Authen Authz('admins') {
 	my $self = shift;
 	if ( $self->param('item') eq 'all' ) {
 		# Need a transaction
@@ -101,19 +101,19 @@ sub resetitem_DELETE : Runmode { # Authen Authz('admins') {
 	return $self->to_json({error=>0});
 }
 
-sub assign : Runmode { # Authen Authz('admins') {
+sub assign : Runmode RequireAjax Authen Authz('admins') {
 	my $self = shift;
 	$self->dbh->do("UPDATE items_vw SET auctioneer=? WHERE item_id=?", undef, ($self->param('auctioneer'), $self->param('item')));
 	return $self->to_json({error=>0});
 }
 
-sub notify : Runmode { # Authen Authz('admins') {
+sub notify : Runmode RequireAjax Authen Authz('admins') {
 	my $self = shift;
 	$self->dbh->do("UPDATE items_vw SET notify = CONCAT_WS(',',notify,?) WHERE item_id=?", undef, $self->param('notify'), $self->param('item'));
 	return $self->to_json({error=>0});
 }
 
-sub respond : Runmode { # Authen Authz('auctioneers') {
+sub respond : Runmode RequireAjax Authen Authz('auctioneers') {
 	my $self = shift;
 	if ( $self->param('respond') eq 'start' ) {
 		$self->dbh->do("UPDATE items_vw SET started=now() WHERE item_id=?", undef, $self->param('item'));
@@ -132,18 +132,18 @@ sub respond : Runmode { # Authen Authz('auctioneers') {
 	return $self->to_json({error=>0});
 }
 
-sub newbidder_POST : Runmode { # Authen Authz('operators') {
+sub newbidder_POST : Runmode RequireAjax Authen Authz('operators') {
 	my $self = shift;
 	$self->dbh->do("INSERT INTO bidders (BidderID, year, Phone, Name) VALUES (null, auction_year(), ?, ?)", undef, ($self->param('phone'), $self->param('name')));
 	return $self->to_json({error=>0});
 }
 
-sub bidder_id_GET : Runmode { # {
+sub bidder_id_GET : Runmode RequireAjax {
 	my $self = shift;
 	return $self->dbx_json("SELECT bidder_id FROM bidders WHERE username=? LIMIT 1", undef, $self->param('bidder') || $self->authen->username);
 }
 
-sub bid_POST : Runmode { # Authen Authz('operators') {
+sub bid_POST : Runmode RequireAjax Authen Authz('operators') {
 	my $self = shift;
 	# Need a transaction
 	$self->dbh->do("INSERT INTO bidhistory (BidNum, year, BidderID, ItemID, Amount, bhTimeStamp) VALUES (null, auction_year(), ?, ?, ?, now())", undef, ($self->param('bidder_id'), $self->param('item'), $self->param('bid')));
@@ -152,7 +152,7 @@ sub bid_POST : Runmode { # Authen Authz('operators') {
 }
 
 # jqGrid colModel editoptions dataUrl dictates that the response must be HTML
-sub buildselect_GET : Runmode { #Ajax Authen Authz('admins') {
+sub buildselect_GET : Runmode RequireAjax Authen Authz('admins') {
 	my $self = shift;
 	my ($for) = split /\//, $self->param('dispatch_url_remainder');
 
@@ -171,7 +171,7 @@ sub buildselect_GET : Runmode { #Ajax Authen Authz('admins') {
 	return "<select>\n<option value=\"\" />\n".join("\n", map { "<option value=\"$_->[0]\">$_->[1]</option>" } @$select)."\n</select>\n";
 }
 
-sub ac_GET : Runmode { # Ajax
+sub ac_GET : Runmode RequireAjax {
 	my $self = shift;
 	my ($for) = split /\//, $self->param('dispatch_url_remainder');
  

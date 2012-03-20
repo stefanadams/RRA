@@ -6,7 +6,7 @@ use warnings;
 use base 'RRA::Base';
 use SQL::Interp ':all';
 
-sub cell_POST : Runmode {
+sub cell_POST : Runmode RequireAjax Authen Authz(':admins') {
 	my $self = shift;
 	my ($sql, @bind) = sql_interp 'UPDATE items SET', {map {$_=>$self->param($_)} $self->param('celname')}, 'WHERE', {item_id => $self->param('id')};
 	return $self->to_json({sc=>'false',msg=>"Editing disabled"}) if $self->cfg('NOEDIT');
@@ -14,7 +14,7 @@ sub cell_POST : Runmode {
 	return $self->to_json({sc=>'true',msg=>""});
 }
 
-sub edit_POST : Runmode {
+sub edit_POST : Runmode RequireAjax Authen Authz(':admins') {
 	my $self = shift;
 	$self->param('donor_id', $1||'') if $self->param('donor') && $self->param('donor') =~ /:(\d+)$/;
 	$self->param('stockitem_id', $1||'') if $self->param('stockitem') && $self->param('stockitem') =~ /:(\d+)$/;
@@ -30,7 +30,7 @@ sub edit_POST : Runmode {
 	return $self->to_json({sc=>'true',msg=>""});
 }
 
-sub add_POST : Runmode {
+sub add_POST : Runmode RequireAjax Authen Authz(':admins') {
 	my $self = shift;
 	$self->param('donor_id', $1||'') if $self->param('donor') && $self->param('donor') =~ /:(\d+)$/;
 	$self->param('stockitem_id', $1||'') if $self->param('stockitem') && $self->param('stockitem') =~ /:(\d+)$/;
@@ -47,7 +47,7 @@ sub add_POST : Runmode {
 	return $self->to_json({sc=>'true',msg=>"",number=>$number});
 }
 
-sub del_POST : Runmode {
+sub del_POST : Runmode RequireAjax Authen Authz(':admins') {
 	my $self = shift;
 	my ($sql, @bind) = sql_interp 'DELETE FROM items WHERE', {item_id => $self->param('id')};
 	return $self->to_json({sc=>'false',msg=>"Editing disabled"}) if $self->cfg('NODEL');
@@ -55,15 +55,15 @@ sub del_POST : Runmode {
 	return $self->to_json({sc=>'true',msg=>""});
 }
 
-sub search_POST : Runmode {
+sub search_POST : Runmode RequireAjax Authen Authz(':admins') {
 	my $self = shift;  
 }
  
-sub view_POST : Runmode {
+sub view_POST : Runmode RequireAjax Authen Authz(':admins') {
 	my $self = shift;
 }
 
-sub items_POST : StartRunmode { #Authen Authz('admins') {
+sub items_POST : StartRunmode RequireAjax Authen Authz(':admins') {
 	my $self = shift;
 	my %sOper = $self->sOper;
 	my ($sidx, $sord, $page, $rows) = ($self->param('sidx')||'number', $self->param('sord')||'asc', $self->param('page')||1, $self->param('rows')||10);

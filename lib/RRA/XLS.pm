@@ -6,7 +6,7 @@ use warnings;
 use base 'RRA::Base';
 use Spreadsheet::WriteExcel;
 
-sub postcards_GET : Runmode { #Ajax Authen Authz('admins') {
+sub postcards_GET : Runmode RequireAjax Authen Authz(':admins') {
 	my $self = shift;
 	$self->header_add(
 		-type => 'application/vnd.ms-excel',
@@ -27,7 +27,7 @@ sub postcards_GET : Runmode { #Ajax Authen Authz('admins') {
 	return $str;
 }
 
-sub insert_GET : Runmode { #Ajax Authen Authz('admins') {
+sub insert_GET : Runmode RequireAjax Authen Authz(':admins') {
 	my $self = shift;
 	$self->header_add(
 		-type => 'application/vnd.ms-excel',

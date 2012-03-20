@@ -6,7 +6,7 @@ use warnings;
 use base 'RRA::Base';
 use SQL::Interp ':all';
 
-sub ad_GET : Runmode { # {
+sub ad_GET : Runmode RequireAjax Authen Authz(':admins') {
 	my $self = shift;
 
 	my $adsroot = $self->cfg('ADS');

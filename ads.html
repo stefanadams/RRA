@@ -127,7 +127,9 @@ $(document).ready(function(){
 			url: "pl/api/ads/view",
 			caption: "View Ad"
 		}
-	);
+	).ajaxError(function(){
+		window.location = "login.html?referer=ads.html";
+	});
 });
 </script>
 </head> 

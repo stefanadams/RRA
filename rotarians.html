@@ -43,7 +43,7 @@ $(document).ready(function(){
 		height: "75\%",
 		autowidth: true
 	}).navGrid('#pager1',
-		{edit:true,add:true,del:true},
+		{edit:false,add:false,del:false},
 		// {edit}, {add}, {del}, {search}, {view}
 		{
 		},
@@ -59,7 +59,9 @@ $(document).ready(function(){
 			url: "pl/api/rotarians/view",
 			caption: "View Rotarian"
 		}
-	);
+	).ajaxError(function(){
+		window.location = "login.html?referer=rotarians.html";
+	});
 });
 </script>
 </head> 

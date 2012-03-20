@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" />
-<title>Items</title>
+<title>Winners</title>
 
 <link rel="stylesheet" type="text/css" media="screen" href="css/smoothness/jquery-ui-1.8.16.custom.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
@@ -17,6 +17,7 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
+	var selectBool = "1:Yes;0:No";
 	var categories = ":;food:Food;gc:Gift Certificates;travel:Travel;personal care:Personal Care;auto:Auto;apparel:Apparel;sports:Sports;event tickets:Event Tickets;baskets:Baskets;wine:Wine;misc:Misc;garden:Garden;one per:One Per;restaurant:Restaurant;catering:Catering;floral:Floral & Landscape;spa:Salon & Spa;golf:Golf;meat:Steak & Meat;car wash:Car Wash;droege:Droege's;kr:K & R";
 
 	function alertAddedItemNumber(response,postdata) {
@@ -91,60 +92,58 @@ $(document).ready(function(){
 	}
 
 	function formatGridCells() {
-			// Reference in .jqGrid {options} loadComplete: property
-			$('table#list1 tbody tr td[title="Yes"]').css('color', 'green');
-			$('table#list1 tbody tr td[title="No"]').css('color', 'red');   
-			$('table#list1 tbody tr td[aria-describedby="list1_items"]').css('color', 'green');
-			$('table#list1 tbody tr td[aria-describedby="list1_items"][title="0"]').css('color', 'red');
+		// Reference in .jqGrid {options} loadComplete: property
+		$('table#list1 tbody tr td[title="Yes"]').css('color', 'green');
+		$('table#list1 tbody tr td[title="No"]').css('color', 'red');   
+		$('table#list1 tbody tr td[aria-describedby="list1_items"]').css('color', 'green');
+		$('table#list1 tbody tr td[aria-describedby="list1_items"][title="0"]').css('color', 'red');
 	}
 
 	jQuery.extend($.fn.fmatter , {
-			// Reference in .jqGrid {options} colModel {name:...} property with formatter:'___Fmatter' property
-			phoneFmatter : function(cellvalue, options, rowdata) {
-					if ( cellvalue ) {
-							var re = /\(?([0-9]{3})\)? ?([0-9]{3})-?([0-9]{4})/.exec(cellvalue);
-							return "(" + re[1] + ") " + re[2] + "-" + re[3];
-					}
-					return '&nbsp;';
-			},
-			boolFmatter : function(cellvalue, options, rowdata) {
-					if ( cellvalue == 1 ) return 'Yes';
-					return 'No';
-			},
-			categoryFmatter : function(cellvalue, options, rowdata) {
-					if ( cellvalue ) return cellvalue.charAt(0).toUpperCase() + cellvalue.slice(1);
-					return '&nbsp;';
+		// Reference in .jqGrid {options} colModel {name:...} property with formatter:'___Fmatter' property
+		phoneFmatter : function(cellvalue, options, rowdata) {
+			if ( cellvalue ) {
+				var re = /\(?([0-9]{3})\)? ?([0-9]{3})-?([0-9]{4})/.exec(cellvalue);
+				return "(" + re[1] + ") " + re[2] + "-" + re[3];
 			}
+			return '&nbsp;';
+		},
+		boolFmatter : function(cellvalue, options, rowdata) {
+			if ( cellvalue == 1 ) return 'Yes';
+			return 'No';
+		},
+		categoryFmatter : function(cellvalue, options, rowdata) {
+			if ( cellvalue ) return cellvalue.charAt(0).toUpperCase() + cellvalue.slice(1);
+			return '&nbsp;';
+		}
 	});
 
 	$("#list1").jqGrid({
-		url: 'pl/api/items',
+		url: 'pl/api/winners',
 		postData: {debug: 1},
 		mtype: 'POST',   
 		datatype: 'json',
 		jsonReader: {repeatitems: false, id: "item_id"},
 		ajaxGridOptions: { contentType: "application/json; charset=utf-8" },  
 		serializeGridData: function (postData) { return $.toJSON(postData); },
-		caption: "Items",
+		caption: "Winners",
 		colModel:[
-			{name:'year',label:'Year',width:30,editable:false,hidden:true},
 			{name:'number',label:'Number',width:20,editable:false},
-			{name:'donor',label:'Donor',width:150,editable:true,editoptions:{size:50,dataInit:ac_donor},editrules:{required:true,custom:true,custom_func:hasFK},formoptions:{elmsuffix:'(*)'},formatter:hideFK,unformat:showFK},
-			{name:'stockitem',label:'Stock Item',width:100,editable:true,hidden:true,editoptions:{size:50,dataInit:ac_stockitem},editrules:{edithidden:true,required:false,custom:true,custom_func:hasFK},formatter:hideFK,unformat:showFK},
-			{name:'item',label:'Item', width:200,editable:true,editoptions:{size:50,dataInit:ac_item},editrules:{required:true},formoptions:{elmsuffix:'(*)'}},
-			{name:'description',label:'Description', width:100,editable:true,hidden:true,edittype:'textarea',editoptions:{rows:4,cols:40},editrules:{edithidden:true}},
-			{name:'value',label:'Value', width:25, align:'right',editable:true,editoptions:{size:10},editrules:{required:true,number:true,minValue:0},formoptions:{elmsuffix:'(*)'},formatter:'currency',formatoptions:{decimalSeparator:".", thousandsSeparator: ",", decimalPlaces: 0, prefix: "$"}},
-			{name:'itemcat',label:'Category', width:50,align:'center',editable:true,edittype:'select',editoptions:{multiple:true,value:categories},formatter:'categoryFmatter'},
-			{name:'advertisement',label:'Advertisement',hidden:true,editable:true,edittype:'textarea',editrules:{edithidden:true},editoptions:{rows:4,cols:40,dataInit:ac_advertisement}},
-			{name:'itemurl',label:'More Info URL', width:100,editable:true,hidden:true,editoptions:{size:50},editrules:{edithidden:true}}
+			{name:'sold',label:'Sold',width:25,editable:true,edittype:'select',editoptions:{multiple:false,value:selectBool},formatter:'boolFmatter'}
+			{name:'item',label:'Item', width:200,editable:false},
+			{name:'highbid',label:'Price', width:25, align:'right',editable:false,formatter:'currency',formatoptions:{decimalSeparator:".", thousandsSeparator: ",", decimalPlaces: 0, prefix: "$"}},
+			{name:'bidder',label:'Winner',editable:false},
+			{name:'phone',label:'Phone',editable:false},
+			{name:'bellitem',label:'Bellringer Item',width:100,editable:true,edittype:'select',editoptions:{multiple:false,dataUrl:'pl/api/buildselect/bellitems'}},
+			{name:'contacted',label:'Contacted',width:25,editable:true,edittype:'select',editoptions:{multiple:false,value:selectBool},formatter:'boolFmatter'}
 		],
 		cellEdit: true,
-		cellurl: 'pl/api/items/cell',
+		cellurl: 'pl/api/winners/cell',
 		beforeSubmitCell: function(rowid,celname,value,iRow,iCol){
-			if (celname=="stockitem"){
-				return {celname:"stockitem_id",stockitem_id:value};
-			} else if (celname=="donor"){
-				return {celname:"donor_id",donor_id:value};
+			if (celname=="bellitem"){
+				return {celname:"bellitem_id",bellitem_id:value};
+			} else if (celname=="bidder"){
+				return {celname:"bidder_id",bidder_id:value};
 			} else {
 				return {celname:celname};
 			}
@@ -158,7 +157,7 @@ $(document).ready(function(){
 		rowNum: 50,
 		rowList: [10, 20, 50, 100, 500, 1000, 5000, 10000],
 		pager: $('#pager1'),
-		sortname: 'year,number',
+		sortname: 'number',
 		viewrecords: true,
 		height: "75\%",
 		autowidth: true
@@ -166,7 +165,7 @@ $(document).ready(function(){
 		{edit:true,add:true,del:true},
 		// {edit}, {add}, {del}, {search}, {view}
 		{
-			url: "pl/api/items/edit",
+			url: "pl/api/winners/edit",
 			editCaption: "Edit Item",
 			width: 700,
 			closeOnEscape: true,
@@ -174,29 +173,29 @@ $(document).ready(function(){
 			afterSubmit: checkUpdate
 		},
 		{
-			url: "pl/api/items/add",
+			url: "pl/api/winners/add",
 			addCaption: "Add Item",
 			width: 700,
 			closeOnEscape: true,
 			afterSubmit: alertAddedItemNumber
 		},
 		{
-			url: "pl/api/items/del",
+			url: "pl/api/winners/del",
 			caption: "Delete Item",
 			msg: "Deleted selected item(s)?",
 			afterSubmit: checkUpdate
 		},
         { 
-            url: "pl/api/items/search",
+            url: "pl/api/winners/search",
             caption: "Search Item",
 			multipleSearch:false
         },
         { 
-            url: "pl/api/items/view",
+            url: "pl/api/winners/view",
             caption: "View Item"
         }
 	).ajaxError(function(){
-		window.location = "login.html?referer=items.html";
+		window.location = "login.html?referer=winners.html";
 	});
 });
 </script>

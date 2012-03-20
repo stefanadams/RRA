@@ -53,19 +53,19 @@ $(document).ready(function(){
 	});
 
 	$("#list1").jqGrid({
-		url: 'pl/api/stockbellringers',
+		url: 'pl/api/bellitems',
 		postData: {debug: 1},
 		mtype: 'POST',   
 		datatype: 'json',
-		jsonReader: {repeatitems: false, id: "stockbellringer_id"},
+		jsonReader: {repeatitems: false, id: "bellitem_id"},
 		ajaxGridOptions: { contentType: "application/json; charset=utf-8" },  
 		serializeGridData: function (postData) { return $.toJSON(postData); },
 		caption: "Bellringer Items",
 		colModel:[
-			{name:'stockbellringer',label:'Bellringer Item', width:200,editable:true,editoptions:{size:50},editrules:{required:true},formoptions:{elmsuffix:'(*)'}},
+			{name:'bellitem',label:'Bellringer Item', width:200,editable:true,editoptions:{size:50},editrules:{required:true},formoptions:{elmsuffix:'(*)'}},
 		],
 		cellEdit: true,
-		cellurl: 'pl/api/stockbellringers/cell',
+		cellurl: 'pl/api/bellitems/cell',
 		recreateForm: true,
 		altRows: true,
 		rownumbers: true,
@@ -74,7 +74,7 @@ $(document).ready(function(){
 		rowNum: 50,
 		rowList: [10, 20, 50, 100, 500, 1000, 5000, 10000],
 		pager: $('#pager1'),
-		sortname: 'stockbellringer_id',
+		sortname: 'bellitem_id',
 		viewrecords: true,
 		height: "75\%",
 		autowidth: true
@@ -82,7 +82,7 @@ $(document).ready(function(){
 		{edit:true,add:true,del:true},
 		// {edit}, {add}, {del}, {search}, {view}
 		{
-			url: "pl/api/stockbellringers/edit",
+			url: "pl/api/bellitems/edit",
 			editCaption: "Edit Bellringer Item",
 			width: 700,
 			closeOnEscape: true,
@@ -90,28 +90,30 @@ $(document).ready(function(){
 			afterSubmit: checkUpdate
 		},
 		{
-			url: "pl/api/stockbellringers/add",
+			url: "pl/api/bellitems/add",
 			addCaption: "Add Bellringer Item",
 			width: 700,
 			closeOnEscape: true,
 			afterSubmit: checkUpdate
 		},
 		{
-			url: "pl/api/stockbellringers/del",
+			url: "pl/api/bellitems/del",
 			caption: "Delete Bellringer Item",
 			msg: "Deleted selected Bellringer item(s)?",
 			afterSubmit: checkUpdate
 		},
         { 
-            url: "pl/api/stockbellringers/search",
+            url: "pl/api/bellitems/search",
             caption: "Search Bellringer Item",
 			multipleSearch:false
         },
         { 
-            url: "pl/api/stockbellringer/view",
+            url: "pl/api/bellitem/view",
             caption: "View Bellringer Item"
         }
-	);
+	).ajaxError(function(){
+		window.location = "login.html?referer=bellitems.html";
+	});
 });
 </script>
 </head> 

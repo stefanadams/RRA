@@ -6,7 +6,7 @@ use warnings;
 use base 'RRA::Base';
 use SQL::Interp ':all';
 
-sub schedule_GET : StartRunmode { #: Runmode Authen Authz('admins') {
+sub schedule_GET : StartRunmode RequireAjax Authen Authz(':admins') {
 	my $self = shift;
 	my ($sql, @bind);
 	my $night = $self->param('dispatch_url_remainder');
@@ -22,7 +22,7 @@ sub schedule_GET : StartRunmode { #: Runmode Authen Authz('admins') {
 	return $self->to_json({rows => $self->dbh->selectall_arrayref($sql, {Slice=>{}}, @bind)});
 }
 
-sub schedule_POST : Runmode { #: Runmode Authen Authz('admins') {
+sub schedule_POST : Runmode RequireAjax Authen Authz(':admins') {
 	my $self = shift;
 	my $night = $self->param('dispatch_url_remainder');
 	my ($sql, @bind) = sql_interp 'UPDATE ad, auctions SET scheduled=cast(start AS date) WHERE auctions.year=auction_year() AND', {night=>$night, ad_id=>$self->param('ad_id')}; 

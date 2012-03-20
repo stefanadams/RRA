@@ -1,0 +1,193 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset-utf-8" />
+		<title>[% c.param('live') %] - Radio Auction [% c.param('year') %] - [% c.param('phone') %]</title>
+		<!-- CSS for the theme -->
+		<link rel="stylesheet" href="css/[% c.session.param('theme') %].css" type="text/css" media="[% c.session.param('media') %]" />
+		<!-- <link rel="stylesheet" href="[% root %]/asp/modals.css" type="text/css" media="screen" /> -->
+		<link rel="stylesheet" href="css/tabs.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="css/tablesort.css" type="text/css" media="screen" />
+		<link rel="stylesheet" type="text/css" media="screen" href="css/redmond/jquery-ui-1.8.10.custom.css" />
+		<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+
+		<!-- Libraries: http://code.google.com/apis/libraries/devguide.html -->
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+		<script type="text/javascript" src="js/jquery.jtemplates.js"></script>
+		<!-- <script type="text/javascript" src="js/jquery.taconite.js"></script> -->
+		<script type="text/javascript" src="js/jquery.qtip.js"></script>
+		<script type="text/javascript" src="js/jquery.jtruncate.js"></script>
+		<script type="text/javascript" src="js/jquery.humanmsg.js"></script>
+		<script type="text/javascript" src="js/jquery.maskedinput.js"></script>
+		<script type="text/javascript" src="js/jquery.formatCurrency-1.4.0.pack.js"></script>
+		<script type="text/javascript" src="js/jquery.idTabs.min.js"></script>
+		<script type="text/javascript" src="js/jquery.tools.min.js"></script>
+		<script type="text/javascript" src="js/jquery.tablesorter.min.js"></script>
+		<!-- <script type="text/javascript" src="js/jquery.dump.js"></script> -->
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/jquery-ui.min.js"></script>
+		<script language=javascript src="http://nick8.surfernetwork.com/Media/player/scripts/launch.js"></script>
+
+		<!-- TT Processed javascript -->
+		[%# c.session.param('theme-js') %]
+		<script type="text/javascript">[% INCLUDE mainjs.tmpl %]</script>
+
+	</head>
+
+	<body>
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-2322511-8']);
+  _gaq.push(['_setDomainName', '.washingtonrotary.com']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+		<div id="headergroup">
+			<div id="header">
+				[% INCLUDE header.tmpl %]
+			</div>
+			<div id="alert">
+				[% INCLUDE alert %]
+			</div>
+			<div id="alertmsg">
+				[% INCLUDE alertmsg.tmpl %]
+			</div>
+		</div>
+
+		<div id="bodygroup">
+			<div id="iis">
+				<iframe src="http://iis.radioauction.washingtonrotary.com" style="height:900px;width:100%;padding-top:5px;border:0" />
+			</div>
+		</div>
+
+		<div id="footergroup">
+			<div id="key">
+				[% INCLUDE key %]
+			</div>
+		</div>
+
+	</body>
+
+</html>
+
+[% BLOCK stats %]
+	<div id="dialog-stats"></div>
+[% END %]
+[% BLOCK alert %]
+	[% IF c.authz.authorize('admins') %]
+	<table>
+		<tr id="alert-row-alert" class="alert">
+			<td>
+				<span id="alert-admin" class="alert" value="admin">Admins</span>
+				<span id="alert-operator" class="alert" value="operator">Operators</span>
+				<span id="alert-caller" class="alert" value="caller">Callers</span>
+				<span id="alert-bellringer" class="alert" value="bellringer">Bellringers</span>
+				<span id="alert-auctioneer" class="alert" value="auctioneer">Auctioneers</span>
+				<span id="alert-public" class="alert" value="public">Public</span>
+			</td>
+		</tr>
+		<tr id="alert-row-msg" class="msg">
+			<td>
+				<input id="alert-msg" class="msg" type="text" value="Enter Alert Message Here" />
+			</td>
+		</tr>
+	</table>
+	[% END %]
+[% END %]
+[% IF 0 && c.authz.authorize('operators') %]
+<div id="dialog_placebid" class="window">
+	<div class="d-header">
+		<span class="number"></span>
+		<span class="name"></span>
+		<span class="value"></span>
+		<span class="minbid"></span>
+		<input type="hidden" title="item_id" value=""/>
+		<input type="hidden" title="bidder_id" value=""/>
+		<input type="text" class="placebid bidder" title="Bidder" value="Bidder" />
+		<input type="text" class="placebid name" title="Name" value="Name" />
+		<input type="text" class="placebid phone" title="Phone" value="Phone" />
+		<input type="text" class="placebid bid" title="Bid" value="Bid" />
+	</div>
+	<div class="d-blank"></div>
+	<div class="d-login"><input type="button" alt="Dev" title="Dev" value="Place Bid!" /></div>
+</div>
+[% END %]
+[% BLOCK key %]
+	<span class="key">Key:
+		<img valign='middle' src='/washrotary/icons/paddle1.gif' width='16' height='16' class="tooltip above" description="New Bid">&nbsp;= New Bid |
+		<img valign='middle' src='/washrotary/icons/bell2.png' width='16' height='16' class="tooltip above" description="Bell Ringer">&nbsp;= Bell Ringer |
+		<img valign='middle' src='/washrotary/icons/clock3.gif' width='16' height='16' class="tooltip above" description="Timer">&nbsp;= Timer |
+		<img valign='middle' src='/washrotary/icons/gavel2.gif' width='16' height='16' class="tooltip above" description="Sold">&nbsp;= Sold |
+		<img valign='middle' src='/washrotary/icons/paper1.gif' width='16' height='16' class="tooltip above" description="More description">&nbsp;= More description |
+		<img valign='middle' src='/washrotary/icons/chain1.png' width='16' height='16' class="tooltip_fixed above" description="<a href='http://google.com' target='_new'>Link</a>">&nbsp;= External link |
+		<img valign='middle' src='/washrotary/icons/attach_image.gif' width='16' height='16' class="tooltip above" description="<img src='/washrotary/icons/attach_image.gif' />">&nbsp;= View image
+	</span>
+[% END %]
+
+
+
+
+
+
+
+
+
+<!-- ######################################################################## -->
+
+[% IF 0 && c.authz.authorize('backend') %]
+<!-- Action menu -->
+<br />
+<br />
+<hr />
+<table class="menu">
+	[% IF c.authz.authorize('auctioneers') %]
+	[% IF c.param('live') != 'Closed' %]
+	[% FOREACH auctioneer IN c.param('auctioneers').split(',') %]
+	<tr><td><a href="/washrotary/index.cgi/auctioneer/[% auctioneer %]">Broadcaster [% auctioneer | upper %]</a></td></tr>
+	[% END %]
+	<tr><td>&nbsp;</td></tr>
+	[% END %]
+	[% END %]
+	[% IF c.authz.authorize('admins') %]
+	<tr><td><a href="/turbo">TurboDB - Full Raw DB access (Needs to get locked down)</a></td></tr>
+	<tr><td><a href="/phpmyadmin">phpMyAdmin - Raw DB administration and access (wash... / h)</a></td></tr>
+	<tr><td><a href="http://ringcentral.com">Phones - Backend (877-707-2345 / 0 / 13579)</a></td></tr>
+	<tr><td><a href="http://inexpensivedomains.com">DNS - Backend (wash... / h)</a></td></tr>
+	<tr><td><a href="http://phpldapadmin.cogentinnovators.com">qmail-ldap - Backend (Not set up yet)</a></td></tr>
+
+	<tr><td><a href="/washrotary/index.cgi/admin/stockitems">View / Edit Stock Items</a></td></tr>
+	<tr><td><a href="/washrotary/index.cgi/admin/items">View / Edit Items</a></td></tr>
+	<tr><td><a href="/washrotary/index.cgi/admin/seqitems">Sequence Items</a></td></tr>
+	<tr><td><a href="/washrotary/index.cgi/admin/donors">View / Edit Donors</a></td></tr>
+	[% IF c.param('live') != 'Closed' %]
+	<tr><td><a href="/washrotary/index.cgi/admin/start">Start Auction</a></td></tr>
+	<tr><td><a href="/washrotary/index.cgi/admin/timer">Timer Functions</a></td></tr>
+	[% END %]
+	[% END %]
+	[% IF c.authz.authorize('operators') %]
+	[% IF c.param('live') != 'Closed' %]
+	<tr><td><a href="/mibew">Chat - Backend</a></tr></td>
+	<tr><td><a href="/washrotary/index.cgi/operator">Place Bids from Callers</a></td></tr>
+	[% END %]
+	<tr><td><a href="/washrotary">View Auction in Progress</a></td></tr>
+	[% END %]
+</table>
+[% END %]
+
+[% IF 0 && c.param('live') == 'Dev' %]
+<hr />
+<h1>DEBUG</h1>
+Is Authz: [% c.authz.is_authz_runmode(c.get_current_runmode) %]<br />
+Runmode: [% c.get_current_runmode %]<br />
+API: [% c.param('api') %]<br />
+Username: [% c.authen.username %]<br />
+Admins: [% c.authz.authorize('admins') %]<br />
+Auctioneers: [% c.authz.authorize('auctioneers') %]<br />
+Operators: [% c.authz.authorize('operators') %]<br />
+[% END %]
+

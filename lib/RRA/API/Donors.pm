@@ -6,7 +6,7 @@ use warnings;
 use base 'RRA::Base';
 use SQL::Interp ':all';
 
-sub cell_POST : Runmode {
+sub cell_POST : Runmode RequireAjax Authen Authz(':admins') {
 	my $self = shift;
 	my ($sql, @bind) = sql_interp 'UPDATE donors SET', {map {$_=>$self->param($_)} $self->param('celname')}, 'WHERE', {donor_id=>$self->param('id')};
 	return $self->to_json({sc=>'false',msg=>"Editing disabled"}) if $self->cfg('NOEDIT');
@@ -14,7 +14,7 @@ sub cell_POST : Runmode {
 	return $self->to_json({sc=>'true',msg=>""});
 }
 
-sub edit_POST : Runmode {
+sub edit_POST : Runmode RequireAjax Authen Authz(':admins') {
 	my $self = shift;
 	$self->param('url', $self->param('donorurl')||'');
 	$self->param('category', $self->param('donorcat')||'');
@@ -24,7 +24,7 @@ sub edit_POST : Runmode {
 	return $self->to_json({sc=>'true',msg=>""});
 }
 
-sub add_POST : Runmode {
+sub add_POST : Runmode RequireAjax Authen Authz(':admins') {
 	my $self = shift;
 	$self->param('url', $self->param('donorurl')||'');
 	$self->param('category', $self->param('donorcat')||'');
@@ -35,7 +35,7 @@ sub add_POST : Runmode {
 	return $self->to_json({sc=>'true',msg=>""});
 }
 
-sub del_POST : Runmode {
+sub del_POST : Runmode RequireAjax Authen Authz(':admins') {
 	my $self = shift;
 	my ($sql, @bind) = sql_interp 'DELETE FROM donors WHERE', {donor_id=>$self->param('id')};
 	return $self->to_json({sc=>'false',msg=>"Editing disabled"}) if $self->cfg('NODEL');
@@ -43,15 +43,15 @@ sub del_POST : Runmode {
 	return $self->to_json({sc=>'true',msg=>""});
 }
 
-sub search_POST : Runmode {
+sub search_POST : Runmode RequireAjax Authen Authz(':admins') {
 	my $self = shift;
 }
 
-sub view_POST : Runmode {
+sub view_POST : Runmode RequireAjax Authen Authz(':admins') {
 	my $self = shift;
 }
 
-sub donors_POST : StartRunmode { #Ajax Authen Authz('admins') {
+sub donors_POST : StartRunmode RequireAjax Authen Authz(':admins') {
 	my $self = shift;
 	my %sOper = $self->sOper;
 	my ($sidx, $sord, $page, $rows) = ($self->param('sidx')||'donor', $self->param('sord')||'asc', $self->param('page')||1, $self->param('rows')||10);
@@ -65,7 +65,7 @@ sub donors_POST : StartRunmode { #Ajax Authen Authz('admins') {
 	return $self->to_json({page => $page, total => $pages, records => $records, rows => $self->dbh->selectall_arrayref($sql, {Slice=>{}}, @bind)});
 }
 
-sub items_POST : Runmode {
+sub items_POST : Runmode RequireAjax Authen Authz(':admins') {
 	my $self = shift;
 	my ($donor_id) = ($self->param('id'));
 	my ($sidx, $sord, $page, $rows) = ($self->param('sidx')||'donor', $self->param('sord')||'asc', $self->param('page')||1, $self->param('rows')||10);
@@ -87,7 +87,7 @@ sub items_POST : Runmode {
 	return $self->to_json($json);
 }
 
-sub rotariancompliance_POST : Runmode {
+sub rotariancompliance_POST : Runmode RequireAjax Authen Authz(':admins') {
         my $self = shift;
 	my ($sql, @bind) = sql_interp 'INSERT INTO rotarian_compliance', {rotarian_id=>$self->param('id'), compliance=>1}, 'ON DUPLICATE KEY UPDATE compliance=IF(compliance=1,0,1)';
         return $self->to_json({sc=>'false',msg=>"Editing disabled"}) if $self->cfg('NOEDIT');
@@ -95,7 +95,7 @@ sub rotariancompliance_POST : Runmode {
         return $self->to_json({sc=>'true',msg=>""});
 }
 
-sub rotarianleader_POST : Runmode {
+sub rotarianleader_POST : Runmode RequireAjax Authen Authz(':admins') {
         my $self = shift;
 	my ($sql, @bind) = sql_interp 'UPDATE rotarians SET lead=IF(lead=1,0,1) WHERE', {rotarian_id=>$self->param('id')};
         return $self->to_json({sc=>'false',msg=>"Editing disabled"}) if $self->cfg('NOEDIT');
@@ -103,7 +103,7 @@ sub rotarianleader_POST : Runmode {
         return $self->to_json({sc=>'true',msg=>""});
 }
 
-sub solicitationaids_GET : Runmode {
+sub solicitationaids_GET : Runmode RequireAjax Authen Authz(':admins') {
 	my $self = shift;
 	my @leaders = ();
 	my $rotarians = {};

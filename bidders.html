@@ -150,7 +150,9 @@ $(document).ready(function(){
 			url: "pl/api/bidders/view",
 			caption: "View Bidder"
 		}
-	);
+	).ajaxError(function(){
+		window.location = "login.html?referer=bidders.html";
+	});
 });
 </script>
 </head> 

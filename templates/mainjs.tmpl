@@ -1,0 +1,470 @@
+var allowHumanMsg = 0;
+var c_response = '';
+var jtmplCache = new Array();
+var dataCache = new Array();
+var live = isLive('[% c.param('live') %]');
+var dev = isDev('[% c.param('live') %]');
+var clsed = isClosed('[% c.param('live') %]'); // closed is a reserved keyword
+[%# var admins = '[ c.authz.authorize('admin') ]'?true:false; %]
+
+function isLive(live){return (live=="Live")?true:false;}
+function isDev(dev){return (dev=="Dev")?true:false;}
+function isClosed(clsed){return (clsed=="Closed")?true:false;}
+
+[% INCLUDE refresh %]
+[% INCLUDE live %]
+$(document).ready(function() {
+/*
+	if (dev){
+		$("#devoff").show();
+		$("#devon").hide();
+	} else {
+		$("#devon").show();
+		$("#devoff").hide();
+	}
+	$("#dialog-devon").dialog({
+		autoOpen: false,
+		height: 160,
+		width: 350,
+		modal: true,
+		buttons: {
+			"Turn Dev On!": function(){
+				$(this).dialog("disable");
+				$(this).dialog({title: 'Turning on Dev...'});
+				$.get('[% rootexec %]/index.cgi/admin/api/dev/'+$('input#hours:text').val());
+				$("#devon").hide();
+				$("#devoff").show();
+				$(this).dialog("close");
+				$('.tabs .tablist').trigger('refresh');
+				headerRefresh();
+			},
+			Cancel: function(){$(this).dialog("close");}
+		}
+	});
+	$("#devon").button().click(function(){
+		$("#dialog-devon").dialog("open");
+	});
+	$("#dialog-devoff").dialog({
+		autoOpen: false,
+		height: 60,
+		width: 350,
+		modal: true,
+		title: "Turning off Dev...",
+		open: function(){
+			$(this).dialog("disable");
+			$.get('[% rootexec %]/index.cgi/admin/api/dev');
+			$("#devoff").hide();
+			$("#devon").show();
+			$(this).dialog("close");
+			$('.tabs .tablist').trigger('refresh');
+			headerRefresh();
+		}
+	});
+	$("#devoff").button().click(function(){
+		$("#dialog-devoff").dialog("open");
+	});
+	$("#dialog-login").dialog({
+		autoOpen: false,
+		height: 218,
+		width: 350,
+		modal: true,
+		buttons: {
+			"Login": function(){
+				$(this).dialog("disable");
+				$(this).dialog({title: 'Logging in...'}); 
+				$.post('[% rootexec %]/index.cgi/'+$('#authen_loginfield').val(), {
+					authen_username: $('#authen_loginfield').val(),
+					authen_password: $('#authen_passwordfield').val(),
+					authen_rememberuser: $('#authen_rememberuserfield').val(),
+					authen_loginbutton: 'Sign In'
+				}, function(){window.location.replace('[% rootexec%]/index.cgi?login');});
+			},
+			Cancel: function(){$(this).dialog("close");}
+		}
+	});
+	$("#login").button().click(function(){
+		$("#dialog-login").dialog("open");
+	});
+	$("#dialog-logout").dialog({
+		autoOpen: false,
+		height: 60,
+		width: 350,
+		modal: true,
+		title: "Logging out...",
+		open: function(){
+			$(this).dialog("disable");
+			$.get('[% rootexec %]?authen_logout=1');
+			window.location.replace('[% rootexec %]?logout');
+		}
+	});
+	$("#logout").button().click(function(){
+		$("#dialog-logout").dialog("open");
+	});
+*/
+	headerRefresh();
+	setInterval(function(){
+		$("#header").load('[% rootexec %]/index.cgi/header', function(response){headerRefresh(response);});
+	}, [% refresh.header*1000 %]);
+	alertRefresh($('#alert-msg-text').html());
+	setInterval(function(){
+		$("#alert-msg-text").load('[% rootexec %]/index.cgi/alert', function(response){alertRefresh(response);});
+	}, [% refresh.alert*1000 %]);
+//	$('.tabs .tablist').trigger('refresh');
+
+	var headergroupHeight = [% IF c.session.param('theme') == 'tv' %]130[% ELSE %]190[% END %];
+	$('body').css('padding-top', headergroupHeight+'px');
+});
+
+
+// ---------------------------------------------------------------------
+
+
+[% BLOCK refresh %]
+// Post-refresh handling functions
+function headerRefresh(response){
+	if ( clsed != isClosed($('#header table[live]').attr('live')) ) {
+		$('.tabs .tablist').trigger('refresh');
+	}
+	clsed = isClosed($('#header table[live]').attr('live'));
+//	$('#auth').draggable();
+//	$('#stats').css('top',  $(window).height()-$('#stats').height()-100);
+//	$('#stats').css('left', $(window).width()-$('#stats').width()-100);
+	$("#stats").dialog({autoOpen: false});
+/*
+	if(admins){
+		$("#dialog-stats").dialog("open");
+	} else {
+		$("#dialog-stats").dialog("close");
+	}
+*/
+	$("#stats>div").html($("#stats-data").html());
+	$('.modal').css("cursor","pointer");
+/*
+	$("#dialog-mibew").dialog({
+		autoOpen: false,
+		height: 290,
+		width: 350,
+		modal: true,
+	});
+	$("#mibew").click(function(){
+		$("#dialog-mibew").dialog("open");
+	});
+*/
+	$("#paypal").click(function(){
+		$("#dialog-paypal").dialog({
+			autoOpen: false,
+			height: 290,
+			width: 350,
+			modal: true
+		});
+		$("#dialog-paypal").dialog("open");
+		$("#paypal-os0").autocomplete({
+			source: function( request, response ) {
+				$.ajax({
+					url: '[% rootexec %]/index.cgi/public/api/ac/number',
+					dataType: "jsonp",
+					data: {
+						term: request.term
+					},
+					success: function(data){
+						response($.map(data.ac.records, function(item){return {number: item.number,name: item.name};}));
+					}
+				});
+			},
+			minLength: 3,
+			select:	function(event, ui){
+				if (ui.item){
+					$('#paypal-name').val(ui.item.name);
+				}
+			}
+		});
+	});
+		
+	$(document).attr('title', $('#header table[live]').attr('live')+' - Radio Auction [% c.param('year') %] - [% c.param('phone') %]');
+	// setup ul.tablist to work as tabs for each div directly under div.panes
+/*
+	$("ul.tablist").tabs("div.panes > div");
+	if (clsed){
+		$('#tabs').hide();
+		$('#closed').show();
+	} else {
+		$('span.nolive a, span.nolive label').toggle();
+		$('#tabs').show();
+		$('#closed').hide();
+	}
+*/
+	return true;
+}
+function alertRefresh(response){
+	if (response){
+		if (response != c_response && allowHumanMsg){$(window).humanMsg(response, {autoHide: [% hide.popup*1000 %]});}
+		allowHumanMsg = 1;
+		c_response = response;
+		$('#alertmsg').show();
+		$('#alert-msg-text').html(response);
+	} else {
+		$('#alertmsg').hide();
+	}
+	var headergroupHeight = 0;
+	$('#header').not(':hidden').each(function(){headergroupHeight = headergroupHeight + $(this).height();});
+	$('#alert-row-alert').not(':hidden').each(function(){headergroupHeight = headergroupHeight + $(this).height();});
+	$('#alert-row-msg').not(':hidden').each(function(){headergroupHeight = headergroupHeight + $(this).height();});
+	$('#alertmsg').not(':hidden').each(function(){headergroupHeight = headergroupHeight + $(this).height();});
+	$('body').css('height', ($('body').height()-headergroupHeight-50)+'px');	// Sub 50 for the body bottom padding
+	$('body').css('padding-top', headergroupHeight+'px');
+	return true;
+}
+function dataRefresh(jquery){
+	//alert('dataRefresh');
+	$('a.ajax').click(function(e){
+		e.preventDefault();
+	});
+	// Add item row highlighting
+	$('table.items tbody tr').hover(
+		function(){
+			$(this).addClass("highlight");
+		},
+		function(){
+			$(this).removeClass("highlight");
+		}
+	);
+	// Add item tooltips
+	$('.tooltip').each(function(){
+		var content = [];
+		if (!!$(this).attr('name') && $(this).find('span.truncate').html().length > $(this).find('span.truncate').attr("length")){content.push($(this).attr('name'));}
+		if (!!$(this).attr('description')){content.push($(this).attr('description'));}
+		if (!!$(this).attr('img')){content.push('<img src="/washrotary/'+$(this).attr('img')+'">');}
+		if (!!$(this).attr('message') && $(this).find('span.truncate').html().length > $(this).find('span.truncate').attr("length")){content.push($(this).attr('message'));}
+		if (content.length >= 1){
+			if ($(this).hasClass('above')) {
+				$(this).qtip({
+					content: content.join('<hr class=tooltip />'),
+					style: {
+						name: 'blue',
+						border: {radius:8,width:3},
+						tip: {corner:'bottomLeft'}
+					},
+					position: {
+						adjust: {x:40,y:-3},
+						corner: {target:'topLeft',tooltip:'bottomLeft'}
+					}
+				});
+			} else {
+				$(this).qtip({
+					content: content.join('<hr class=tooltip />'),
+					style: {
+						name: 'blue',
+						border: {radius:8,width:3},
+						tip: {corner:'topLeft'}
+					},
+					position: {
+						adjust: {x:40,y:3},
+						corner: {target:'bottomLeft',tooltip:'topLeft'}
+					}
+				});
+			}
+		}
+	});
+	// Add tooltips for links (delay so that a link within a tip can be clicked
+	$('.tooltip_fixed').each(function(){
+		var content = [];
+		if ($(this).attr('description') != 'null'){content.push($(this).attr('description'));}
+		if ($(this).hasClass('above')) {
+			$(this).qtip({
+				content: content.join('<hr class=tooltip />'),
+				style: {
+					name: 'blue',
+					border: {radius:8,width:3},
+					tip: {corner:'bottomLeft'}
+				},
+				position: {
+					adjust: {x:40,y:-3},
+					corner: {target:'topLeft',tooltip:'bottomLeft'}
+				},
+				hide: {
+					delay: 100,
+					fixed: true
+				}
+			});
+		} else {
+			$(this).qtip({
+				content: content.join('<hr class=tooltip />'),
+				style: {
+					name: 'blue',
+					border: {radius:8,width:3},
+					tip: {corner:'topLeft'}
+				},
+				position: {
+					adjust: {x:40,y:3},
+					corner: {target:'bottomLeft',tooltip:'topLeft'}
+				},
+				hide: {
+					delay: 100,
+					fixed: true
+				}
+			});
+		}
+	});
+	// Truncate element contents to the length specified in the element length attribute
+	$('span.truncate').each(function(){
+		var text = $(this).html();
+		var len = $(this).attr('length') || 50;
+		text = text.length > len ? text.substring(0,len)+'...' : text;
+		$(this).html(text);
+	});
+	// Apply state indicator styling
+	$('tr[name="item"]').each(function(){
+		if($(this).attr('status') == 'Sold'){$(this).addClass('sold');}
+		else if(!!$(this).attr('timer')){$(this).addClass('timer');}
+		else if(!!$(this).attr('bellringer')){$(this).addClass('bellringer');}
+		if(!!$(this).attr('newbid')){$(this).find('td[col="highbid"]').addClass('newbid');}
+	});
+	// Format cell contents as currency
+	$('.currency').each(function(){
+		$(this).formatCurrency({roundToDecimalPlace:0});
+	});
+
+	if ( clsed != isClosed($('#header table[live]').attr('live')) ) {
+		for(i in dataCache){
+			clearInterval(dataCache[i]);
+			dataCache[i] = 0;
+		}
+		$('.tabs href').each(function(){
+			var id = $(this).attr('href');
+			dataCache[id] = 0;
+		});
+		$('.tabs .tablist').trigger('refresh');
+	}
+	$("#itemsbidding").tablesorter();
+	$("#itemsondeck").tablesorter();
+}
+[% END %]
+
+[% BLOCK live %]
+// Alert
+$('span.alert').live('click', function(){
+	if ($(this).hasClass('selected')){
+		$(this).removeClass('selected');
+		$('#alert-msg').parent().parent().hide();
+		$('#alert-msg').removeAttr('alert');
+		$.get('[% rootexec %]/index.cgi/alert/'+$(this).attr('value'), function(msg){
+			alertRefresh($('#alert-msg-text').html(msg));
+		});
+	} else {
+		$('span.alert').each(function(){
+			$(this).removeClass('selected');
+		});
+		$(this).addClass('selected');
+		$('#alert-msg').val("Enter Alert Message Here");
+		$('#alert-msg').parent().parent().show();
+		$('#alert-msg').attr('alert', $(this).attr('value'));
+		$.get('[% rootexec %]/index.cgi/alert/'+$(this).attr('value'), function(msg){
+			alertRefresh($('#alert-msg-text').html(msg));
+		});
+	}
+});
+// Clear the text input field for a blank slate
+$('#alert-msg').live('focus', function() {
+	this.style.color='black';
+	this.value='';
+});
+// Save the current text value (even if blank) and hide inputs again.
+$('#alert-msg').live('blur', function() {
+	this.style.color='grey';
+	$.get('[% rootexec %]/index.cgi/alert/'+$('#alert-msg').attr('alert'), {msg: $('#alert-msg').val()}, function(response){
+		$('#alert-msg').parent().parent().hide();
+		$('span.alert').each(function(){
+			if ($(this).hasClass('selected')){$(this).removeClass('selected');}
+		});
+		//if(!!response){alertRefresh(response);}
+		alertRefresh(response);
+	});
+});
+
+/*
+// Paypal
+$('#dialog-paypal').live('dialogopen', function(){
+});
+
+// Tabs
+$('.tabs .tablist').live('refresh', function(){
+	$(this).each(function(){
+		//alert('tabs');
+		$(this).find('[href]').each(function(){
+			var id = $(this).attr('href');
+			jtmplCache[id] = 0;
+			dataCache[id] = 0;
+		});
+		$(this).idTabs(function(id){
+			if($(id).hasClass('rm')){
+				// Do nothing?
+			}else if($(id).hasClass('data')){
+				if (new Date().getTime()-jtmplCache[id] > [% refresh.template*1000 %]){
+					$(id).setTemplateURL('[% rootexec %]/index.cgi/'+$(id).attr('rm')+'/'+$(id).attr('action')+'/jtmpl?load');
+					jtmplCache[id] = new Date().getTime();
+				}
+				setInterval(function(){
+					if (clsed){return false;}
+					if (new Date().getTime()-jtmplCache[id] > [% refresh.template*1000 %] && $(id).hasClass('data') && $(id).not(':hidden')){
+						$(id).setTemplateURL('[% rootexec %]/index.cgi/'+$(id).attr('rm')+'/'+$(id).attr('action')+'/jtmpl?interval');
+						jtmplCache[id] = new Date().getTime();
+					}
+					return true;
+				}, [% refresh.template*1000 %]);
+				if (new Date().getTime()-dataCache[id] > [% refresh.data*1000 %]){
+					$(id).processTemplateURL('[% rootexec %]/index.cgi/'+$(id).attr('rm')+'/'+$(id).attr('action')+'?load', null, {on_success: dataRefresh});
+					dataCache[id] = new Date().getTime();
+				}
+				setInterval(function(){
+					if (clsed){return false;}
+					if (new Date().getTime()-dataCache[id] > [% refresh.data*1000 %] && $(id).hasClass('data') && $(id).not(':hidden')){
+						$(id).processTemplateURL('[% rootexec %]/index.cgi/'+$(id).attr('rm')+'/'+$(id).attr('action')+'?interval', null, {on_success: dataRefresh});
+						dataCache[id] = new Date().getTime();
+					}
+					return true;
+				}, [% refresh.data*1000 %]);
+			}
+			return true;
+		});
+	});
+});
+*/
+[% END %]
+
+[% IF 0 %]
+	[% IF c.authz.authorize('operators') %]
+	$('input[type="text"]').autocomplete('[% rootexec %]/index.cgi/[% c.get_current_runmode %]/api/ac/'+$(this).attr('name'), {
+		minChars: 3
+	}).result(function(event, data, formatted){
+		$.each(data, function(index, value){
+			if ( index > 0 ) {
+				var result = value.split(':');
+				$('input#'+result[0]).val(result[1]);
+			}
+		});
+	});
+	$('input.phone').mask("(999) 999-9999");
+	$('input[type="text"]').each(function(){
+		click(function(){
+			$(this).attr('value', '');
+			$(this).css('color', 'black');
+		}).blur(function(){
+			if ($(this).attr('value') === "") {
+				$(this).attr('value', $(this).attr('title'));
+				$(this).css('color', 'gray');
+			}
+		});
+	});
+	$('input:button[value="Place Bid!"]').click(function(){
+		var id = $('input[title="item_id"]').attr('value');
+		var bidder = $('input[title="bidder_id"]').attr('value');
+		var name = $('input[title="Name"]').attr('value');
+		var phone = $('input[title="Phone"]').attr('value');
+		var bid = $('input[title="Bid"]').attr('value');
+		$.get('[% rootexec %]/index.cgi/operator/api/bid/'+id, {bidder: bidder, name: name, phone: phone, bid: bid}, function(){
+			$(this).processTemplateURL('[% rootexec %]/index.cgi/'+$(this).attr('rm')+'/'+$(this).attr('action')+'?'+trace, null, {on_success: dataRefresh});
+		});
+	});
+	[% END %]
+[% END %]
+

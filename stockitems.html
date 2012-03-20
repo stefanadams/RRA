@@ -115,7 +115,9 @@ $(document).ready(function(){
             url: "pl/api/stockitems/view",
             caption: "View Pre-arranged Item"
         }
-	);
+	).ajaxError(function(){
+		window.location = "login.html?referer=stockitems.html";
+	});
 });
 </script>
 </head> 

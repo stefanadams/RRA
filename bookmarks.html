@@ -5,6 +5,7 @@
 <title>Bookmarks</title>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script type="text/javascript" src="js/jquery-jtemplates.js"></script>
+<script type="text/javascript" src="js/env.js"></script>
 <style type="text/css">
 	* {
 		font-family: Verdana;
@@ -51,11 +52,14 @@ $(document).ready(function(){
 	// process the template
 	$("#result1").processTemplateURL("pl/bookmarks", null, {
 		type: 'GET',
+	}).fail(function(){
+		window.location = "login.html?referer=bookmarks.html";
 	});
 });
 </script>
 </head>
 <body>
+	<div id="loggedin"></div>
 	<!-- Template content -->
 	<textarea id="template" style="display:none">
 		{#foreach $T.rows as r}

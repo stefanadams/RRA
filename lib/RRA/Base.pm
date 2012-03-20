@@ -44,11 +44,14 @@ use Apache2::RequestIO ();
 use CGI::Application::Plugin::ConfigAuto (qw/cfg cfg_file/);
 use CGI::Application::Plugin::AutoRunmode;
 use CGI::Application::Plugin::Redirect;
+use CGI::Application::Plugin::Forward;
 use CGI::Application::Plugin::Session;
 use CGI::Application::Plugin::DBH qw/dbh_config dbh/;
 use CGI::Application::Plugin::AnyTemplate;
 use CGI::Application::Plugin::DetectAjax;
 use CGI::Application::Plugin::JSON ':all';
+use CGI::Application::Plugin::RequireSSL;
+use CGI::Application::Plugin::RequireAjax;
 use CGI::Application::Plugin::Authentication;
 use CGI::Application::Plugin::Authorization;
 use CGI::Application::Plugin::Stream (qw/stream_file/);
@@ -71,7 +74,6 @@ sub cgiapp_init {
 	$self->cfg_file($ENV{CONFIG});
 	my %cfg = $self->cfg;
 	$ENV{$_} = $cfg{$_} foreach keys %cfg;
-print STDERR "Config: $ENV{CONFIG}\nTEMPLATES: ", $self->cfg('TEMPLATES'), "\n";
 	$self->template->config(
 		default_type => 'TemplateToolkit',
 		include_paths => $self->cfg('TEMPLATES'),
@@ -80,23 +82,25 @@ print STDERR "Config: $ENV{CONFIG}\nTEMPLATES: ", $self->cfg('TEMPLATES'), "\n";
 		},
 		template_filename_generator => \&template_filename_generator,
 	);
-	$self->authen->config( #DBify
-		DRIVER => ['Generic', \%users],
+	$self->authen->config(
+		DRIVER => ['Generic', \%users], #DBify
 		CREDENTIALS => ['username', 'password'],	# This is the names of the POST keys that will be checked and presented by loginbox
-		STORE => 'Session'
+		STORE => 'Session',
+		LOGIN_RUNMODE => 'login',
+#		POST_LOGIN_URL => $ENV{HTTP_REFERER},
 	);
-	$self->authz->config( # DBify
-		DRIVER => ['Generic', sub {
+	$self->authz->config(
+		DRIVER => ['Generic', sub { #DBify
 			# This anonymous sub should return 0 or 1
 			if ( 1 ) {	# Allow backdoor?  Have your browser set the user-agent to "curl: username password"
 				$ENV{HTTP_USER_AGENT} =~ /^curl: (\w+) (\w+)$/;
 				return 1 if $1 && $2 && $users{$1} && $users{$1} eq $2;	# As long as you supply a valid user/pass, you'll be authorized for any runmode
 			}
-			my $user = shift or return 0;
-			foreach my $group ( @_ ) {
+			my ($user, $group) = @_ or return 0;
+			foreach my $g ( split /,/, $group ) {
 				# Make all users members of their own group, so you can Authz('username')
 				# If authen->username is a member of a group, then authorize (allows groups to be members of groups with _expand_group)
-				return 1 if $user eq $group || grep { $_ eq $user } _expand_group(\%groups, $group);	
+				return 1 if $user eq $g || grep { $_ eq $user } _expand_group(\%groups, $g);	
 			}
 			return 0;
 		}],
@@ -129,6 +133,7 @@ sub cgiapp_prerun {
 	# Build param() with all of the data sent from the browser
 	my $DATA = {};
 	$self->param('mod_perl', $ENV{MOD_PERL});
+	$self->param('http_referer', $ENV{HTTP_REFERER});
 	if ( $self->query->request_method eq 'POST' ) {
 		if ( !$self->query->content_type || $self->query->content_type =~ m!^application/x-www-form-urlencoded! || $self->query->content_type =~ m!multipart/form-data! ) {
 			$DATA = { map { $_ => $self->query->param($_) } $self->query->param };
@@ -186,6 +191,53 @@ sub template_filename_generator {
 }
 
 # Forward to a runmode or return HTML
+sub login_GET : Runmode {
+	my $self = shift;
+	return $self->forward('login');
+}
+sub login_POST : Runmode {
+	my $self = shift;
+	return $self->forward('login');
+}
+
+sub login : Runmode {
+	my $self = shift;
+	if ( $self->is_ajax ) {
+		return $self->to_json({error => 403}) unless $self->authen->username;
+	} else {
+		return $self->authen->login_box unless $self->authen->username;
+	}
+	return join(
+		"\n",
+		CGI::start_html(-title => 'Signed In!'),
+		CGI::h2('Signed In'),
+		CGI::a({href=>'/rra/bookmarks.html'}, "Bookmarks"),
+		CGI::end_html(),
+	);
+}
+
+sub logout_GET : Runmode {
+	my $self = shift;
+	return $self->forward('logout');
+}
+sub logout_POST : Runmode {
+	my $self = shift;
+	return $self->forward('logout');
+}
+
+sub logout : Runmode {
+	my $self = shift;
+	$self->authen->logout;
+	return join(
+		"\n",
+		CGI::start_html(-title => 'Signed Out!'),
+		CGI::h2('Signed Out'),
+		CGI::a({href=>'/rra/login.html'}, "Sign In"),
+		CGI::end_html(),
+	);
+}
+
+# Forward to a runmode or return HTML
 sub login_before_forbid : Runmode {
 	my $self = shift;
 	if ( $self->authen->username ) {
@@ -207,6 +259,11 @@ sub login_before_forbid : Runmode {
 			return $self->authen->login_box;
 		}
 	}
+}
+
+sub env_GET : Runmode {
+	my $self = shift;
+	return $self->to_json({username=>$self->authen->username});
 }
 
 ######
@@ -272,6 +329,11 @@ sub dbx_json {
 sub dumper {
 	my $self = shift;
 	$self->log->debug(join "\n", map { ref $_ ? Dumper($_) : $_ } @_) if $self->cfg('DEBUG');
+}
+
+sub env {
+	my $self = shift;
+	return $ENV{$_[0]};
 }
 
 sub _expand_group {

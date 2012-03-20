@@ -6,7 +6,7 @@ use warnings;
 use base 'RRA::Base';
 use SQL::Interp ':all';
 
-sub sequence_GET : StartRunmode { #: Runmode Authen Authz('admins') {
+sub sequence_GET : StartRunmode RequireAjax Authen Authz(':admins') {
 	my $self = shift;
 	my ($sql, @bind);
 	my $night = $self->param('dispatch_url_remainder');
@@ -22,7 +22,7 @@ sub sequence_GET : StartRunmode { #: Runmode Authen Authz('admins') {
 	return $self->to_json({rows => $self->dbh->selectall_arrayref($sql, {Slice=>{}}, @bind)});
 }
 
-sub sequence_POST : Runmode { #: Runmode Authen Authz('admins') {
+sub sequence_POST : Runmode RequireAjax Authen Authz(':admins') {
 	my $self = shift;
 	my $night = $self->param('dispatch_url_remainder');
 	my @item_id = map { /_(\d+)$/; $1 } @{$self->param('item_id')};

@@ -14,6 +14,8 @@
 $(document).ready(function(){
 	$.get('pl/backup', function(data) {
 		$('#result1').html(data);
+	}).ajaxError(function(){
+		window.location = "login.html?referer=backup.html";
 	});
 });
 </script>

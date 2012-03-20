@@ -6,7 +6,7 @@ use warnings;
 use base 'RRA::Base';
 use SQL::Interp ':all';
 
-sub cell_POST : Runmode {
+sub cell_POST : Runmode RequireAjax Authen Authz(':admins') {
 	my $self = shift;
 	my ($sql, @bind) = sql_interp 'UPDATE stockitems SET', {map {$_=>$self->param($_)} $self->param('celname')}, 'WHERE', {stockitem_id => $self->param('id')};
 	return $self->to_json({sc=>'false',msg=>"Editing disabled"}) if $self->cfg('NOEDIT');
@@ -14,7 +14,7 @@ sub cell_POST : Runmode {
 	return $self->to_json({sc=>'true',msg=>""});
 }
 
-sub edit_POST : Runmode {
+sub edit_POST : Runmode RequireAjax Authen Authz(':admins') {
 	my $self = shift;
 	$self->param('category', $self->param('stockitemcat')||'');
 	my @stockitems = qw/category stockitem value cost/;
@@ -24,7 +24,7 @@ sub edit_POST : Runmode {
 	return $self->to_json({sc=>'true',msg=>""});
 }
 
-sub add_POST : Runmode {
+sub add_POST : Runmode RequireAjax Authen Authz(':admins') {
 	my $self = shift;
 	$self->param('category', $self->param('stockitemcat')||'');
 	my @stockitems = qw/category stockitem value cost/;
@@ -34,7 +34,7 @@ sub add_POST : Runmode {
 	return $self->to_json({sc=>'true',msg=>""});
 }
 
-sub del_POST : Runmode {
+sub del_POST : Runmode RequireAjax Authen Authz(':admins') {
 	my $self = shift;
 	my ($sql, @bind) = sql_interp 'DELETE FROM stockitems WHERE', {stockitem_id => $self->param('id')};
 	return $self->to_json({sc=>'false',msg=>"Editing disabled"}) if $self->cfg('NODEL');
@@ -42,15 +42,15 @@ sub del_POST : Runmode {
 	return $self->to_json({sc=>'true',msg=>""});
 }
 
-sub search_POST : Runmode {
+sub search_POST : Runmode RequireAjax Authen Authz(':admins') {
 	my $self = shift;  
 }
  
-sub view_POST : Runmode {
+sub view_POST : Runmode RequireAjax Authen Authz(':admins') {
 	my $self = shift;
 }
 
-sub stockitems_POST : StartRunmode { #Authen Authz('admins') {
+sub stockitems_POST : StartRunmode RequireAjax Authen Authz(':admins') {
 	my $self = shift;
 	my %sOper = $self->sOper;
 	my ($sidx, $sord, $page, $rows) = ($self->param('sidx')||'number', $self->param('sord')||'asc', $self->param('page')||1, $self->param('rows')||10);

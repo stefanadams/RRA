@@ -30,7 +30,7 @@ $(document).ready(function(){
 	var $tabs = $( "#tabs" ).tabs({
 		select: function( event, ui ) {
 			selectedtab = $tabs.tabs('option', 'selected');
-			$("#sortable9999").processTemplateURL(baseurl+"/9999", null, {type: 'GET'});
+			$("#sortable9999").processTemplateURL(baseurl+"/9999", null, {type: 'GET'}).ajaxError(function(){window.location = "login.html?referer=schedule_ads.html";});
 		}
 	});
 
@@ -69,7 +69,7 @@ $(document).ready(function(){
 			});
 		}
 	});
-	$("#sortable0").processTemplateURL(baseurl+"/0", null, {type: 'GET'});
+	$("#sortable0").processTemplateURL(baseurl+"/0", null, {type: 'GET'}).ajaxError(function(){window.location = "login.html?referer=schedule_ads.html";});
 	$("#sortable1").sortable({
 		update: function(event, ui) {
 			$.ajax({
@@ -82,7 +82,7 @@ $(document).ready(function(){
 			});
 		}
 	});
-	$("#sortable1").processTemplateURL(baseurl+"/1", null, {type: 'GET'});
+	$("#sortable1").processTemplateURL(baseurl+"/1", null, {type: 'GET'}).ajaxError(function(){window.location = "login.html?referer=schedule_ads.html";});
 	$("#sortable2").sortable({
 		update: function(event, ui) {
 			$.ajax({
@@ -95,7 +95,7 @@ $(document).ready(function(){
 			});
 		}
 	});
-	$("#sortable2").processTemplateURL(baseurl+"/2", null, {type: 'GET'});
+	$("#sortable2").processTemplateURL(baseurl+"/2", null, {type: 'GET'}).ajaxError(function(){window.location = "login.html?referer=schedule_ads.html";});
 	$("#sortable3").sortable({
 		update: function(event, ui) {
 			$.ajax({
@@ -108,7 +108,7 @@ $(document).ready(function(){
 			});
 		}
 	});
-	$("#sortable3").processTemplateURL(baseurl+"/3", null, {type: 'GET'});
+	$("#sortable3").processTemplateURL(baseurl+"/3", null, {type: 'GET'}).ajaxError(function(){window.location = "login.html?referer=schedule_ads.html";});
 	$("#sortable4").sortable({
 		update: function(event, ui) {
 			$.ajax({
@@ -121,8 +121,8 @@ $(document).ready(function(){
 			});
 		}
 	});
-	$("#sortable4").processTemplateURL(baseurl+"/4", null, {type: 'GET'});
-	$("#sortable9999").processTemplateURL(baseurl+"/9999", null, {type: 'GET'});
+	$("#sortable4").processTemplateURL(baseurl+"/4", null, {type: 'GET'}).ajaxError(function(){window.location = "login.html?referer=schedule_ads.html";});
+	$("#sortable9999").processTemplateURL(baseurl+"/9999", null, {type: 'GET'}).ajaxError(function(){window.location = "login.html?referer=schedule_ads.html";});
 	//$("#summary").load(baseurl, 'summary=5');
 
 });

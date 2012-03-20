@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset-utf-8" />
+		<!-- [% c.param('live') %] - Radio Auction [% c.param('year') %] - [% c.param('phone') %] -->
+		<title>Radio Auction</title>
+		<!-- CSS for the theme -->
+		<link rel="stylesheet" href="css/[% c.session.param('theme') %].css" type="text/css" media="[% c.session.param('media') %]" />
+		<!-- <link rel="stylesheet" href="css/modals.css" type="text/css" media="screen" /> -->
+		<link rel="stylesheet" href="css/tabs.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="css/tablesort.css" type="text/css" media="screen" />
+		<link rel="stylesheet" type="text/css" media="screen" href="css/redmond/jquery-ui-1.8.10.custom.css" />
+		<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+
+		<!-- Libraries: http://code.google.com/apis/libraries/devguide.html -->
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+		<script type="text/javascript" src="js/jquery.jtemplates.js"></script>
+		<!-- <script type="text/javascript" src="js/jquery.taconite.js"></script> -->
+		<script type="text/javascript" src="js/jquery.qtip.js"></script>
+		<script type="text/javascript" src="js/jquery.jtruncate.js"></script>
+		<script type="text/javascript" src="js/jquery.humanmsg.js"></script>
+		<script type="text/javascript" src="js/jquery.maskedinput.js"></script>
+		<script type="text/javascript" src="js/jquery.formatCurrency-1.4.0.pack.js"></script>
+		<script type="text/javascript" src="js/jquery.idTabs.min.js"></script>
+		<script type="text/javascript" src="js/jquery.tools.min.js"></script>
+		<script type="text/javascript" src="js/jquery.tablesorter.min.js"></script>
+		<!-- <script type="text/javascript" src="js/jquery.dump.js"></script> -->
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/jquery-ui.min.js"></script>
+
+		<script language=javascript src="http://nick8.surfernetwork.com/Media/player/scripts/launch.js"></script>
+
+	</head>
+
+	<body>
+
+		<div id="headergroup">
+			<div id="header">
+				[% INCLUDE header.tmpl %]
+			</div>
+			<div id="alert">
+				[% INCLUDE alert %]
+			</div>
+			<div id="alertmsg">
+				[% INCLUDE alertmsg.tmpl %]
+			</div>
+		</div>
+
+		<div id="bodygroup">
+			<div id="iis">
+				<iframe src="http://iis.radioauction.washingtonrotary.com" style="height:900px;width:100%;padding-top:5px;border:0" />
+			</div>
+		</div>
+
+		<div id="footergroup">  
+			<div id="key">
+				[% INCLUDE key %]
+			</div>
+		</div>
+
+	</body>
+</html>
+
+[% BLOCK alert %]
+    [% IF c.authz.authorize('admins') %]
+    <table>
+        <tr id="alert-row-alert" class="alert">
+            <td>
+                <span id="alert-admin" class="alert" value="admin">Admins</span>
+                <span id="alert-operator" class="alert" value="operator">Operators</span>
+                <span id="alert-caller" class="alert" value="caller">Callers</span>
+                <span id="alert-bellringer" class="alert" value="bellringer">Bellringers</span>
+                <span id="alert-auctioneer" class="alert" value="auctioneer">Auctioneers</span>
+                <span id="alert-public" class="alert" value="public">Public</span>
+            </td>
+        </tr>
+        <tr id="alert-row-msg" class="msg">
+            <td>
+                <input id="alert-msg" class="msg" type="text" value="Enter Alert Message Here" />
+            </td>
+        </tr>
+    </table> 
+    [% END %]
+[% END %]
+
+[% BLOCK key %]
+    <span class="key">Key:
+        <img valign='middle' src='img/paddle1.gif' width='16' height='16' class="tooltip above" description="New Bid">&nbsp;= New Bid |
+        <img valign='middle' src='img/bell2.png' width='16' height='16' class="tooltip above" description="Bell Ringer">&nbsp;= Bell Ringer |
+        <img valign='middle' src='img/clock3.gif' width='16' height='16' class="tooltip above" description="Timer">&nbsp;= Timer |
+        <img valign='middle' src='img/gavel2.gif' width='16' height='16' class="tooltip above" description="Sold">&nbsp;= Sold |  
+        <img valign='middle' src='img/paper1.gif' width='16' height='16' class="tooltip above" description="More description">&nbsp;= More description |
+        <img valign='middle' src='img/chain1.png' width='16' height='16' class="tooltip_fixed above" description="<a href='http://google.com' target='_new'>Link</a>">&nbsp;= External link |
+        <img valign='middle' src='img/attach_image.gif' width='16' height='16' class="tooltip above" description="<img src='img/attach_image.gif' />">&nbsp;= View image
+    </span>
+[% END %]  

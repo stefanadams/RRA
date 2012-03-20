@@ -6,15 +6,15 @@ use warnings;
 use base 'RRA::Base';
 use SQL::Interp ':all';
 
-sub search_POST : Runmode {
+sub search_POST : Runmode RequireAjax Authen Authz(':admins') {
 	my $self = shift;
 }
 
-sub view_POST : Runmode {
+sub view_POST : Runmode RequireAjax Authen Authz(':admins') {
 	my $self = shift;
 }
 
-sub rotarians_POST : StartRunmode { #Ajax Authen Authz('admins') {
+sub rotarians_POST : StartRunmode RequireAjax Authen Authz(':admins') {
 	my $self = shift;
 	my %sOper = $self->sOper;
 	my ($sidx, $sord, $page, $rows) = ($self->param('sidx')||'rotarian', $self->param('sord')||'asc', $self->param('page')||1, $self->param('rows')||10);

@@ -13,6 +13,8 @@ $(document).ready(function(){
 	// process the template
 	$("#result1").processTemplateURL("pl/api/donors/solicitationaids", null, {
 		type: 'GET',
+	}).ajaxError(function(){
+		window.location = "login.html?referer=solicitation_aids.html";
 	});
 });
 function UpdateCompliance(id) {

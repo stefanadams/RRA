@@ -1,0 +1,106 @@
+<table live="[% c.param('live') %]" user="[% c.auth.username %]" [% IF c.authz.authorize('admins') %]admin="admin"[% END %]>
+	<tr><td class="mast">[% PROCESS mast %]</td></tr>
+	<tr><td class="ad">[% PROCESS ad %]</td></tr>
+</table>
+<div id="stats-data" class="hidden">
+	Count: <span class="number">[% stats.tonight.items.count %]</span><br />
+	Total Value: <span class="currency">[% stats.tonight.items.value %]</span><br />
+</div>
+
+[% BLOCK chat %]
+	<a href='http://radioauction.washingtonrotary.com/mibew/client.php?locale=en&style=simplicity' target='_blank' onclick='if(navigator.userAgent.toLowerCase().indexOf('opera') != -1 && window.event.preventDefault) window.event.preventDefault();this.newWindow = window.open('http://radioauction.washingtonrotary.com/mibew/client.php?locale=en&style=simplicity&url='+escape(document.location.href)+'&referrer='+escape(document.referrer), 'webim', 'toolbar=0,scrollbars=0,location=0,status=1,menubar=0,width=640,height=480,resizable=1');this.newWindow.focus();this.newWindow.opener=window;return false;'>
+		<img src='http://radioauction.washingtonrotary.com/mibew/button.php?i=webim&lang=en' border='0' width='163' height='61' alt=''/>
+	</a>
+[% END %]
+
+[% BLOCK listen %]
+	<a href='http://lightningstream.surfernetwork.com/Media/player/view/klpw4.asp?call=klpw' target='new'>
+		<img src='http://images.radcity.net/5680/2489224.gif' border='0' width='163' alt=''/>
+	</a>
+[% END %]
+
+[% BLOCK mast %]
+	<table id="mast">
+	[% IF c.session.param('theme') == 'main' %]
+		<tr><td class="title">Washington Rotary Radio Auction [% IF c.param('year') %]<span class="year">[% c.param('year') %]</span>[% END %][% IF c.param('year') && c.param('night') %], [% END %][% IF c.param('night') %]Night <span class="night">[% c.param('night') %]</span>[% END %]</td></tr>
+		<tr>
+			<td class="play">
+				<span class="listen">Listen:
+					<span class="radio">
+					[% FOREACH station IN listen.radio %]
+						[% IF station.link %]
+							<span class="nolive"><label class="mast hidden">[% station.name %]</label><a class="mast" href="javascript:callLTR='KLPW';grptuner='';file='';title='';ListenLive();" target="_self">[% station.name %]</a></span>
+						[% ELSE %]
+							[% station.name %]
+						[% END %]
+						[% UNLESS loop.last %]
+							<span class="choicesep">/</span>
+						[% END %]
+					[% END %]
+					</span>
+				</span>
+				<img class="arrowsep" src="images/right_arrow_button.gif" />
+				<span class="bid">Bid:
+					[% FOREACH phone IN bid.phone %]
+						[% phone %]
+						[% UNLESS loop.last %]
+							<span class="choicesep">/</span>
+						[% END %]
+					[% END %]
+					<span class="choicesep">/</span>
+					[% FOREACH online IN bid.chat %]
+						[% IF online.name %]
+							<span class="nolive"><label class="mast hidden">[% online.name %]</label><a id="[% online.id %]" class="mast" href="[% online.link %]" target="new">[% online.name %]</a></span>
+						[% ELSE %]
+							[% online.name %]
+						[% END %]
+						[% UNLESS loop.last %]
+							<span class="choicesep">/</span>
+						[% END %]
+					[% END %]
+				</span>
+<!--
+				<div id="dialog-mibew" title="Bid by Chat!" class="modal">
+					<iframe src="http://radioauction.washingtonrotary.com/mibew/client.php?locale=en&style=simplicity" width="310" height="250"/>
+				</div>
+-->
+				<img class="arrowsep" src="images/right_arrow_button.gif" />
+				<span class="pay">Pay:
+					<a id="paypal" class="modal">PayPal</a>
+				</span>
+				<div id="dialog-paypal" title="Pay by Credit Card" class="modal">
+					<form action='https://www.paypal.com/cgi-bin/webscr' method='post'>
+						<input type='hidden' name='cmd' value='_s-xclick'><input type='hidden' name='hosted_button_id' value='4113257'>
+						<table>
+							<tr><td colspan="2">Complete the form below to pay for your item:</td></tr>
+							<tr><td>Item #:</td><td><input type='hidden' name='on0' value='Item ID'><input id="paypal-os0" type='text' name='os0' maxlength='60' value='Item ID' onfocus="this.value = ( this.value == this.defaultValue ) ? '' : this.value;return true;"></td></tr>
+							<tr><td>Description:</td><td><input type='hidden' name='item_name' value='Item Description'><input id="paypal-name" type='text' name='item_name' maxlength='60' value='Item Description' onfocus="this.value = ( this.value == this.defaultValue ) ? '' : this.value;return true;"></td></tr>
+							<tr><td>Street Address:</td><td><input type='hidden' name='on1' value='Street Address'><input type='text' name='os1' maxlength='60' value='Street Address' onfocus="this.value = ( this.value == this.defaultValue ) ? '' : this.value;return true;"></td></tr>
+							<tr><td>City, ST ZIP</td><td><input type='hidden' name='on2' value='City, State, Zip'><input type='text' name='os2' maxlength='60' value='City, State, Zip' onfocus="this.value = ( this.value == this.defaultValue ) ? '' : this.value;return true;"></td></tr>
+							<tr><td colspan="2" align="center"><input type='image' src='https://www.paypal.com/en_US/i/btn/btn_paynowCC_LG.gif' border='0' name='submit' alt='PayPal - The safer, easier way to pay online!'><img alt='' border='0' src='https://www.paypal.com/en_US/i/scr/pixel.gif' width='1' height='1'></td></tr>
+						</table>
+					</form>
+				</div>   
+			</td>
+		</tr>
+	[% ELSIF c.session.param('theme') == 'tv' %]
+		<tr><td class="title">Washington Rotary Radio Auction <span class="year">[% c.param('year') %]</span>.<span class="night">[% c.param('night') %]</span> <img class="arrowsep" src="[% root %]/images/right_arrow_button.gif" /> <span class="phone">[% bid.phone.0 %]</span></td></tr>
+	[% ELSE %]
+		<tr><td class="title">Washington Rotary Radio Auction <span class="year">[% c.param('year') %]</span>.<span class="night">[% c.param('night') %]</span> <img class="arrowsep" src="[% root %]/images/right_arrow_button.gif" /> <span class="phone">[% bid.phone.0 %]</span></td></tr>
+	[% END %]
+	</table>
+[% END %]
+
+[% BLOCK ad %]
+	<table id="ad">
+		<tr>
+			<td>
+			[% IF ad_id %]
+			<a href="pl/api/ad/[% ad_id %]" target="_new"><img src="ads/[% ad_id %].jpg" border="0" /></a>
+			[% ELSE %]
+			<a href="http://www.washingtonrotary.com" target="_new"><img src="ads/washrotary.jpg" border="0" /></a>
+			[% END %]
+			</td>
+		</tr>
+	</table>
+[% END %]

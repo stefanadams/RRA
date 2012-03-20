@@ -1,0 +1,22 @@
+    #header table[live] {width:100%}
+[% IF c.session.param('theme') == 'tv' %]
+    #header {width:100%;background-color:#414794;text-align:center;padding:0px}
+    table#mast {width:700px;margin-left:auto;margin-right:auto}
+    table#mast td {color: white;width:700px;font-weight:bold/*;border: thin black solid*/}
+    table#ad td {width:700px}
+[% ELSE %]
+    #header {width:100%;background-color:#414794;text-align:center;padding:5px}
+    table#mast {width:960px;margin-left:auto;margin-right:auto}
+    table#mast td {color: white;width:960px;font-weight:bold/*;border: thin black solid*/}
+    table#ad td {width:960px;height:100px;}
+[% END %]
+    table#mast td.listen {color: white;text-align:right;padding-right:15px;width:320px}
+    table#mast td.bid {color: white;text-align:center;width:320px}
+    table#mast td.pay {color: white;text-align:left;padding-left:15px;width:320px}
+    table#ad {width:100%}
+    a.mast:link {color:white;text-decoration:underline}
+    a.mast:visited {color:white;text-decoration:underline}
+    a.mast:hover {color:white;text-decoration:underline}
+    a.mast:active {color:white;text-decoration:underline}
+    a#paypal {color:white;text-decoration:underline}
+    img.arrowsep {padding-left:15px;padding-right:15px}

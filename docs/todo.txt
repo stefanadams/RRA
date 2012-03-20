@@ -41,6 +41,10 @@ Rather than croak, make the runmode 404
 #Need to get SSL on rra.
 #RequireSSL on login page only: That is the login form needs to POST to SSL (So really, RequireSSL isn't needed anywhere)
 
+Header / About / Env
+Get it on all/select pages.  Probably just a div like loggedin that has the full header details.  One header for public (ads) and one for admins (no-ads).
+What about other themes like for TV?
+
 ----------
 
 Show All

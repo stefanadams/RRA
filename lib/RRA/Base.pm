@@ -2,42 +2,6 @@ package RRA::Base;
 
 our $VERSION = '0.01';
 
-our %users = (
-	#username => 'password',
-	admin => 'harris',
-	adsales => 'harris',
-	caller => 'harris',
-	bellringer => 'harris',
-	auctioneer => 'harris',
-	a => 'harris',
-	b => 'harris',
-	operator => 'harris',
-);
-our %groups = (
-	#group => [qw/user names/],
-	admins => [qw/admin/],
-	adsales => [qw/adsales :admins/],
-	callers => [qw/caller :admins/],
-	bellringers => [qw/bellringer :admins/],
-	auctioneers => [qw/a b auctioneer :admins/],
-	operators => [qw/operator :admins/],
-	backend => [qw/:admins :auctioneers :operators/],
-);
-# @auctioneers = join ',', grep { /^(?!:)/ } @{$groups{auctioneers}}
-#our %protected = ( 
-#	#page => 'group',
-#	admin => 'admins',
-#	adsales => 'adsales',
-#	caller => 'callers',
-#	bellringer => 'bellringers',
-#	auctioneer => 'auctioneers',
-#	operator => 'operators',
-#	resttest_GET => 'admins',
-#	resttest_POST => 'admins',
-#	resttest_DELETE => 'auctioneers',
-#	resttest_PUT => 'admins',
-#);
-
 use strict;
 use warnings;
 
@@ -84,15 +48,16 @@ sub cgiapp_init {
 		},
 		template_filename_generator => \&template_filename_generator,
 	);
+	my %users = %{$self->cfg('USERS')};
+	my %groups = %{$self->cfg('GROUPS')};
 	$self->authen->config(
 		DRIVER => ['Generic', \%users], #DBify
 		CREDENTIALS => ['username', 'password'],	# This is the names of the POST keys that will be checked and presented by loginbox
 		STORE => 'Session',
 		LOGIN_RUNMODE => 'login',
-#		POST_LOGIN_URL => $ENV{HTTP_REFERER},
 	);
 	$self->authz->config(
-		DRIVER => ['Generic', sub { #DBify
+		DRIVER => ['Generic', sub { #DBify - put users in groups
 			# This anonymous sub should return 0 or 1
 			if ( 1 ) {	# Allow backdoor?  Have your browser set the user-agent to "curl: username password"
 				$ENV{HTTP_USER_AGENT} =~ /^curl: (\w+) (\w+)$/;
@@ -102,7 +67,7 @@ sub cgiapp_init {
 			foreach my $g ( split /,/, $group ) {
 				# Make all users members of their own group, so you can Authz('username')
 				# If authen->username is a member of a group, then authorize (allows groups to be members of groups with _expand_group)
-				return 1 if $user eq $g || grep { $_ eq $user } _expand_group(\%groups, $g);	
+				return 1 if $user eq $g || grep { $_ eq $user } _expand_group(\%groups, $g);
 			}
 			return 0;
 		}],

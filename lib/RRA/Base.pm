@@ -7,7 +7,10 @@ use warnings;
 
 use base 'CGI::Application';
 use Apache2::RequestIO ();
+use CGI::Application::Plugin::Authentication;
+use CGI::Application::Plugin::Authorization;
 use CGI::Application::Plugin::ConfigAuto (qw/cfg cfg_file/);
+use CGI::Application::Plugin::ErrorPage 'error';
 use CGI::Application::Plugin::AutoRunmode;
 use CGI::Application::Plugin::Redirect;
 use CGI::Application::Plugin::Forward;
@@ -16,10 +19,8 @@ use CGI::Application::Plugin::DBH qw/dbh_config dbh/;
 use CGI::Application::Plugin::AnyTemplate;
 use CGI::Application::Plugin::DetectAjax;
 use CGI::Application::Plugin::JSON ':all';
-use CGI::Application::Plugin::RequireSSL;
-use CGI::Application::Plugin::RequireAjax;
-use CGI::Application::Plugin::Authentication;
-use CGI::Application::Plugin::Authorization;
+use CGI::Application::Plugin::RequireAjax 'requires_ajax';
+use CGI::Application::Plugin::RequireSSL 'mode_redirect';
 use CGI::Application::Plugin::Stream (qw/stream_file/);
 
 use CGI::Application::Plugin::LogDispatch;
@@ -38,6 +39,7 @@ sub cgiapp_init {
 	my $self = shift;
 
 	$self->cfg_file($ENV{CONFIG});
+	chdir $self->cfg('TEMPLATES');
 	my %cfg = $self->cfg;
 	$ENV{$_} = $cfg{$_} foreach keys %cfg;
 	$self->template->config(
@@ -63,7 +65,9 @@ sub cgiapp_init {
 				$ENV{HTTP_USER_AGENT} =~ /^curl: (\w+) (\w+)$/;
 				return 1 if $1 && $2 && $users{$1} && $users{$1} eq $2;	# As long as you supply a valid user/pass, you'll be authorized for any runmode
 			}
-			my ($user, $group) = @_ or return 0;
+			my ($user, $group) = @_;
+			return 1 if $user && !$group;
+			return 0 if !$user;
 			foreach my $g ( split /,/, $group ) {
 				# Make all users members of their own group, so you can Authz('username')
 				# If authen->username is a member of a group, then authorize (allows groups to be members of groups with _expand_group)
@@ -158,6 +162,11 @@ sub cgiapp_postrun {
 	});
 }
 
+sub error_rm : ErrorRunmode Runmode {
+	my $self = shift;
+	return $self->error( title => 'Technical Failure', msg => 'There was a technical failure: '.shift );
+}
+
 sub template_filename_generator {
 	my $self     = shift;
 	my $run_mode = $self->get_current_runmode;
@@ -169,6 +178,11 @@ sub template_filename_generator {
 }
 
 # Forward to a runmode or return HTML
+sub login_before_forbid : Runmode {
+	my $self = shift;
+	return $self->forward('login');
+}
+
 sub login_GET : Runmode {
 	my $self = shift;
 	return $self->forward('login');
@@ -180,18 +194,24 @@ sub login_POST : Runmode {
 
 sub login : Runmode {
 	my $self = shift;
-	if ( $self->is_ajax ) {
-		return $self->to_json({error => 403}) unless $self->authen->username;
+	if ( $self->authen->username ) {
+		if ( $self->is_ajax ) {
+			return $self->return_json({error => 401});
+		} else {
+			return join("\n",
+				CGI::start_html(-title => 'Unauthorized'),
+				CGI::h2('Unauthorized'),
+				CGI::p('You do not have permission to perform that action'),
+				CGI::end_html(),
+			);
+		}
 	} else {
-		return $self->authen->login_box unless $self->authen->username;
+		if ( $self->is_ajax ) {
+			return $self->return_json({error => 403});
+		} else {
+			return $self->authen->login_box;
+		}
 	}
-	return join(
-		"\n",
-		CGI::start_html(-title => 'Signed In!'),
-		CGI::h2('Signed In'),
-		CGI::a({href=>'/rra/bookmarks.html'}, "Bookmarks"),
-		CGI::end_html(),
-	);
 }
 
 sub logout_GET : Runmode {
@@ -213,30 +233,6 @@ sub logout : Runmode {
 		CGI::a({href=>'/rra/login.html'}, "Sign In"),
 		CGI::end_html(),
 	);
-}
-
-# Forward to a runmode or return HTML
-sub login_before_forbid : Runmode {
-	my $self = shift;
-	if ( $self->authen->username ) {
-		if ( $self->is_ajax ) {
-			return $self->to_json({error => 403});
-		} else {
-			return join(
-				"\n",
-				CGI::start_html(-title => 'Forbidden'),
-				CGI::h2('Forbidden'),
-				CGI::p('You do not have permission to perform that action'),
-				CGI::end_html(),
-			);
-		}
-	} else {
-		if ( $self->is_ajax ) {
-			return $self->to_json({error => 403});
-		} else {
-			return $self->authen->login_box;
-		}
-	}
 }
 
 sub about {
@@ -262,11 +258,19 @@ sub about {
 
 sub about_GET : Runmode RequireAjax {
 	my $self = shift;
-	return $self->to_json($self->about);
+	return $self->return_json($self->about);
 }
 
 ######
 ######
+
+sub return_json {
+	my $self = shift;
+	$self->header_add(
+		-type => 'application/json',
+	);
+	return $self->to_json(@_);
+}
 
 sub sOper { ('eq' => '=', 'ne' => '<>', 'lt' => '<', 'le' => '<=', 'gt' => '>', 'ge' => '>=', 'bw' => " LIKE '%'", 'ew' => " LIKE '%'", 'cn' => " LIKE '%%'") }
 

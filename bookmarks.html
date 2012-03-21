@@ -51,9 +51,11 @@ $(document).ready(function(){
 			
 	// process the template
 	$("#result1").processTemplateURL("pl/bookmarks", null, {
-		type: 'GET',
-	}).ajaxError(function(){
-		window.location = "login.html?referer=bookmarks.html";
+		type: 'GET'
+	}).ajaxComplete(function(e, xhr, settings){
+		var json = $.parseJSON(xhr.responseText);
+		if ( json && json.error == "401" ) { window.location = "error.html?referer=bookmarks.html;status=401"; }
+		if ( json && json.error == "403" ) { window.location = "login.html?referer=bookmarks.html"; }
 	});
 });
 </script>

@@ -30,7 +30,10 @@
 package RRA::Dispatch;
 use base 'CGI::Application::Dispatch';
 
-print STDERR '[dispatch] '.join "\n", map { "$_\t$ENV{$_}" } sort keys %ENV;
+use Config::Auto;
+my $config = Config::Auto::parse($ENV{CONFIG});
+
+#print STDERR '[dispatch] '.(join "\n", map { "\t$_:\t$ENV{$_}" } sort keys %ENV)."\n".(join "\n", map { "\t$_:\t$config->{$_}" } sort keys %{$config});
 
 sub dispatch_args {{
 	prefix => 'RRA',
@@ -68,6 +71,7 @@ sub dispatch_args {{
 		'template/*'			=> { app => 'Template', rm => 'template' },
 	],
 	args_to_new => {
+		TMPL_PATH => $config->{TEMPLATES},
 		PARAMS => { },
 	},
 }}

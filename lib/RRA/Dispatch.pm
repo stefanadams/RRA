@@ -37,7 +37,7 @@ my $config = Config::Auto::parse($ENV{CONFIG});
 
 sub dispatch_args {{
 	prefix => 'RRA',
-	debug => 1,
+	debug => 0,
 	auto_rest => 1,
 	table => [
 		'api/rotarians'			=> { app => 'API::Rotarians', rm => 'rotarians' },

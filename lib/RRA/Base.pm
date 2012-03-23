@@ -94,12 +94,12 @@ sub cgiapp_init {
 sub cgiapp_prerun {
 	my $self = shift;
 
-	my ($year, $night, $live) = $self->dbh->selectrow_array('SELECT * FROM current_auction_vw');
+	my ($year, $night, $live) = $self->dbh->selectrow_array('SELECT * FROM auctions_current_vw');
 	$self->param('year', $year);
 	$self->param('night', $night);
 	$self->param('live', $live);
 	unless ( $live ) {
-		my ($year, $night, $date) = $self->dbh->selectrow_array('SELECT * FROM next_auction_vw');
+		my ($year, $night, $date) = $self->dbh->selectrow_array('SELECT * FROM auctions_next_vw');
 		$self->param('year_next', $year);
 		$self->param('night_next', $night);
 		$self->param('date_next', $date);
@@ -164,7 +164,11 @@ sub cgiapp_postrun {
 
 sub error_rm : ErrorRunmode Runmode {
 	my $self = shift;
-	return $self->error( title => 'Technical Failure', msg => 'There was a technical failure: '.shift );
+	if ( $self->is_ajax ) {
+		return $self->return_json({error => 500, title => 'Technical Failure', msg => 'There was a technical failure: '.shift});
+	} else {
+		return $self->error(title => 'Technical Failure', msg => 'There was a technical failure: '.shift);
+	}
 }
 
 sub template_filename_generator {

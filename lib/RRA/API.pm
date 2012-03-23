@@ -181,6 +181,7 @@ sub ac_GET : Runmode RequireAjax {
 	$self->param('stockitem_id', $1||'') if $self->param('stockitem') && $self->param('stockitem') =~ /:(\d+)$/;
 	my $limit = $self->param('limit') || 10;
 	my ($sql, @bind);
+	my $new = 0;
 	switch ( $for ) {
 		case 'city' {
 			($sql, @bind) = sql_interp 'SELECT ac FROM ac_city_vw WHERE city LIKE',\"$q%",'LIMIT', \$limit;
@@ -206,16 +207,10 @@ sub ac_GET : Runmode RequireAjax {
 		case 'stockitem' {
 			($sql, @bind) = sql_interp 'SELECT ac FROM ac_stockitem_vw WHERE stockitem LIKE',\"%$q%",'LIMIT', \$limit;
 		}
-		case 'pay' {
-			my $term = $self->query->param('term');
-			my $limit = $self->query->param('limit') || 10;
-			switch ( $self->param('field') ) {
-				case 'number' {
-					return $self->to_json({
-						ac => $self->dbx("SELECT id,number,name FROM items WHERE number=? ORDER BY number LIMIT $limit", undef, $term),
-					});
-				}
-			}
+		case 'pay_number' {
+			$new = 1;
+			my $term = $self->param('term');
+			($sql, @bind) = sql_interp 'SELECT * FROM ac_pay_number_vw WHERE', {value=>$term}, 'OR label LIKE',\"%$term%", 'ORDER BY value LIMIT', \$limit;
 		}
 		case 'bid' {
 			my $term = $self->query->param('term');
@@ -251,8 +246,13 @@ sub ac_GET : Runmode RequireAjax {
 		}
 	}
 	print STDERR "\n\n\n\n\n$sql\n\n\n\n\n\n";
-	$ac = $self->dbh->selectall_arrayref($sql, {}, @bind);
-	return join "\n", map { @$_ } @$ac;
+	if ( $new ) {
+		my $ac = $self->dbh->selectall_arrayref($sql, {Slice=>{}}, @bind);
+		return $self->to_json(\@$ac);
+	} else {
+		$ac = $self->dbh->selectall_arrayref($sql, {}, @bind);
+		return join "\n", map { @$_ } @$ac;
+	}
 }
 
 1;

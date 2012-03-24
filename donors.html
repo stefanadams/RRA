@@ -108,7 +108,7 @@ $(document).ready(function(){
 			{name:'donorurl',label:'URL',width:60,search:false,editable:true,hidden:true,editrules:{url:true,edithidden:true,required:false}},
 			{name:'advertisement',label:'Advertisement',hidden:true,search:false,editable:true,edittype:'textarea',editrules:{edithidden:true}},
 			{name:'solicit',label:'Solicit',width:25,editable:true,edittype:'select',editoptions:{multiple:false,value:selectBool},formatter:'boolFmatter'},
-			{name:'items',label:'LY#',width:25,editable:false},
+			{name:'items_last',label:'LY#',width:25,editable:false},
 			{name:'rotarian',label:'Rotarian',width:100,editable:true,edittype:'select',editoptions:{multiple:false,dataUrl:'pl/api/buildselect/rotarians'}},
 			{name:'comments',label:'Comments',width:100,search:false,editable:true}
 		],
@@ -173,9 +173,12 @@ $(document).ready(function(){
 			url: "pl/api/donors/view",
 			caption: "View Donor"
 		}
-	).ajaxError(function(){
-		window.location = "login.html?referer=donors.html";
-	});
+	).ajaxComplete(function(e, xhr, settings){
+        var json = $.parseJSON(xhr.responseText);
+        if ( json && json.error == "401" ) { window.location = "error.html?referer=donors.html;status=401"; }
+        if ( json && json.error == "403" ) { window.location = "login.html?referer=donors.html"; }
+    });
+
 });
 </script>
 </head> 

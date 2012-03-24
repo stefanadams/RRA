@@ -3,6 +3,8 @@
 # select name,param_list,returns,body from mysql.proc where db='rra_master'\G
 # select * from information_schema.routines where ROUTINE_SCHEMA='rra_master'\G
 # select TABLE_NAME,VIEW_DEFINITION from information_schema.views where table_schema='rra_master'\G
+select table_name from information_schema.tables where table_schema='rra_master' and TABLE_TYPE="BASE TABLE";
+select table_name from information_schema.tables where table_schema='rra_master' and TABLE_TYPE="VIEW";
 select column_name,data_type from information_schema.columns where table_schema='rra_master' and table_name='items_vw' order by table_name limit 100;
 select table_name,table_type,table_rows from information_schema.tables where table_schema='rra_master' order by table_type, table_name;
 

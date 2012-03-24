@@ -131,10 +131,10 @@ $(document).ready(function(){
 		caption: "Winners",
 		colModel:[
 			{name:'number',label:'Number',width:20,editable:false},
-			{name:'sold',label:'Sold',width:25,editable:true,edittype:'select',editoptions:{multiple:false,value:selectBool},formatter:'boolFmatter'}
+			{name:'sold',label:'Sold',width:25,editable:true,edittype:'select',editoptions:{multiple:false,value:selectBool},formatter:'boolFmatter'},
 			{name:'item',label:'Item', width:200,editable:false},
 			{name:'highbid',label:'Price', width:25, align:'right',editable:false,formatter:'currency',formatoptions:{decimalSeparator:".", thousandsSeparator: ",", decimalPlaces: 0, prefix: "$"}},
-			{name:'bidder',label:'Winner',editable:false},
+			{name:'highbidder',label:'Winner',editable:false},
 			{name:'phone',label:'Phone',editable:false},
 			{name:'bellitem',label:'Bellringer Item',width:100,editable:true,edittype:'select',editoptions:{multiple:false,dataUrl:'pl/api/buildselect/bellitems'}},
 			{name:'contacted',label:'Contacted',width:25,editable:true,edittype:'select',editoptions:{multiple:false,value:selectBool},formatter:'boolFmatter'}
@@ -196,9 +196,11 @@ $(document).ready(function(){
             url: "pl/api/winners/view",
             caption: "View Item"
         }
-	).ajaxError(function(){
-		window.location = "login.html?referer=winners.html";
-	});
+	).ajaxComplete(function(e, xhr, settings){
+        var json = $.parseJSON(xhr.responseText);
+        if ( json && json.error == "401" ) { window.location = "error.html?referer=winners.html;status=401"; }
+        if ( json && json.error == "403" ) { window.location = "login.html?referer=winners.html"; }
+    });
 });
 </script>
 </head> 

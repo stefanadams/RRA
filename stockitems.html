@@ -64,7 +64,6 @@ $(document).ready(function(){
 		serializeGridData: function (postData) { return $.toJSON(postData); },
 		caption: "Pre-arranged Items",
 		colModel:[
-			{name:'year',label:'Year',width:30,editable:false,hidden:true},
 			{name:'stockitem',label:'Pre-arranged Item', width:200,editable:true,editoptions:{size:50},editrules:{required:true},formoptions:{elmsuffix:'(*)'}},
 			{name:'value',label:'Value', width:25, align:'right',editable:true,editoptions:{size:10},editrules:{required:true,number:true,minValue:0},formoptions:{elmsuffix:'(*)'},formatter:'currency',formatoptions:{decimalSeparator:".", thousandsSeparator: ",", decimalPlaces: 0, prefix: "$"}},
 			{name:'cost',label:'Cost', width:25, align:'right',editable:true,editoptions:{size:10},editrules:{required:true,number:true,minValue:0},formoptions:{elmsuffix:'(*)'},formatter:'currency',formatoptions:{decimalSeparator:".", thousandsSeparator: ",", decimalPlaces: 0, prefix: "$"}},
@@ -117,9 +116,11 @@ $(document).ready(function(){
             url: "pl/api/stockitems/view",
             caption: "View Pre-arranged Item"
         }
-	).ajaxError(function(){
-		window.location = "login.html?referer=stockitems.html";
-	});
+	).ajaxComplete(function(e, xhr, settings){
+        var json = $.parseJSON(xhr.responseText);
+        if ( json && json.error == "401" ) { window.location = "error.html?referer=stockitems.html;status=401"; }
+        if ( json && json.error == "403" ) { window.location = "login.html?referer=stockitems.html"; }
+    });
 });
 </script>
 </head> 

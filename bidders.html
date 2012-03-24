@@ -96,7 +96,9 @@ $(document).ready(function(){
 		caption: "Bidders By Item",
 		colModel:[
 			{name:'number',label:'Number',width:70,editable:false},
-			{name:'item',label:'Item',width:200,editable:false}
+			{name:'item',label:'Item',width:200,editable:false},
+			{name:'value',label:'Value',width:70,editable:false},
+			{name:'highbid',label:'High Bid',width:70,editable:false}
 		],
 		subGrid: true,
 		subGridRowExpanded: function(subgrid_id, row_id) {
@@ -112,7 +114,7 @@ $(document).ready(function(){
 					{name:"bidder",label:"Bidder",width:130},
 					{name:"address",label:"Address",width:80,align:"right"},
 					{name:"city",label:"City",width:80,align:"right"},
-					{name:"state",label:"State",width:100,align:"right",sortable:false}
+					{name:"state",label:"State",width:100,align:"right",sortable:false},
 					{name:"zip",label:"Zip",width:80,align:"right"},
 					{name:"email",label:"Email",width:100,align:"right",sortable:false}
 				],
@@ -121,7 +123,7 @@ $(document).ready(function(){
 				sortname: 'num',
 				sortorder: "asc"
 			});
-		}
+		},
 		loadComplete: formatGridCells,
 		recreateForm: true,
 		altRows: true,
@@ -152,9 +154,12 @@ $(document).ready(function(){
 			url: "pl/api/bidders/view",
 			caption: "View Bidder"
 		}
-	).ajaxError(function(){
-		window.location = "login.html?referer=bidders.html";
-	});
+	).ajaxComplete(function(e, xhr, settings){
+        var json = $.parseJSON(xhr.responseText);
+        if ( json && json.error == "401" ) { window.location = "error.html?referer=bidders.html;status=401"; }
+        if ( json && json.error == "403" ) { window.location = "login.html?referer=bidders.html"; }
+    });
+
 });
 </script>
 </head> 

@@ -6,7 +6,7 @@ use warnings;
 use base 'RRA::Base';
 use Spreadsheet::WriteExcel;
 
-sub postcards_GET : Runmode RequireAjax Authen Authz(':admins') {
+sub postcards_GET : Runmode Authen Authz(':admins') {
 	my $self = shift;
 	$self->header_add(
 		-type => 'application/vnd.ms-excel',
@@ -15,7 +15,7 @@ sub postcards_GET : Runmode RequireAjax Authen Authz(':admins') {
 	open my $fh, '>', \my $str or die "Failed to open filehandle: $!";
 	my $workbook = Spreadsheet::WriteExcel->new($fh);
 	my $worksheet = $workbook->add_worksheet();
-	my $sql = "SELECT * FROM postcards_vw ORDER BY donor asc";
+	my $sql = "SELECT * FROM xls_postcards_vw";
 	my $sth = $self->dbh->prepare($sql);
 	$sth->execute;
 	my $row=0;
@@ -27,7 +27,7 @@ sub postcards_GET : Runmode RequireAjax Authen Authz(':admins') {
 	return $str;
 }
 
-sub insert_GET : Runmode RequireAjax Authen Authz(':admins') {
+sub insert_GET : Runmode Authen Authz(':admins') {
 	my $self = shift;
 	$self->header_add(
 		-type => 'application/vnd.ms-excel',
@@ -36,7 +36,7 @@ sub insert_GET : Runmode RequireAjax Authen Authz(':admins') {
 	open my $fh, '>', \my $str or die "Failed to open filehandle: $!";
 	my $workbook = Spreadsheet::WriteExcel->new($fh);
 	my $worksheet = $workbook->add_worksheet();
-	my $sql = "SELECT * FROM insert_vw ORDER BY scheduled,number";
+	my $sql = "SELECT * FROM xls_insert_vw";
 	my $sth = $self->dbh->prepare($sql);
 	$sth->execute;
 	my $row=0;

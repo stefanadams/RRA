@@ -70,11 +70,11 @@ sub items_POST : Runmode RequireAjax Authen Authz(':admins') {
 	my ($donor_id) = ($self->param('id'));
 	my ($sidx, $sord, $page, $rows) = ($self->param('sidx')||'donor', $self->param('sord')||'asc', $self->param('page')||1, $self->param('rows')||10);
 	$donor_id or return $self->to_json({sc=>'false',msg=>"Error: No 'id' parameter for donor lookup"});
-	my ($sql, @bind) = sql_interp 'SELECT count(*) FROM manage_donors_items_vw WHERE', {donor_id=>$donor_id};
+	my ($sql, @bind) = sql_interp 'SELECT count(*) FROM manage_donors_vw_items_sg WHERE', {donor_id=>$donor_id};
 	my $records = $self->dbh->selectrow_array($sql);
 	my $pages = $records > 0 ? int(($records / $rows) + 0.99) : 0;
 	my $start = $page * $rows - $rows || 0;
-	($sql, @bind) = sql_interp 'SELECT * from manage_donors_items_vw WHERE', {donor_id=>$donor_id}, 'ORDER BY year DESC, bellringer DESC, highbid DESC LIMIT 20 OFFSET 0';
+	($sql, @bind) = sql_interp 'SELECT * from manage_donors_vw_items_sg WHERE', {donor_id=>$donor_id}, 'ORDER BY year DESC, bellringer DESC, highbid DESC LIMIT 20 OFFSET 0';
 	my $sth = $self->dbh->prepare($sql);
 	$sth->execute(@bind) or return $self->to_json({sc=>'false',msg=>"Error: ".$self->dbh->errstr});
 	my $i = 0;

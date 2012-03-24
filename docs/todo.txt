@@ -3,7 +3,7 @@ Still to do on this page: drag a Rotarian from one Leader grouping to another.
 
 Manage Items
 Edit advertisement, need to refresh the page for it to be recognized for subsequent items.
-Remove highbid_id, change to a _vw_ss
+Remove highbid_id (and trigger), change to a _vw_ss
 
 Sequence Items
 Lock Seq link
@@ -50,15 +50,6 @@ What about other themes like for TV?
 
 ----------
 
-Show All
-
-Show Recent Years
-
-Show This Year Only, All/No nights
-
-Show This Year, Tonight only
-
-Show This Year, All nights up to an including tonight
 
 
 
@@ -74,10 +65,6 @@ Show This Year, All nights up to an including tonight
 
 
 
-
-
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`washingtonrotary`@`%` SQL SECURITY DEFINER VIEW `donors_vw_items_ss` AS select `items_vw`.`donor_id` AS `donor_id`,`items_vw`.`year` AS `year`,`rra_master`.`auctions`.`night` AS `sold`,`items_vw`.`number` AS `number`,`items_vw`.`item` AS `item`,`items_vw`.`value` AS `value`,`items_vw`.`highbid` AS `highbid`,if(`items_vw`.`bellringer`,'Yes','No') AS `bellringer` from (`items_vw` left join `auctions` on((`items_vw`.`sold` between `rra_master`.`auctions`.`start` and `rra_master`.`auctions`.`end`))) where (`items_vw`.`year` between (`auction_year`() - 3) and `auction_year`()) order by `items_vw`.`year` desc,if(`items_vw`.`bellringer`,'Yes','No') desc,`items_vw`.`highbid` desc
 CREATE ALGORITHM=UNDEFINED DEFINER=`washingtonrotary`@`%` SQL SECURITY DEFINER VIEW `winners_vw_ss` AS select `t1`.`bid_id` AS `bid_id`,`t1`.`bidder_id` AS `bidder_id`,`t1`.`item_id` AS `item_id`,`t1`.`bid` AS `bid`,`t1`.`bidtime` AS `bidtime` from (`bids` `t1` left join `bids` `t2` on(((`t1`.`item_id` = `t2`.`item_id`) and (`t1`.`bid` < `t2`.`bid`)))) where isnull(`t2`.`bid_id`)
 CREATE ALGORITHM=UNDEFINED DEFINER=`washingtonrotary`@`%` SQL SECURITY DEFINER VIEW `winners_vw` AS select `items_vw`.`item_id` AS `item_id`,`items_vw`.`number` AS `number`,`items_vw`.`item` AS `item`,`winners_vw_ss`.`bid` AS `highbid`,`bellringers_vw`.`bidder` AS `bidder`,`bellringers_vw`.`bellitem` AS `bellitem`,`items_vw`.`contacted` AS `contacted` from ((`items_vw` join `winners_vw_ss` on((`items_vw`.`item_id` = `winners_vw_ss`.`item_id`))) left join `bellringers_vw` on((`winners_vw_ss`.`bidder_id` = `bellringers_vw`.`bidder_id`))) where ((`items_vw`.`year` = `auction_year`()) and (`items_vw`.`sold` is not null))
 +-----------+------------------+------+-----+---------+-------+

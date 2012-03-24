@@ -15,9 +15,11 @@
 $(document).ready(function(){
 	$.get('pl/backup', function(data) {
 		$('#result1').html(data);
-	}).ajaxError(function(){
-		window.location = "login.html?referer=backup.html";
-	});
+	}).ajaxComplete(function(e, xhr, settings){
+        var json = $.parseJSON(xhr.responseText);
+        if ( json && json.error == "401" ) { window.location = "error.html?referer=backup.html;status=401"; }
+        if ( json && json.error == "403" ) { window.location = "login.html?referer=backup.html"; }
+    });
 });
 </script>
 </head>

@@ -71,7 +71,6 @@ $(document).ready(function(){
 		serializeGridData: function (postData) { return $.toJSON(postData); },
 		caption: "Ads",
 		colModel:[
-			{name:'year',label:'Year',width:30,editable:false,hidden:true},
 			{name:'advertiser',label:'Advertiser',width:150,editable:true,editoptions:{size:50,dataInit:ac_advertiser},editrules:{required:true,custom:true,custom_func:hasFK},formoptions:{elmsuffix:'(*)'},formatter:hideFK,unformat:showFK},
 			{name:'ad',label:'Ad', width:200,editable:true,editoptions:{size:50,dataInit:ac_ad},editrules:{required:true},formoptions:{elmsuffix:'(*)'}},
 			{name:'adurl',label:'URL',width:60,search:false,editable:true,editrules:{url:true,required:true},formoptions:{elmsuffix:'(*)'}}
@@ -129,9 +128,11 @@ $(document).ready(function(){
 			url: "pl/api/ads/view",
 			caption: "View Ad"
 		}
-	).ajaxError(function(){
-		window.location = "login.html?referer=ads.html";
-	});
+	).ajaxComplete(function(e, xhr, settings){
+        var json = $.parseJSON(xhr.responseText);
+        if ( json && json.error == "401" ) { window.location = "error.html?referer=ads.html;status=401"; }
+        if ( json && json.error == "403" ) { window.location = "login.html?referer=ads.html"; }
+    });
 });
 </script>
 </head> 

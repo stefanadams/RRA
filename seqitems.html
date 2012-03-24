@@ -20,12 +20,12 @@ $(document).ready(function(){
 	$( "#sortable0, #sortable1, #sortable2, #sortable3, #sortable4, #sortable9999" ).setTemplateElement("template", null, {runnable_functions: true});
 
 	function tablabels (data) {
-		$('a[href="#tabs-0"]').html(data.rows[0].label);
-		$('a[href="#tabs-1"]').html(data.rows[1].label);
-		$('a[href="#tabs-2"]').html(data.rows[2].label);
-		$('a[href="#tabs-3"]').html(data.rows[3].label);
-		$('a[href="#tabs-4"]').html(data.rows[4].label);
-		$('a[href="#tabs-9999"]').html(data.rows[5].label);
+		$('a[href="#tabs-0"]').html(data.rows[0].label||'Not Assigned');
+		$('a[href="#tabs-1"]').html(data.rows[1].label||'Night 1');
+		$('a[href="#tabs-2"]').html(data.rows[2].label||'Night 2');
+		$('a[href="#tabs-3"]').html(data.rows[3].label||'Night 3');
+		$('a[href="#tabs-4"]').html(data.rows[4].label||'Night 4');
+		$('a[href="#tabs-9999"]').html(data.rows[5].label||'All Nights');
 	}
 
 	var selectedtab;
@@ -140,12 +140,12 @@ $(document).ready(function(){
 	There is one known bug in the item sequencer: when you drag an item to a new tab, the tab information will not recalculate and no sorting will be initiated.  You MUST reorder within the tab that you dragged the item to.
 	<div id="tabs">
 		<ul>
-			<li><a href="#tabs-0">Not assigned</a></li>
+			<li><a href="#tabs-0">Not Assigned</a></li>
 			<li><a href="#tabs-1">Night 1</a></li>
 			<li><a href="#tabs-2">Night 2</a></li>
 			<li><a href="#tabs-3">Night 3</a></li>
 			<li><a href="#tabs-4">Night 4</a></li>
-			<li><a href="#tabs-9999">All items</a></li>
+			<li><a href="#tabs-9999">All Nights</a></li>
 		</ul>
 		<div id="tabs-0">
 			<ul id="sortable0" class="scroll connectedSortable ui-helper-reset jTemplatesTest">

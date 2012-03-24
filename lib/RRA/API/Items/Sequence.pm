@@ -12,12 +12,12 @@ sub sequence_GET : StartRunmode RequireAjax Authen Authz(':admins') {
 	my $night = $self->param('dispatch_url_remainder');
 	if ( defined $night ) {
 		if ( $night == 9999 ) {
-			($sql, @bind) = sql_interp 'SELECT concat(item," -- Night ",scheduled,", ",if(isnull(seq),"Sequence Undefined",concat("Sequence ",seq))) item FROM sequence_items_vw ORDER BY number';
+			($sql, @bind) = sql_interp 'SELECT concat(item," -- Night ",scheduled,", ",if(isnull(seq),"Sequence Undefined",concat("Sequence ",seq))) item FROM manage_items_sequence_vw ORDER BY number';
 		} else {
-			($sql, @bind) = sql_interp 'SELECT * FROM sequence_items_vw WHERE', {scheduled=>$night};
+			($sql, @bind) = sql_interp 'SELECT * FROM manage_items_sequence_vw WHERE', {scheduled=>$night};
 		}
 	} else {
-		($sql, @bind) = sql_interp 'SELECT * FROM sequence_items_tablabels_vw';
+		($sql, @bind) = sql_interp 'SELECT * FROM manage_items_sequence_tablabels_vw';
 	}
 	return $self->to_json({rows => $self->dbh->selectall_arrayref($sql, {Slice=>{}}, @bind)});
 }
@@ -31,7 +31,7 @@ sub sequence_POST : Runmode RequireAjax Authen Authz(':admins') {
 	return $self->to_json({sc=>'false',msg=>"Editing disabled"}) if $self->cfg('NOEDIT');
 	$self->dbh->do($sql, {}, @bind) or return $self->to_json({sc=>'false',msg=>"Error: ".$self->dbh->errstr});
 #return $self->to_json({sc=>'true',msg=>""});
-	($sql, @bind) = sql_interp 'SELECT * FROM sequence_items_tablabels_vw';
+	($sql, @bind) = sql_interp 'SELECT * FROM manage_items_sequence_tablabels_vw';
 	return $self->to_json({sc=>'true', rows => $self->dbh->selectall_arrayref($sql, {Slice=>{}}, @bind)});
 }
 

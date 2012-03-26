@@ -12,17 +12,17 @@ $(document).ready(function(){
 	$("#result1").setTemplateElement("template", null, {runnable_functions: true});
 			
 	// process the template
-	$("#result1").processTemplateURL("pl/api/donors/solicitationaids", null, {
+	$("#result1").processTemplateURL("pl/manage/donors/solicitationaids", null, {
 		type: 'GET',
 	}).ajaxError(function(){
 		window.location = "login.html?referer=solicitation_aids.html";
 	});
 });
 function UpdateCompliance(id) {
-    $.post("pl/api/donors/rotariancompliance", {id: id});
+    $.post("pl/manage/donors/rotariancompliance", {id: id});
 }
 function UpdateLeader(id) {
-    $.post("pl/api/donors/rotarianleaders", {id: id});
+    $.post("pl/manage/donors/rotarianleaders", {id: id});
 }
 </script>
 <style type="text/css">

@@ -22,7 +22,7 @@ $(document).ready(function(){
 	$("#list1").jqGrid({
 		// To do: run boolFmatter after update
 		// To do: Escape on cell edit sometimes does not work
-		url: 'pl/api/rotarians',
+		url: 'pl/manage/rotarians',
 		mtype: 'POST',
 		datatype: 'json',
 		jsonReader: {repeatitems: false, id: "rotarian_id"},
@@ -54,11 +54,11 @@ $(document).ready(function(){
 		{
 		},
 		{
-			url: "pl/api/rotarians/search",
+			url: "pl/manage/rotarians/search",
 			caption: "Search Rotarian"
 		},
 		{
-			url: "pl/api/rotarians/view",
+			url: "pl/manage/rotarians/view",
 			caption: "View Rotarian"
 		}
 	).ajaxComplete(function(e, xhr, settings){

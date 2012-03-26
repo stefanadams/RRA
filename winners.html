@@ -32,7 +32,7 @@ $(document).ready(function(){
 
 	// Autocompletes
 	function ac_donor(elem){
-		$(elem).autocomplete('pl/api/ac/donor', {minChars: 3});
+		$(elem).autocomplete('pl/ac/donor', {minChars: 3});
 		$(elem).result(function(event, data, formatted){
 			if (data) {
 				$('#advertisement').val(data[1]);
@@ -41,7 +41,7 @@ $(document).ready(function(){
 		return true;
 	}
 	function ac_stockitem(elem){
-		$(elem).autocomplete('pl/api/ac/stockitem', {minChars: 3});
+		$(elem).autocomplete('pl/ac/stockitem', {minChars: 3});
 		$(elem).result(function(event, data, formatted){
 			if (data) {
 				$('#item').val(data[1]);
@@ -52,7 +52,7 @@ $(document).ready(function(){
 		return true;
 	}
 	function ac_item(elem){
-		$(elem).autocomplete('pl/api/ac/item', {minChars: 3, limit: 20, extraParams: {donor: function(){ return $('#donor').val(); }}});
+		$(elem).autocomplete('pl/ac/item', {minChars: 3, limit: 20, extraParams: {donor: function(){ return $('#donor').val(); }}});
 		$(elem).result(function(event, data, formatted){
 			if (data) {
 				$('#description').val(data[1]);
@@ -64,7 +64,7 @@ $(document).ready(function(){
 		return true;
 	}
 	function ac_advertisement(elem){
-		$(elem).autocomplete('pl/api/ac/advertisement', {minChars: 3, extraParams: {donor: function(){ return $('#donor').val(); }}});
+		$(elem).autocomplete('pl/ac/advertisement', {minChars: 3, extraParams: {donor: function(){ return $('#donor').val(); }}});
 		return true;
 	}
 
@@ -121,7 +121,7 @@ $(document).ready(function(){
 	});
 
 	$("#list1").jqGrid({
-		url: 'pl/api/winners',
+		url: 'pl/manage/winners',
 		postData: {debug: 1},
 		mtype: 'POST',   
 		datatype: 'json',
@@ -136,16 +136,15 @@ $(document).ready(function(){
 			{name:'highbid',label:'Price', width:25, align:'right',editable:false,formatter:'currency',formatoptions:{decimalSeparator:".", thousandsSeparator: ",", decimalPlaces: 0, prefix: "$"}},
 			{name:'highbidder',label:'Winner',editable:false},
 			{name:'phone',label:'Phone',editable:false},
-			{name:'bellitem',label:'Bellringer Item',width:100,editable:true,edittype:'select',editoptions:{multiple:false,dataUrl:'pl/api/buildselect/bellitems'}},
+			{name:'bellitem',label:'Bellringer Item',width:100,editable:true,edittype:'select',editoptions:{multiple:false,dataUrl:'pl/bs/bellitems'}},
+			{name:'qty',label:'Qty',width:50},
 			{name:'contacted',label:'Contacted',width:25,editable:true,edittype:'select',editoptions:{multiple:false,value:selectBool},formatter:'boolFmatter'}
 		],
 		cellEdit: true,
-		cellurl: 'pl/api/winners/cell',
+		cellurl: 'pl/manage/winners/cell',
 		beforeSubmitCell: function(rowid,celname,value,iRow,iCol){
 			if (celname=="bellitem"){
 				return {celname:"bellitem_id",bellitem_id:value};
-			} else if (celname=="bidder"){
-				return {celname:"bidder_id",bidder_id:value};
 			} else {
 				return {celname:celname};
 			}
@@ -167,7 +166,7 @@ $(document).ready(function(){
 		{edit:true,add:true,del:true},
 		// {edit}, {add}, {del}, {search}, {view}
 		{
-			url: "pl/api/winners/edit",
+			url: "pl/manage/winners/edit",
 			editCaption: "Edit Item",
 			width: 700,
 			closeOnEscape: true,
@@ -175,25 +174,25 @@ $(document).ready(function(){
 			afterSubmit: checkUpdate
 		},
 		{
-			url: "pl/api/winners/add",
+			url: "pl/manage/winners/add",
 			addCaption: "Add Item",
 			width: 700,
 			closeOnEscape: true,
 			afterSubmit: alertAddedItemNumber
 		},
 		{
-			url: "pl/api/winners/del",
+			url: "pl/manage/winners/del",
 			caption: "Delete Item",
 			msg: "Deleted selected item(s)?",
 			afterSubmit: checkUpdate
 		},
         { 
-            url: "pl/api/winners/search",
+            url: "pl/manage/winners/search",
             caption: "Search Item",
 			multipleSearch:false
         },
         { 
-            url: "pl/api/winners/view",
+            url: "pl/manage/winners/view",
             caption: "View Item"
         }
 	).ajaxComplete(function(e, xhr, settings){

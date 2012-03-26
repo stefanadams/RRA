@@ -1,4 +1,4 @@
-package RRA::API::Donors;
+package RRA::Manage::Donors;
 
 use strict;
 use warnings;
@@ -65,13 +65,13 @@ sub donors_POST : StartRunmode RequireAjax Authen Authz(':admins') {
 	return $self->to_json({page => $page, total => $pages, records => $records, rows => $self->dbh->selectall_arrayref($sql, {Slice=>{}}, @bind)});
 }
 
-sub items_POST : Runmode RequireAjax Authen Authz(':admins') {
+sub donor_POST : Runmode RequireAjax Authen Authz(':admins') {
 	my $self = shift;
-	my ($donor_id) = ($self->param('id'));
+	my ($donor_id) = ($self->param('donor_id'));
 	my ($sidx, $sord, $page, $rows) = ($self->param('sidx')||'donor', $self->param('sord')||'asc', $self->param('page')||1, $self->param('rows')||10);
 	$donor_id or return $self->to_json({sc=>'false',msg=>"Error: No 'id' parameter for donor lookup"});
 	my ($sql, @bind) = sql_interp 'SELECT count(*) FROM manage_donors_vw_items_sg WHERE', {donor_id=>$donor_id};
-	my $records = $self->dbh->selectrow_array($sql);
+	my $records = $self->dbh->selectrow_array($sql, {}, @bind);
 	my $pages = $records > 0 ? int(($records / $rows) + 0.99) : 0;
 	my $start = $page * $rows - $rows || 0;
 	($sql, @bind) = sql_interp 'SELECT * from manage_donors_vw_items_sg WHERE', {donor_id=>$donor_id}, 'ORDER BY year DESC, bellringer DESC, highbid DESC LIMIT 20 OFFSET 0';

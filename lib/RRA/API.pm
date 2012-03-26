@@ -4,26 +4,11 @@ use base 'RRA::Base';
 use Switch;
 use SQL::Interp ':all';
 
-sub resttest_GET : Runmode RequireAjax Authen Authz('auctioneer') {
-	my $self = shift;
-	return 'resttest_GET: '.$self->authen->username;
-}
-sub resttest_POST : Runmode RequireAjax Authen Authz('operators') {
-	my $self = shift;
-	return 'resttest_POST: '.$self->authen->username;
-}
-sub resttest_DELETE : Runmode RequireAjax Authen Authz('auctioneers') {
-	my $self = shift;
-	return 'resttest_DELETE: '.$self->authen->username;
-}
-sub resttest_PUT : Runmode RequireAjax Authen Authz('backend') {
-	my $self = shift;
-	return 'resttest_PUT: '.$self->authen->username;
-}
-
 sub bidding_GET : Runmode RequireAjax {
 	my $self = shift;
-	return $self->dbx_json("SELECT item_id id,number,itemurl,name,description,value,highbid,startbid,minbid,bidder,bellringer,timermin timer,donor,donorurl,message FROM items_vw WHERE (status='Bidding' OR status='Sold') ORDER BY number");
+	return $self->to_json({closed=>1}) unless $self->param('live');
+	($sql, @bind) = sql_interp 'SELECT item_id,item_id id,number,itemurl,item,description,auctioneer,value,highbid,startbid,minbid,highbidder,bellringer,timerminutes timer,donor,donorurl,advertisement,advertisement message FROM items_current_vw WHERE (status="Bidding" OR status="Sold") ORDER BY number';
+	return $self->return_json({bidding => $self->dbh->selectall_arrayref($sql, {Slice=>{}}, @bind)});
 }
 
 sub ondeck_GET : Runmode RequireAjax {
@@ -52,30 +37,6 @@ sub auction_GET : Runmode RequireAjax Authen Authz('auctioneers') {
 sub placebids_GET : Runmode RequireAjax Authen Authz('operators') {
 	my $self = shift;
 	return $self->dbx_json("SELECT item_id id,number,itemurl,name,description,value,highbid,startbid,minbid,bellringer,timermin timer FROM items_vw WHERE status='Bidding' ORDER BY number");
-}
-
-sub dev_POST : Runmode RequireAjax Authen Authz('root') {
-	my $self = shift;
-	$self->dbh->do("INSERT INTO auctions (year, night, start, end, live) VALUES (?, ?, now(), date_add(now(), INTERVAL ? HOUR), 0)", undef, (((localtime)[5])+1900, 1, $self->param('hours'))) if $self->param('hours');
-	return $self->to_json({error=>0});
-}
-sub dev_DELETE : Runmode RequireAjax Authen Authz('root') {
-	my $self = shift;
-	$self->dbh->do("DELETE FROM auctions WHERE year=auction_year() AND live=0");
-	return $self->to_json({error=>0});
-}
-
-sub alert_GET : Runmode RequireAjax {
-	my $self = shift;
-	my $alert = $self->param('alert') || $self->authen->username || 'public';
-	return $self->to_json($self->dbh->selectrow_hashref('SELECT msg FROM alerts WHERE alert=? LIMIT 1', {Slice=>{}}, $alert));
-}
-sub alert_POST : Runmode RequireAjax Authen Authz('admins') {
-	my $self = shift;
-	my $alert = $self->param('alert') || $self->authen->username || 'public';
-	my $msg = $self->query->param('msg');
-	$self->dbh->do("INSERT INTO alerts (alert, msg) VALUES (?, ?) ON DUPLICATE KEY UPDATE msg=?", undef, ($alert, $msg, $msg)) if $self->authz->authorize('admins') && $alert && defined $msg;
-	return $self->to_json({error=>0});
 }
 
 sub clearlastbid_DELETE : Runmode RequireAjax Authen Authz('admins') {
@@ -151,108 +112,156 @@ sub bid_POST : Runmode RequireAjax Authen Authz('operators') {
 	return $self->to_json({error=>0});
 }
 
-# jqGrid colModel editoptions dataUrl dictates that the response must be HTML
-sub buildselect_GET : Runmode RequireAjax Authen Authz('admins') {
+sub alert_GET : Runmode RequireAjax {
 	my $self = shift;
-	my ($for) = split /\//, $self->param('dispatch_url_remainder');
-
-	my $select = {};
-	switch ( $for ) {
-		case 'rotarians' {
-			$select = $self->dbh->selectall_arrayref("SELECT rotarian_id,concat_ws(', ',lastname,firstname) name FROM rotarians ORDER BY lastname");
-		}
-		case 'donor_id' {
-			$select = $self->dbh->selectall_arrayref("SELECT donor_id,name FROM donors_vw ORDER BY name");
-		}
-		case 'stockitem_id' {
-			$select = $self->dbh->selectall_arrayref("SELECT stockitem_id,concat(name,' (',value,')') namevalue FROM stockitems ORDER BY name");
-		}
-	}
-	return "<select>\n<option value=\"\" />\n".join("\n", map { "<option value=\"$_->[0]\">$_->[1]</option>" } @$select)."\n</select>\n";
+	my $alert = $self->param('alert') || $self->authen->username || 'public';
+	return $self->to_json($self->dbh->selectrow_hashref('SELECT msg FROM alerts WHERE alert=? LIMIT 1', {Slice=>{}}, $self->session->param('alert') || $self->authen->username || 'public'));
+}
+sub alert_POST : Runmode RequireAjax Authen Authz('admins') {
+	my $self = shift;
+	my $alert = $self->param('alert') || $self->authen->username || 'public';
+	my $msg = $self->param('msg');
+	$self->dbh->do("INSERT INTO alerts (alert, msg) VALUES (?, ?) ON DUPLICATE KEY UPDATE msg=?", undef, ($alert, $msg, $msg)) if $alert && defined $msg;
+	return $self->to_json({alert=>$alert,msg=>$msg});
 }
 
-sub ac_GET : Runmode RequireAjax {
+sub ad_GET : Runmode {
 	my $self = shift;
-	my ($for) = split /\//, $self->param('dispatch_url_remainder');
- 
-	my $q = $self->param('q') || '';
-	my $ac = {};
-	$self->param('donor_id', $1||'') if $self->param('donor') && $self->param('donor') =~ /:(\d+)$/;
-	$self->param('stockitem_id', $1||'') if $self->param('stockitem') && $self->param('stockitem') =~ /:(\d+)$/;
-	my $limit = $self->param('limit') || 10;
-	my ($sql, @bind);
-	my $new = 0;
-	switch ( $for ) {
-		case 'city' {
-			($sql, @bind) = sql_interp 'SELECT ac FROM ac_city_vw WHERE city LIKE',\"$q%",'LIMIT', \$limit;
-		}
-		case 'donor' {
-			($sql, @bind) = sql_interp 'SELECT ac FROM ac_donor_vw WHERE donor LIKE',\"$q%",'OR', {donor_id=>$q}, 'LIMIT', \$limit;
-		}
-		case 'advertiser' {
-			($sql, @bind) = sql_interp 'SELECT ac FROM ac_advertiser_vw WHERE advertiser LIKE',\"$q%",'OR', {advertiser_id=>$q}, 'LIMIT', \$limit;
-		}
-		case 'item_stockitem' {
-			($sql, @bind) = sql_interp 'SELECT ac FROM ac_item_stockitem_vw WHERE stockitem LIKE',\"%$q%",'LIMIT', \$limit;
-		}
-		case 'item' {
-			($sql, @bind) = sql_interp 'SELECT ac FROM ac_item_vw WHERE',{number=>$q},'OR item LIKE',\"%$q%",'OR donor LIKE',\"$q%",'OR',{donor_id=>$q},'OR',{item_id=>$q},'LIMIT', \$limit;
-		}
-		case 'ad' {
-			($sql, @bind) = sql_interp 'SELECT ac FROM ac_ad_vw WHERE',{number=>$q},'OR ad LIKE',\"%$q%",'OR advertiser LIKE',\"$q%",'OR',{advertiser_id=>$q},'OR',{ad_id=>$q},'LIMIT', \$limit;
-		}
-		case 'advertisement' {
-			($sql, @bind) = sql_interp 'SELECT ac FROM ac_advertisement_vw WHERE',{donor_id=>$q},'OR advertisement LIKE',\"%$q%",'LIMIT', \$limit;
-		}
-		case 'stockitem' {
-			($sql, @bind) = sql_interp 'SELECT ac FROM ac_stockitem_vw WHERE stockitem LIKE',\"%$q%",'LIMIT', \$limit;
-		}
-		case 'pay_number' {
-			$new = 1;
-			my $term = $self->param('term');
-			($sql, @bind) = sql_interp 'SELECT * FROM ac_pay_number_vw WHERE', {value=>$term}, 'OR label LIKE',\"%$term%", 'ORDER BY value LIMIT', \$limit;
-		}
-		case 'bid' {
-			my $term = $self->query->param('term');
-			my $limit = $self->query->param('limit') || 10;
-			my $ac;
-			my @ac = ();
-			switch ( $self->param('field') ) {
-				case 'name' {
-					if ( $term =~ /^\d+$/ ) {
-						my ($a, $b, $c);
-						if ( length($term) == 3 ) {
-							$b = $term;
-						} elsif ( length($term) == 4 ) {
-							$c = $term
-						} elsif ( length($term) > 4 && length($term) <= 7 ) {
-							my ($b, $c) = ($term =~ /^(\d{3})(\d{0,4})$/);
-						} elsif ( length($term) > 7 && length($term) <= 10 ) {
-							my ($a, $b, $c) = ($term =~ /^(\d{3})(\d{2,3})(\d{0,4})$/);
-						}
-						$a .= '_' while length($a) < 3;
-						$b .= '_' while length($b) < 3;
-						$c .= '_' while length($c) < 4;
-						$ac = $self->dbh->selectall_hashref("SELECT bidder_id id,name,phone FROM bidders_vw WHERE phone LIKE '(?) ?-?' OR phone LIKE '???' ORDER BY name LIMIT $limit", "id", undef, $a, $b, $c, $a, $b, $c);
-					} else {
-						$ac = $self->dbh->selectall_hashref("SELECT bidder_id id,name,phone FROM bidders_vw WHERE name LIKE ? ORDER BY name LIMIT $limit", "id", undef, "%$term%");
-					}
-					foreach my $id ( keys %{$ac} ) {
-						push @ac, join '|', map { $_ eq 'name' ? $ac->{$id}->{$_} || '' : join ':', $_, ($ac->{$id}->{$_} || '') } qw/name phone id/;
-					}
-				}
-			}
-			return join "\n", @ac;
+
+	my $adsroot = $self->cfg('ADS');
+
+	my ($sql, @bind) = sql_interp 'SELECT count(*) count FROM ads_today_vw';
+	my $ads = $self->dbh->selectrow_array($sql, {}, @bind);
+	my ($sql, @bind) = sql_interp 'SELECT adurl FROM ads_today_vw WHERE', {ad_id=>$self->param('ad_id')};
+	my $url = '';
+	if ( $url = $self->dbh->selectrow_array($sql, {}, @bind) ) {
+		($sql, @bind) = sql_interp 'INSERT INTO adcount', {ad_id=>$self->param('ad_id'), processed=>sql('now()')}, 'ON DUPLICATE KEY UPDATE click=click+1';
+		$self->dbh->do($sql, {}, @bind);
+	}
+	return $self->redirect($url||'http://www.washingtonrotary.com');
+}
+
+sub header_GET : Runmode RequireAjax {
+	my $self = shift;
+	my $out;
+
+        my ($dbname) = ($self->dbh->{Name} =~ /^([^;]+)/);
+	$out->{about} = {
+		name => 'Washington Rotary Radio Auction',
+		version => $RRA::Base::VERSION,
+		database => $dbname,
+		dev => ($dbname =~ /_dev$/ ? 1 : 0),
+		time => join(' - ', $$, scalar localtime),
+		#rm_time => tv_interval($self->param('t0'), [gettimeofday]),
+		username => $self->authen->username,
+		year => $self->param('year'),
+		night => $self->param('night'),
+		live => $self->param('live'),
+		year_next => $self->param('year_next') || undef,
+		night_next => $self->param('night_next') || undef,
+		date_next => $self->param('date_next') || undef,
+	};
+
+	$out->{header} = {
+		play => $self->cfg('PLAY'),
+		alert => $self->dbh->selectrow_hashref('SELECT msg FROM alerts WHERE alert=? LIMIT 1', {Slice=>{}}, $self->session->param('alert') || $self->authen->username || 'public'),
+	};
+
+	$out->{ads} = {
+		ad => $self->ad,
+	};
+
+	return $self->to_json($out);
+}
+
+######
+
+sub ad {
+	my $self = shift;
+	return {img=>'washrotary.jpg',ad_id=>618,closed=>1} unless $self->about->{live};
+	my $adsroot = $self->cfg('ADS');
+	return $self->session->param('AD') if $self->session->param('_AD_CTIME') && time-$self->session->param('_AD_CTIME')<=10;
+	$self->session->param('_AD_CTIME', time);
+	my ($sql, @bind) = sql_interp 'SELECT count(*) count FROM ads_today_vw';
+	my $ads = $self->dbh->selectrow_array($sql, {}, @bind);
+	my $ad = {};
+	foreach ( 1..$ads ) {
+		my ($sql, @bind) = sql_interp 'SELECT * FROM adcount_today_vw ORDER BY rotate ASC, RAND() LIMIT 1';
+		$ad = $self->dbh->selectrow_hashref($sql, {}, @bind);
+		($sql, @bind) = sql_interp 'INSERT INTO adcount', {ad_id=>$ad->{ad_id}, processed=>sql('now()')}, 'ON DUPLICATE KEY UPDATE rotate=rotate+1';
+		$self->dbh->do($sql, {}, @bind);
+		$ad->{img} = (glob("$adsroot/$ad->{year}/$ad->{advertiser_id}-$ad->{ad_id}.*"))[0] || (glob("$adsroot/$ad->{year}/$ad->{advertiser_id}.*"))[0] if $ad->{advertiser_id} && $ad->{ad_id};
+		$ad->{img} && -e $ad->{img} && -f _ && -r _ && do {
+			$ad->{img} =~ s/^$adsroot\/?// or $ad->{img} = undef;
+			$ad->{refresh} = 1;
+			last;
 		}
 	}
-	print STDERR "\n\n\n\n\n$sql\n\n\n\n\n\n";
-	if ( $new ) {
-		my $ac = $self->dbh->selectall_arrayref($sql, {Slice=>{}}, @bind);
-		return $self->to_json(\@$ac);
+	if ( $ad->{img} && $ad->{ad_id} ) {
+		my ($sql, @bind) = sql_interp 'INSERT INTO adcount', {ad_id=>$ad->{ad_id}, processed=>sql('now()')}, 'ON DUPLICATE KEY UPDATE display=display+1';
+		$self->dbh->do($sql, {}, @bind);
 	} else {
-		$ac = $self->dbh->selectall_arrayref($sql, {}, @bind);
-		return join "\n", map { @$_ } @$ac;
+		$ad = {img=>'washrotary.jpg',ad_id=>618,error=>1};
 	}
+
+	$self->session->param('AD', {map { $_ => $ad->{$_} } qw/ad_id img error/});
+	return {map { $_ => $ad->{$_} } qw/ad_id img ad_error refresh/};
+}
+
+sub return_json {
+	my $self = shift;
+	my $in = shift;
+	my $out;
+	if ( $in->{bidding} ) {
+		my @bidding;
+		foreach my $row ( @{$in->{bidding}} ) {
+			# if((find_in_set('newbid',`items`.`notify`) > 0),1,NULL) `newbid`
+			# if((`items`.`status` = 'Sold'),1,NULL) `sold`
+			$row->{img} = (glob($self->cfg('PHOTOS')."$row->{year}/$row->{number}.*"))[0] if $row->{number};
+			if ( $self->cfg('FAKEBIDDING') ) {
+				my @notify = ();
+				if ( int(rand(99)) < 25 ) {
+					$row->{status} = 'Ready';
+				} elsif ( int(rand(99)) < 25 ) { 
+					$row->{status} = 'OnDeck';
+					$row->{auctioneer} = int(rand(99)) < 50 ? 'a' : 'b';
+				} elsif ( int(rand(99)) < 25 ) {
+					$row->{status} = 'Bidding';
+					push @notify, 'newbid' if int(rand(99)) < 20;
+					if ( int(rand(99)) < 25 ) {
+						push @notify, 'starttimer';
+					} elsif ( int(rand(99)) < 25 ) {   
+						push @notify, 'sell';      
+					}
+					$row->{auctioneer} = int(rand(99)) < 50 ? 'a' : 'b';
+					$row->{highbid} = $row->{highbid} =~ /\d/ ? $row->{highbid} : $row->{value} - 10 + int(rand(15));
+					$row->{bellringer} = $row->{highbid} >= $row->{value}; 
+					$row->{highbidder} = $row->{donor};
+					$row->{timer} = int(rand(99)) < 20 ? 1 : 0;
+				} elsif ( int(rand(99)) < 25 ) {
+					$row->{status} = 'Sold';
+				} elsif ( int(rand(99)) < 25 ) {
+					$row->{status} = 'Complete';
+				}
+				$row->{description} ||= int(rand(99)) < 20 ? 'Fuller description' : undef;
+				$row->{itemurl} ||= int(rand(99)) < 20 ? 'http://google.com' : undef;
+				$row->{donorurl} ||= int(rand(99)) < 20 ? 'http://google.com' : undef;
+				$row->{img} ||= int(rand(99)) < 20 ? 'http://dev.washingtonrotary.com/rra/img/right_arrow_button.gif' : undef;
+				$row->{notify} = join ',', @notify;
+			}
+			$row->{notify} = {map { $_ => 1 } split /,/, $row->{notify}};
+			push @bidding, {map { $_ => $row->{$_}||'' } keys %$row};
+		}
+		$out->{bidding} = {
+			count=>$#bidding+1,
+			rows=>[@bidding]
+		}
+	}
+
+        $self->header_add(
+                -type => 'application/json',
+        );
+	return $self->to_json($out);
 }
 
 1;

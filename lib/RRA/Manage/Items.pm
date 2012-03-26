@@ -1,4 +1,4 @@
-package RRA::API::Items;
+package RRA::Manage::Items;
 
 use strict;
 use warnings;
@@ -72,7 +72,7 @@ sub items_POST : StartRunmode RequireAjax Authen Authz(':admins') {
 	my $records = $self->dbh->selectrow_array($sql, {}, @bind);
 	my $pages = $records > 0 ? int(($records / $rows) + 0.99) : 0;
 	my $start = $page * $rows - $rows || 0;
-	($sql, @bind) = sql_interp 'SELECT * FROM manage_items_vw WHERE', ($sField&&$sOper{$sOper}? (\$sField,$sOper{$sOper},\$sValue) : ('1=1')), 'ORDER BY', \$sidx, \$sord, 'LIMIT', \$rows, 'OFFSET', \$start;
+	($sql, @bind) = sql_interp 'SELECT * FROM manage_items_vw WHERE', ($sField&&$sOper{$sOper}? (\$sField,$sOper{$sOper},\$sValue) : ('1=1')), 'ORDER BY', $sidx, $sord, 'LIMIT', \$rows, 'OFFSET', \$start;
 	return $self->to_json({page => $page, total => $pages, records => $records, rows => $self->dbh->selectall_arrayref($sql, {Slice=>{}}, @bind)});
 }
 

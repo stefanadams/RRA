@@ -1,0 +1,38 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+	<head>
+		<title>Temporary Tooltip Solution</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+		<script type="text/javascript" src="js/jquery-jtemplates.js"></script>
+		<script type="text/javascript" src="js/env.js"></script>
+        <script type="text/javascript">
+        $(document).ready(function(){   
+            $("#tooltip").setTemplateElement("template", null, {runnable_functions: true});
+            $("#tooltip").processTemplateURL("pl/tooltip/[% c.param('item_id') %]", null, {type: 'GET'});
+        });
+        </script>
+	</head>
+	<body>
+</head>
+<body>
+    <div id="tooltip"></div>
+
+    <textarea id="template" style="display:none">
+	{#foreach $T.rows as r}
+		{#if $T.r.img}
+			<img src="{$T.r.img}" /><br />
+		{#/if}
+		{#if $T.r.description}
+        	{$T.r.description}<br />
+		{#/if}
+		{#if $T.r.message}
+        	{$T.r.message}<br />
+		{#/if}
+	{/#foreach}
+    </textarea>
+</body>
+	</body>
+</html>

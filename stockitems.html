@@ -55,7 +55,7 @@ $(document).ready(function(){
 	});
 
 	$("#list1").jqGrid({
-		url: 'pl/api/stockitems',
+		url: 'pl/manage/stockitems',
 		postData: {debug: 1},
 		mtype: 'POST',   
 		datatype: 'json',
@@ -70,7 +70,10 @@ $(document).ready(function(){
 			{name:'itemcat',label:'Category', width:50,align:'center',editable:true,edittype:'select',editoptions:{multiple:true,value:categories},formatter:'categoryFmatter'}
 		],
 		cellEdit: true,
-		cellurl: 'pl/api/stockitems/cell',
+		cellurl: 'pl/manage/stockitems/cell',
+        beforeSubmitCell: function(rowid,celname,value,iRow,iCol){   
+            return {celname:celname};
+        },
 		recreateForm: true,
 		altRows: true,
 		rownumbers: true,
@@ -87,7 +90,7 @@ $(document).ready(function(){
 		{edit:true,add:true,del:true},
 		// {edit}, {add}, {del}, {search}, {view}
 		{
-			url: "pl/api/stockitems/edit",
+			url: "pl/manage/stockitems/edit",
 			editCaption: "Edit Pre-arranged Item",
 			width: 700,
 			closeOnEscape: true,
@@ -95,25 +98,25 @@ $(document).ready(function(){
 			afterSubmit: checkUpdate
 		},
 		{
-			url: "pl/api/stockitems/add",
+			url: "pl/manage/stockitems/add",
 			addCaption: "Add Pre-arranged Item",
 			width: 700,
 			closeOnEscape: true,
 			afterSubmit: checkUpdate
 		},
 		{
-			url: "pl/api/stockitems/del",
+			url: "pl/manage/stockitems/del",
 			caption: "Delete Pre-arranged Item",
 			msg: "Deleted selected pre-arranged item(s)?",
 			afterSubmit: checkUpdate
 		},
         { 
-            url: "pl/api/stockitems/search",
+            url: "pl/manage/stockitems/search",
             caption: "Search Pre-arranged Item",
 			multipleSearch:false
         },
         { 
-            url: "pl/api/stockitems/view",
+            url: "pl/manage/stockitems/view",
             caption: "View Pre-arranged Item"
         }
 	).ajaxComplete(function(e, xhr, settings){

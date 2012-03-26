@@ -31,7 +31,7 @@ $(document).ready(function(){
 
 	// Autocompletes
 	function ac_donor(elem){
-		$(elem).autocomplete('pl/api/ac/donor', {minChars: 3});
+		$(elem).autocomplete('pl/ac/donor', {minChars: 3});
 		$(elem).result(function(event, data, formatted){
 			if (data) {
 				$('#advertisement').val(data[1]);
@@ -40,7 +40,7 @@ $(document).ready(function(){
 		return true;
 	}
 	function ac_stockitem(elem){
-		$(elem).autocomplete('pl/api/ac/stockitem', {minChars: 3});
+		$(elem).autocomplete('pl/ac/stockitem', {minChars: 3});
 		$(elem).result(function(event, data, formatted){
 			if (data) {
 				$('#item').val(data[1]);
@@ -51,7 +51,7 @@ $(document).ready(function(){
 		return true;
 	}
 	function ac_item(elem){
-		$(elem).autocomplete('pl/api/ac/item', {minChars: 3, limit: 20, extraParams: {donor: function(){ return $('#donor').val(); }}});
+		$(elem).autocomplete('pl/ac/item', {minChars: 3, limit: 20, extraParams: {donor: function(){ return $('#donor').val(); }}});
 		$(elem).result(function(event, data, formatted){
 			if (data) {
 				$('#description').val(data[1]);
@@ -63,7 +63,7 @@ $(document).ready(function(){
 		return true;
 	}
 	function ac_advertisement(elem){
-		$(elem).autocomplete('pl/api/ac/advertisement', {minChars: 3, extraParams: {donor: function(){ return $('#donor').val(); }}});
+		$(elem).autocomplete('pl/ac/advertisement', {minChars: 3, extraParams: {donor: function(){ return $('#donor').val(); }}});
 		return true;
 	}
 
@@ -120,7 +120,7 @@ $(document).ready(function(){
 	});
 
 	$("#list1").jqGrid({
-		url: 'pl/api/items',
+		url: 'pl/manage/items',
 		postData: {debug: 1},
 		mtype: 'POST',   
 		datatype: 'json',
@@ -140,7 +140,7 @@ $(document).ready(function(){
 			{name:'itemurl',label:'More Info URL', width:100,editable:true,hidden:true,editoptions:{size:50},editrules:{edithidden:true}}
 		],
 		cellEdit: true,
-		cellurl: 'pl/api/items/cell',
+		cellurl: 'pl/manage/items/cell',
 		beforeSubmitCell: function(rowid,celname,value,iRow,iCol){
 			if (celname=="stockitem"){
 				return {celname:"stockitem_id",stockitem_id:value};
@@ -159,7 +159,7 @@ $(document).ready(function(){
 		rowNum: 50,
 		rowList: [10, 20, 50, 100, 500, 1000, 5000, 10000],
 		pager: $('#pager1'),
-		sortname: 'year,number',
+		sortname: 'number',
 		viewrecords: true,
 		height: "75\%",
 		autowidth: true
@@ -167,7 +167,7 @@ $(document).ready(function(){
 		{edit:true,add:true,del:true},
 		// {edit}, {add}, {del}, {search}, {view}
 		{
-			url: "pl/api/items/edit",
+			url: "pl/manage/items/edit",
 			editCaption: "Edit Item",
 			width: 700,
 			closeOnEscape: true,
@@ -175,25 +175,25 @@ $(document).ready(function(){
 			afterSubmit: checkUpdate
 		},
 		{
-			url: "pl/api/items/add",
+			url: "pl/manage/items/add",
 			addCaption: "Add Item",
 			width: 700,
 			closeOnEscape: true,
 			afterSubmit: alertAddedItemNumber
 		},
 		{
-			url: "pl/api/items/del",
+			url: "pl/manage/items/del",
 			caption: "Delete Item",
 			msg: "Deleted selected item(s)?",
 			afterSubmit: checkUpdate
 		},
         { 
-            url: "pl/api/items/search",
+            url: "pl/manage/items/search",
             caption: "Search Item",
 			multipleSearch:false
         },
         { 
-            url: "pl/api/items/view",
+            url: "pl/manage/items/view",
             caption: "View Item"
         }
 	).ajaxComplete(function(e, xhr, settings){
@@ -207,7 +207,6 @@ $(document).ready(function(){
 </head> 
 <body> 
 <div id="loggedin"></div>
-<a href="bookmarks.html">Back to Bookmarks</a>
 <table id="list1" class="scroll"></table> 
 <div id="pager1" class="scroll" style="text-align:center;" />
 </body> 

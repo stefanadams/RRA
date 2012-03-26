@@ -39,7 +39,7 @@ $(document).ready(function(){
 	}
 
 	function ac_city(elem){
-		$(elem).autocomplete('pl/api/ac/city');
+		$(elem).autocomplete('pl/ac/city');
 		$(elem).result(function(event, data, formatted){
 			if (data) {
 				$('#state').val(data[1]);
@@ -86,7 +86,7 @@ $(document).ready(function(){
 	$("#list1").jqGrid({
 		// To do: run boolFmatter after update
 		// To do: Escape on cell edit sometimes does not work
-		url: 'pl/api/donors',
+		url: 'pl/manage/donors',
 		postData: {debug: 1},
 		mtype: 'POST',
 		datatype: 'json',
@@ -109,18 +109,33 @@ $(document).ready(function(){
 			{name:'advertisement',label:'Advertisement',hidden:true,search:false,editable:true,edittype:'textarea',editrules:{edithidden:true}},
 			{name:'solicit',label:'Solicit',width:25,editable:true,edittype:'select',editoptions:{multiple:false,value:selectBool},formatter:'boolFmatter'},
 			{name:'items_last',label:'LY#',width:25,editable:false},
-			{name:'rotarian',label:'Rotarian',width:100,editable:true,edittype:'select',editoptions:{multiple:false,dataUrl:'pl/api/buildselect/rotarians'}},
+			{name:'rotarian',label:'Rotarian',width:100,editable:true,edittype:'select',editoptions:{multiple:false,dataUrl:'pl/bs/rotarians'}},
 			{name:'comments',label:'Comments',width:100,search:false,editable:true}
 		],
 		subGrid: true,
-		subGridUrl: 'pl/api/donors/items',
-		subGridModel: [ {
-			name: ['Donor ID', 'Year', 'Night', '#', 'Item', 'Value', 'High Bid', 'Bellringer'],
-			width: [30, 30, 30, 30, 400, 30, 30, 30],
-			params: ['donor_id']
-		} ],
+        subGridRowExpanded: function(subgrid_id, row_id) {
+            var subgrid_table_id;
+            subgrid_table_id = subgrid_id+"_t";
+            jQuery("#"+subgrid_id).html("<table id='"+subgrid_table_id+"' class='scroll'></table>");
+            jQuery("#"+subgrid_table_id).jqGrid({
+                url:"pl/manage/donors/donor/"+row_id,
+                mtype: 'POST',
+                datatype: "json",
+				jsonReader: {repeatitems: false, id: "donor_id", subgrid: {root: "rows", repeatitems: true}},
+                colModel: [
+                    {name:"year",label:"Year",width:130},
+                    {name:"sold",label:"Night Sold",width:130},
+                    {name:"items",label:"#",width:130},
+                    {name:"value",label:"Value",width:130},
+                    {name:"highbid",label:"High Bid",width:130},
+                    {name:"bellringer",label:"Bellringer",width:130},
+                ],
+                height: '100%',
+                rowNum:20,
+            });
+        },
 		cellEdit: true,
-		cellurl: 'pl/api/donors/cell',
+		cellurl: 'pl/manage/donors/cell',
 		beforeSubmitCell: function(rowid,celname,value,iRow,iCol){
 			if (celname=="rotarian"){
 				return {celname:"rotarian_id",rotarian_id:value};
@@ -145,7 +160,7 @@ $(document).ready(function(){
 		{edit:true,add:true,del:true},
 		// {edit}, {add}, {del}, {search}, {view}
 		{
-			url: "pl/api/donors/edit",
+			url: "pl/manage/donors/edit",
 			editCaption: "Edit Donor",
 			width: 700,
 			closeOnEscape: true,
@@ -153,24 +168,24 @@ $(document).ready(function(){
 			afterSubmit: checkUpdate
 		},
 		{
-			url: "pl/api/donors/add",
+			url: "pl/manage/donors/add",
 			addCaption: "Add Donor",
 			width: 700,
 			closeOnEscape: true,
 			afterSubmit: checkUpdate
 		},
 		{
-			url: "pl/api/donors/del",
+			url: "pl/manage/donors/del",
 			caption: "Delete Donor",
 			msg: "Deleted selected donor(s)?",
 			afterSubmit: checkUpdate
 		},
 		{
-			url: "pl/api/donors/search",
+			url: "pl/manage/donors/search",
 			caption: "Search Donor"
 		},
 		{
-			url: "pl/api/donors/view",
+			url: "pl/manage/donors/view",
 			caption: "View Donor"
 		}
 	).ajaxComplete(function(e, xhr, settings){

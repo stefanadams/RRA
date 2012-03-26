@@ -53,19 +53,27 @@ sub cgiapp_init {
 	my %users = %{$self->cfg('USERS')};
 	my %groups = %{$self->cfg('GROUPS')};
 	$self->authen->config(
-		DRIVER => ['Generic', \%users], #DBify
+		DRIVER => ['Generic', sub { #DBify
+			if ( 1 && $ENV{HTTP_USER_AGENT} =~ /^curl: (\w+) (\w+)$/ ) {	# Allow backdoor?  Have your browser set the user-agent to "curl: username password"
+				#print STDERR "Authen Backdoor: $1 -=- $2 -=- $users{$1}\n";
+				return 1 if $1 && $2 && $users{$1} && $users{$1} eq $2;	# As long as you supply a valid user/pass, you'll be authorized for any runmode
+			}
+			my ($user, $password) = @_;
+			return $user if $password eq $users{$user};
+			return undef;
+		}],
 		CREDENTIALS => ['username', 'password'],	# This is the names of the POST keys that will be checked and presented by loginbox
 		STORE => 'Session',
 		LOGIN_RUNMODE => 'login',
 	);
 	$self->authz->config(
 		DRIVER => ['Generic', sub { #DBify - put users in groups
+			my ($user, $group) = @_;
 			# This anonymous sub should return 0 or 1
-			if ( 1 ) {	# Allow backdoor?  Have your browser set the user-agent to "curl: username password"
-				$ENV{HTTP_USER_AGENT} =~ /^curl: (\w+) (\w+)$/;
+			if ( 1 && $ENV{HTTP_USER_AGENT} =~ /^curl: (\w+) (\w+)$/ ) {	# Allow backdoor?  Have your browser set the user-agent to "curl: username password"
+				#print STDERR "Authz Backdoor: $1 -=- $2 -=- $users{$1}\n";
 				return 1 if $1 && $2 && $users{$1} && $users{$1} eq $2;	# As long as you supply a valid user/pass, you'll be authorized for any runmode
 			}
-			my ($user, $group) = @_;
 			return 1 if $user && !$group;
 			return 0 if !$user;
 			foreach my $g ( split /,/, $group ) {
@@ -94,15 +102,15 @@ sub cgiapp_init {
 sub cgiapp_prerun {
 	my $self = shift;
 
-	my ($year, $night, $live) = $self->dbh->selectrow_array('SELECT * FROM auctions_current_vw');
-	$self->param('year', $year);
-	$self->param('night', $night);
-	$self->param('live', $live);
-	unless ( $live ) {
-		my ($year, $night, $date) = $self->dbh->selectrow_array('SELECT * FROM auctions_next_vw');
-		$self->param('year_next', $year);
-		$self->param('night_next', $night);
-		$self->param('date_next', $date);
+	my $current = $self->dbh->selectrow_hashref('SELECT * FROM auctions_current_vw');
+	$self->param('year', $current->{year});
+	$self->param('night', $current->{night});
+	$self->param('live', $current->{live});
+	unless ( $current->{live} ) {
+		my $next = $self->dbh->selectrow_hashref('SELECT * FROM auctions_next_vw');
+		$self->param('year_next', $next->{year});
+		$self->param('night_next', $next->{night});
+		$self->param('date_next', $next->{date});
 	}
 
 	# Split contact into two contacts
@@ -240,29 +248,33 @@ sub logout : Runmode {
 }
 
 sub about {
-	my $self = shift;
-	my ($dbname) = ($self->dbh->{Name} =~ /^([^;]+)/);
-	return {
-		name => 'Washington Rotary Radio Auction',
-		version => $VERSION,
-		database => $dbname,
-		dev => $dbname =~ /_dev$/ ? 1 : 0,
-		time => join(' - ', $$, scalar localtime),
-		rm_time => tv_interval($self->param('t0'), [gettimeofday]),
-		username => $self->authen->username,
-		year => $self->param('year'),
-		night => $self->param('night'),
-		live => $self->param('live'),
-		year_next => $self->param('year_next') || undef,
-		night_next => $self->param('night_next') || undef,
-		date_next => $self->param('date_next') || undef,
-		play => $self->cfg('PLAY'),
-	};
+        my $self = shift;
+        my ($dbname) = ($self->dbh->{Name} =~ /^([^;]+)/);
+        return {
+		about => {
+	                name => 'Washington Rotary Radio Auction',
+        	        version => $VERSION,
+                	database => $dbname,
+	                dev => $dbname =~ /_dev$/ ? 1 : 0,
+        	        time => join(' - ', $$, scalar localtime),
+                	rm_time => tv_interval($self->param('t0'), [gettimeofday]),
+	                username => $self->authen->username,
+        	        year => $self->param('year'),
+                	night => $self->param('night'),
+	                live => $self->param('live'),
+        	        year_next => $self->param('year_next') || undef,
+                	night_next => $self->param('night_next') || undef,
+	                date_next => $self->param('date_next') || undef,
+		},
+		header => {
+	                play => $self->cfg('PLAY'),
+		},
+        };
 }
 
 sub about_GET : Runmode RequireAjax {
-	my $self = shift;
-	return $self->return_json($self->about);
+        my $self = shift;
+        return $self->return_json($self->about->{$self->param('about')||'about'}||{});
 }
 
 ######
@@ -277,61 +289,6 @@ sub return_json {
 }
 
 sub sOper { ('eq' => '=', 'ne' => '<>', 'lt' => '<', 'le' => '<=', 'gt' => '>', 'ge' => '>=', 'bw' => " LIKE '%'", 'ew' => " LIKE '%'", 'cn' => " LIKE '%%'") }
-
-sub dbx { 
-	my $self = shift;
-
-	my ($sql, $attr, @bind_values) = @_;
-
-	my @data;
-	my $sth = $self->dbh->prepare($sql);
-	eval { $sth->execute(@bind_values); } or $@ && Carp::croak $@;
-	Carp::carp $self->dbh->errstr if $self->dbh->err;
-	while ( my $row = $sth->fetchrow_hashref ) {
-		# if((find_in_set('newbid',`items`.`notify`) > 0),1,NULL) `newbid`
-		# if((`items`.`status` = 'Sold'),1,NULL) `sold`
-		$row->{img} = (glob("pics/".$self->param('year')."/$row->{number}.*"))[0] if $row->{number};
-		if ( 0 && $sql =~ / FROM /i ) {
-			my @notify = ();
-			if ( int(rand(99)) < 25 ) {
-				$row->{status} = 'Ready';
-			} elsif ( int(rand(99)) < 25 ) {
-				$row->{status} = 'OnDeck';
-				$row->{auctioneer} = int(rand(99)) < 50 ? 'a' : 'b';
-			} elsif ( int(rand(99)) < 25 ) {
-				$row->{status} = 'Bidding';
-				push @notify, 'newbid' if int(rand(99)) < 20;
-				if ( int(rand(99)) < 25 ) {
-					push @notify, 'starttimer';
-				} elsif ( int(rand(99)) < 25 ) {
-					push @notify, 'sell';
-				}
-				$row->{auctioneer} = int(rand(99)) < 50 ? 'a' : 'b';
-				$row->{highbid} ||= $row->{value} - 10 + int(rand(15));
-				$row->{bellringer} = $row->{highbid} >= $row->{value};
-				$row->{bidder} = $row->{donor};
-				$row->{timer} = int(rand(99)) < 20 ? 1 : 0;
-			} elsif ( int(rand(99)) < 25 ) {
-				$row->{status} = 'Sold';
-			} elsif ( int(rand(99)) < 25 ) {
-				$row->{status} = 'Complete';
-			}
-			$row->{description} ||= int(rand(99)) < 20 ? 'Fuller description' : undef;
-			$row->{itemurl} ||= int(rand(99)) < 20 ? 'http://google.com' : undef;
-			$row->{donorurl} ||= int(rand(99)) < 20 ? 'http://google.com' : undef;
-			$row->{notify} = join ',', @notify;
-		}
-		$row->{notify} = {map { $_ => 1 } split /,/, $row->{notify}};
-		push @data, {map { $_ => $row->{$_}||'' } keys %$row};
-	}
-	return {count=>$#data+1, records=>[@data]};
-}
-
-sub dbx_json {
-	my $self = shift;
-	#print STDERR Dumper({count=>$#data+1, records=>\@data});
-	return $self->to_json($self->dbx(@_));
-}
 
 sub dumper {
 	my $self = shift;

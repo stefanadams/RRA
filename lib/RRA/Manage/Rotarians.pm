@@ -1,4 +1,4 @@
-package RRA::API::Rotarians;
+package RRA::Manage::Rotarians;
 
 use strict;
 use warnings;

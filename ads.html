@@ -20,7 +20,7 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	function ac_advertiser(elem){
-		$(elem).autocomplete('pl/api/ac/advertiser');
+		$(elem).autocomplete('pl/ac/advertiser');
 		$(elem).result(function(event, data, formatted){
 			if (data) {
 				$('#url').val(data[1]);
@@ -30,7 +30,7 @@ $(document).ready(function(){
 	}
 
 	function ac_ad(elem){
-		$(elem).autocomplete('pl/api/ac/ad');
+		$(elem).autocomplete('pl/ac/ad');
 		return true;
 	}
 
@@ -62,7 +62,7 @@ $(document).ready(function(){
 	$("#list1").jqGrid({
 		// To do: run boolFmatter after update
 		// To do: Escape on cell edit sometimes does not work
-		url: 'pl/api/ads',
+		url: 'pl/manage/ads',
 		postData: {debug: 1},
 		mtype: 'POST',
 		datatype: 'json',
@@ -76,7 +76,7 @@ $(document).ready(function(){
 			{name:'adurl',label:'URL',width:60,search:false,editable:true,editrules:{url:true,required:true},formoptions:{elmsuffix:'(*)'}}
 		],
 		cellEdit: true,
-		cellurl: 'pl/api/ads/cell',
+		cellurl: 'pl/manage/ads/cell',
 		beforeSubmitCell: function(rowid,celname,value,iRow,iCol){
 			if (celname=="advertiser"){
 				return {celname:"advertiser_id",advertiser_id:value};
@@ -100,7 +100,7 @@ $(document).ready(function(){
 		{edit:true,add:true,del:true},
 		// {edit}, {add}, {del}, {search}, {view}
 		{
-			url: "pl/api/ads/edit",
+			url: "pl/manage/ads/edit",
 			editCaption: "Edit Ad",
 			width: 700,
 			closeOnEscape: true,
@@ -108,24 +108,24 @@ $(document).ready(function(){
 			afterSubmit: checkUpdate
 		},
 		{
-			url: "pl/api/ads/add",
+			url: "pl/manage/ads/add",
 			addCaption: "Add Ad",
 			width: 700,
 			closeOnEscape: true,
 			afterSubmit: checkUpdate
 		},
 		{
-			url: "pl/api/ads/del",
+			url: "pl/manage/ads/del",
 			caption: "Delete Ad",
 			msg: "Deleted selected ad(s)?",
 			afterSubmit: checkUpdate
 		},
 		{
-			url: "pl/api/ads/search",
+			url: "pl/manage/ads/search",
 			caption: "Search Ads"
 		},
 		{
-			url: "pl/api/ads/view",
+			url: "pl/manage/ads/view",
 			caption: "View Ad"
 		}
 	).ajaxComplete(function(e, xhr, settings){

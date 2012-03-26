@@ -2,8 +2,8 @@ div.humanized-message{position:absolute;text-align:center;width:70%;min-height:2
 
 * {font-family:verdana;font-size:14px;margin:0}
 /* html, body {height:100%;background-color:#fc6} */
-html, body {height:100%;background-color:#eeeeee}
-body {padding:170px 0 50px 0}
+html, body {background-color:#eeeeee;}
+body {padding:200px 0 50px 0}
 * html body {overflow:hidden} 
 * html div#body {height:100%;overflow:auto}
 @media screen {
@@ -15,13 +15,6 @@ a:link {color:red;text-decoration:underline}
 a:visited {color:red;text-decoration:underline}
 a:hover {color:red;text-decoration:underline} 
 a:active {color:red;text-decoration:underline}
-
-#alert, #alertmsg {background-color:#FF6666;text-align:center}
-#alert table, #alertmsg table {width:100%}
-#alert tr.msg {display:none}
-#alert .alert {text-decoration:underline;cursor:pointer}
-#alert .selected {font-weight:bold}
-#alert-msg {background-color:#ffd685;border:thin solid #414794;color:grey}
 
 a.modal {cursor:pointer}
 div.modal {display:none}
@@ -68,3 +61,43 @@ table.body	{width: 100%; background-color: #ffd685;}
 table.body  {width: 100%}
 table.body div.body_title {text-align: center; font-size: 16px; font-weight: bold; color: #414794; margin-bottom: 15px;}
 */
+
+    #header {width:100%;background-color:#414794;text-align:center;padding:0px;margin:0px:spacing:0px; border-collapse: collapse;}
+    #header table.header {width:100%}
+    table.mast {width:960px;margin-left:auto;margin-right:auto}
+    table.mast td {color: white;width:960px;font-weight:bold/*;border: thin black solid*/}
+    table.mast td.title {text-align:center;}
+    table.mast td.play {text-align:center;}
+    table.mast td.listen {color: white;text-align:right;padding-right:15px;width:320px}
+    table.mast td.bid {color: white;text-align:center;width:320px}
+    table.mast td.pay {color: white;text-align:left;padding-left:15px;width:320px}
+    table.ad {width:100%}
+    table.ad td {width:960px;height:100px;}
+    table.ad td.ad {text-align:center;}
+    a.mast:link {color:white;text-decoration:underline}
+    a.mast:visited {color:white;text-decoration:underline}
+    a.mast:hover {color:white;text-decoration:underline}
+    a.mast:active {color:white;text-decoration:underline}
+    a#paypal {color:white;text-decoration:underline;cursor:pointer;}
+    img.arrowsep {padding-left:15px;padding-right:15px}
+	#ad img {width:960px;height:100px}
+
+table.getalert {width:100%;text-align:center;background-color:#FF6666;}
+table.setalert {width:100%;text-align:center;background-color:#FF6666;}
+table.getalert, table.setalert {width:100%}
+table.setalert tr.alert td {text-align:center;}
+table.setalert tr.msg {display:none}
+table.setalert span.alert {text-decoration:underline;cursor:pointer}
+table.setalert .selected {font-weight:bold}
+//#alert-msg {background-color:#ffd685;border:thin solid #414794;color:grey}
+table.setalert tr.alert span.alert {color:black}
+table.setalert tr.msg input.msg {width:100%;background-color:#ffd685;border:thin solid #414794;color:grey;padding:0}
+label { display:block; }
+input.text { margin-bottom:12px; width:95%; padding: .4em; }
+fieldset { padding:0; border:0; margin-top:25px; }
+
+
+table.mast td.title span {display:block;}
+table.closed {width:95%;border-collapse:collapse;margin-left:auto;margin-right:auto}
+table.closed tr.highlight {background-color:#bbb}
+table.closed td {border:thin solid black;padding-left:5px;padding-right:5px;padding-top:2px;padding-bottom:2px}

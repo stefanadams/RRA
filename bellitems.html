@@ -55,7 +55,7 @@ $(document).ready(function(){
 	});
 
 	$("#list1").jqGrid({
-		url: 'pl/api/bellitems',
+		url: 'pl/manage/bellitems',
 		postData: {debug: 1},
 		mtype: 'POST',   
 		datatype: 'json',
@@ -67,7 +67,10 @@ $(document).ready(function(){
 			{name:'bellitem',label:'Bellringer Item', width:200,editable:true,editoptions:{size:50},editrules:{required:true},formoptions:{elmsuffix:'(*)'}},
 		],
 		cellEdit: true,
-		cellurl: 'pl/api/bellitems/cell',
+		cellurl: 'pl/manage/bellitems/cell',
+        beforeSubmitCell: function(rowid,celname,value,iRow,iCol){
+            return {celname:celname};
+        },
 		recreateForm: true,
 		altRows: true,
 		rownumbers: true,
@@ -84,7 +87,7 @@ $(document).ready(function(){
 		{edit:true,add:true,del:true},
 		// {edit}, {add}, {del}, {search}, {view}
 		{
-			url: "pl/api/bellitems/edit",
+			url: "pl/manage/bellitems/edit",
 			editCaption: "Edit Bellringer Item",
 			width: 700,
 			closeOnEscape: true,
@@ -92,25 +95,25 @@ $(document).ready(function(){
 			afterSubmit: checkUpdate
 		},
 		{
-			url: "pl/api/bellitems/add",
+			url: "pl/manage/bellitems/add",
 			addCaption: "Add Bellringer Item",
 			width: 700,
 			closeOnEscape: true,
 			afterSubmit: checkUpdate
 		},
 		{
-			url: "pl/api/bellitems/del",
+			url: "pl/manage/bellitems/del",
 			caption: "Delete Bellringer Item",
 			msg: "Deleted selected Bellringer item(s)?",
 			afterSubmit: checkUpdate
 		},
         { 
-            url: "pl/api/bellitems/search",
+            url: "pl/manage/bellitems/search",
             caption: "Search Bellringer Item",
 			multipleSearch:false
         },
         { 
-            url: "pl/api/bellitem/view",
+            url: "pl/manage/bellitem/view",
             caption: "View Bellringer Item"
         }
 	).ajaxComplete(function(e, xhr, settings){

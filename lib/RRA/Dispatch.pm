@@ -29,6 +29,27 @@
 
 package RRA::Dispatch;
 use base 'CGI::Application::Dispatch';
+use RRA::Dispatch;
+use RRA::Template;
+use RRA::Backup;
+use RRA::XLS;
+use RRA::Bookmarks;
+use RRA::API;
+use RRA::BuildSelect;
+use RRA::AutoComplete;
+use RRA::Manage;
+use RRA::Manage::Donors;
+use RRA::Manage::Items;
+use RRA::Manage::Items::Sequence;
+use RRA::Manage::Stockitems;
+use RRA::Manage::Bellitems;
+use RRA::Manage::Ads;
+use RRA::Manage::Ads::Ad;
+use RRA::Manage::Ads::Schedule;
+use RRA::Manage::Rotarians;
+use RRA::Manage::Bidding;
+use RRA::Manage::Bidders;
+use RRA::Manage::Winners;
 
 use Config::Auto;
 my $config = Config::Auto::parse($ENV{CONFIG});
@@ -40,35 +61,46 @@ sub dispatch_args {{
 	debug => 0,
 	auto_rest => 1,
 	table => [
-		'api/rotarians'			=> { app => 'API::Rotarians', rm => 'rotarians' },
-		'api/rotarians/:rm'		=> { app => 'API::Rotarians' },
-		'api/bidders'			=> { app => 'API::Bidders', rm => 'bidders' },
-		'api/bidders/:rm'		=> { app => 'API::Bidders' },
-		'api/donors'			=> { app => 'API::Donors', rm => 'donors' },
-		'api/donors/:rm'		=> { app => 'API::Donors' },
-		'api/items'			=> { app => 'API::Items', rm => 'items' },
-		'api/items/sequence'		=> { app => 'API::Items::Sequence', rm => 'sequence' },
-		'api/items/sequence/*'		=> { app => 'API::Items::Sequence', rm => 'sequence' },
-		'api/items/:rm'			=> { app => 'API::Items' },
-		'api/winners'			=> { app => 'API::Winners', rm => 'winners' },
-		'api/stockitems'		=> { app => 'API::Stockitems', rm => 'stockitems' },
-		'api/stockitems/:rm'		=> { app => 'API::Stockitems' },
-		'api/bellitems'			=> { app => 'API::Bellitems', rm => 'bellitems' },
-		'api/bellitems/:rm'		=> { app => 'API::Bellitems' },
-		'api/ads'			=> { app => 'API::Ads', rm => 'ads' },
-		'api/ads/ad'			=> { app => 'API::Ads::Ad', rm => 'ad' },
-		'api/ads/ad/:ad_id'		=> { app => 'API::Ads::Ad', rm => 'ad' },
-		'api/ads/schedule'		=> { app => 'API::Ads::Schedule', rm => 'schedule' },
-		'api/ads/schedule/*'		=> { app => 'API::Ads::Schedule', rm => 'schedule' },
-		'api/ads/:rm'			=> { app => 'API::Ads' },
-		'api/:rm/*'			=> { app => 'API' },
-		'xls/:rm'			=> { app => 'XLS' },
-		'login'				=> { app => 'Base', rm => 'login' },
-		'logout'			=> { app => 'Base', rm => 'logout' },
-		'about'				=> { app => 'Base', rm => 'about' },
-		'bookmarks'			=> { app => 'Bookmarks', rm => 'bookmarks' },
-		'backup'			=> { app => 'Backup', rm => 'backup' },
-		'template/*'			=> { app => 'Template', rm => 'template' },
+		'manage/rotarians'			=> { app => 'Manage::Rotarians', rm => 'rotarians' },
+		'manage/rotarians/:rm'			=> { app => 'Manage::Rotarians' },
+		'manage/bidding'			=> { app => 'Manage::Bidding', rm => 'bidding' },
+		'manage/bidding/item/:item_id'		=> { app => 'Manage::Bidding', rm => 'item' },
+		'manage/bidding/:rm'			=> { app => 'Manage::Bidding' },
+		'manage/bidders'			=> { app => 'Manage::Bidders', rm => 'bidders' },
+		'manage/bidders/:rm'			=> { app => 'Manage::Bidders' },
+		'manage/donors'				=> { app => 'Manage::Donors', rm => 'donors' },
+		'manage/donors/donor/:donor_id'		=> { app => 'Manage::Donors', rm => 'donor' },
+		'manage/donors/:rm'			=> { app => 'Manage::Donors' },
+		'manage/items'				=> { app => 'Manage::Items', rm => 'items' },
+		'manage/items/sequence/:n?'		=> { app => 'Manage::Items::Sequence', rm => 'sequence' },
+		'manage/items/:rm'			=> { app => 'Manage::Items' },
+		'manage/winners'			=> { app => 'Manage::Winners', rm => 'winners' },
+		'manage/winners/:rm'			=> { app => 'Manage::Winners' },
+		'manage/stockitems'			=> { app => 'Manage::Stockitems', rm => 'stockitems' },
+		'manage/stockitems/:rm'			=> { app => 'Manage::Stockitems' },
+		'manage/bellitems'			=> { app => 'Manage::Bellitems', rm => 'bellitems' },
+		'manage/bellitems/:rm'			=> { app => 'Manage::Bellitems' },
+		'manage/ads'				=> { app => 'Manage::Ads', rm => 'ads' },
+		#'manage/ads/ad/:ad_id?'		=> { app => 'Manage::Ads::Ad', rm => 'ad' },
+		'manage/ads/schedule/:n?'		=> { app => 'Manage::Ads::Schedule', rm => 'schedule' },
+		'manage/ads/:rm'			=> { app => 'Manage::Ads' },
+		'manage/:rm/*'				=> { app => 'Manage' },
+		'api/header'				=> { app => 'API', rm => 'header' },
+		'api/ad/:ad_id'				=> { app => 'API', rm => 'ad' },
+		'api/alert/:alert?'			=> { app => 'API', rm => 'alert' },
+		'api/bidding'				=> { app => 'API', rm => 'bidding' },
+		'api/:rm'				=> { app => 'API' },
+		'api/:rm/*'				=> { app => 'API' },
+		'xls/:rm'				=> { app => 'XLS' },
+		'bs/*'					=> { app => 'BuildSelect', rm => 'bs' },
+		'ac/*'					=> { app => 'AutoComplete', rm => 'ac' },
+		'login'					=> { app => 'Base', rm => 'login' },
+		'logout'				=> { app => 'Base', rm => 'logout' },
+		'about/:about?'				=> { app => 'Base', rm => 'about' },
+		'bookmarks'				=> { app => 'Bookmarks', rm => 'bookmarks' },
+		'tooltip/:item_id'			=> { app => 'Tooltip', rm => 'tooltip' },
+		'backup'				=> { app => 'Backup', rm => 'backup' },
+		'template/*'				=> { app => 'Template', rm => 'template' },
 	],
 	args_to_new => {
 		TMPL_PATH => $config->{TEMPLATES},

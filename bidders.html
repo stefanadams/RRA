@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" />
-<title>Bidders</title>
+<title>Donors</title>
 
 <link rel="stylesheet" type="text/css" media="screen" href="css/smoothness/jquery-ui-1.8.16.custom.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
@@ -39,7 +39,7 @@ $(document).ready(function(){
 	}
 
 	function ac_city(elem){
-		$(elem).autocomplete('pl/api/ac/city');
+		$(elem).autocomplete('pl/ac/city');
 		$(elem).result(function(event, data, formatted){
 			if (data) {
 				$('#state').val(data[1]);
@@ -86,44 +86,28 @@ $(document).ready(function(){
 	$("#list1").jqGrid({
 		// To do: run boolFmatter after update
 		// To do: Escape on cell edit sometimes does not work
-		url: 'pl/api/items',
+		url: 'pl/manage/bidders',
 		postData: {debug: 1},
 		mtype: 'POST',
 		datatype: 'json',
-		jsonReader: {repeatitems: false, id: "item_id", subgrid: {root: "rows", repeatitems: true}},
+		jsonReader: {repeatitems: false, id: "bidder_id", subgrid: {root: "rows", repeatitems: true}},
 		ajaxGridOptions: { contentType: "application/json; charset=utf-8" },
 		serializeGridData: function (postData) { return $.toJSON(postData); },
-		caption: "Bidders By Item",
+		caption: "Bidders",
 		colModel:[
-			{name:'number',label:'Number',width:70,editable:false},
-			{name:'item',label:'Item',width:200,editable:false},
-			{name:'value',label:'Value',width:70,editable:false},
-			{name:'highbid',label:'High Bid',width:70,editable:false}
+			{name:'phone',label:'Phone',width:70,editable:true,editoptions:{dataInit:phoneMask},editrules:{required:true},formoptions:{elmsuffix:'(*)'},formatter:'phoneFmatter'},
+			{name:'bidder',label:'Bidder',width:200,editable:true,editrules:{required:true},formoptions:{elmsuffix:'(*)'}},
+			{name:'address',label:'Address',width:100,search:false,editable:true,editrules:{required:true},formoptions:{elmsuffix:'(*)'}},
+			{name:'city',label:'City',width:60,editable:true,editoptions:{dataInit:ac_city}},
+			{name:'state',label:'State',width:60,editable:true,hidden:true,editrules:{edithidden:true}},
+			{name:'zip',label:'Zip',width:60,editable:true,hidden:true,editrules:{edithidden:true}},
+			{name:'email',label:'Email',width:60,search:false,editable:true,hidden:true,editrules:{email:true,edithidden:true,required:false}}
 		],
-		subGrid: true,
-		subGridRowExpanded: function(subgrid_id, row_id) {
-			var subgrid_table_id;
-			subgrid_table_id = subgrid_id+"_t";
-			jQuery("#"+subgrid_id).html("<table id='"+subgrid_table_id+"' class='scroll'></table>");
-			jQuery("#"+subgrid_table_id).jqGrid({
-				url:"pl/api/bidders/item/"+row_id,
-				mtype: 'POST',
-				datatype: "json",
-				colModel: [
-					{name:"phone",label:"Phone",width:80,key:true},
-					{name:"bidder",label:"Bidder",width:130},
-					{name:"address",label:"Address",width:80,align:"right"},
-					{name:"city",label:"City",width:80,align:"right"},
-					{name:"state",label:"State",width:100,align:"right",sortable:false},
-					{name:"zip",label:"Zip",width:80,align:"right"},
-					{name:"email",label:"Email",width:100,align:"right",sortable:false}
-				],
-				height: '100%',
-				rowNum:20,
-				sortname: 'num',
-				sortorder: "asc"
-			});
-		},
+        cellEdit: true,
+        cellurl: 'pl/manage/bidders/cell',
+        beforeSubmitCell: function(rowid,celname,value,iRow,iCol){   
+            return {celname:celname};    
+        },   
 		loadComplete: formatGridCells,
 		recreateForm: true,
 		altRows: true,
@@ -133,25 +117,40 @@ $(document).ready(function(){
 		rowNum: 50,
 		rowList: [10, 20, 50, 100, 500, 1000, 5000, 10000],
 		pager: $('#pager1'),
-		sortname: 'item_id',
+		sortname: 'bidder',
 		viewrecords: true,
 		height: "75\%",
 		autowidth: true
 	}).navGrid('#pager1',
-		{edit:false,add:false,del:false},
+		{edit:true,add:true,del:true},
 		// {edit}, {add}, {del}, {search}, {view}
 		{
+			url: "pl/manage/bidders/edit",
+			editCaption: "Edit Bidder",
+			width: 700,
+			closeOnEscape: true,
+			closeAfterEdit: true,
+			afterSubmit: checkUpdate
 		},
 		{
+			url: "pl/manage/bidders/add",
+			addCaption: "Add Bidder",
+			width: 700,
+			closeOnEscape: true,
+			afterSubmit: checkUpdate
 		},
 		{
+			url: "pl/manage/bidders/del",
+			caption: "Delete Bidder",
+			msg: "Deleted selected bidder(s)?",
+			afterSubmit: checkUpdate
 		},
 		{
-			url: "pl/api/bidders/search",
-			caption: "Search Bidders"
+			url: "pl/manage/bidders/search",
+			caption: "Search Bidder"
 		},
 		{
-			url: "pl/api/bidders/view",
+			url: "pl/manage/bidders/view",
 			caption: "View Bidder"
 		}
 	).ajaxComplete(function(e, xhr, settings){

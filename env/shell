@@ -11,6 +11,17 @@ rra ()
     env CONFIG=/data/vhosts/washingtonrotary.com/dev/htdocs/rra.cfg perl -I/data/vhosts/washingtonrotary.com/dev/htdocs/rra/lib -MRRA::Dispatch -e 'RRA::Dispatch->dispatch' "$@"; echo
 }
 
+rralogin () 
+{ 
+    if [ "$1" = "on" ]; then
+        export RRALOGIN="-A \"curl: $2 $3\" -d username=$2 -d password=$3"
+    else
+        unset RRALOGIN;
+    fi
+    alias curl="curl $AJAX $JSON $RRALOGIN"
+}
+complete -W "on off" rralogin
+
 ajax () 
 { 
     if [ "$1" = "on" ]; then

@@ -1,4 +1,4 @@
-package RRA::API::Ads::Ad;
+package RRA::Manage::Ads::Ad;
 
 use strict;
 use warnings;
@@ -22,8 +22,9 @@ sub ad_GET : Runmode RequireAjax Authen Authz(':admins') {
 	my $ads = $self->dbh->selectrow_array($sql, {}, @bind);
 	if ( $self->param('ad_id') ) {
 		my ($sql, @bind) = sql_interp 'SELECT adurl FROM ads_today_vw WHERE', {ad_id=>$self->param('ad_id')};
-		if ( my $url = $self->dbh->selectrow_array($sql, {}, @bind) ) {
-			($sql, @bind) = sql_interp 'INSERT INTO adcount', {ad_id=>$self->param('ad_id'), processed=>sql('now()')}, 'ON DUPLICATE KEY UPDATE click=click+1'
+		my $url = '';
+		if ( $url = $self->dbh->selectrow_array($sql, {}, @bind) ) {
+			($sql, @bind) = sql_interp 'INSERT INTO adcount', {ad_id=>$self->param('ad_id'), processed=>sql('now()')}, 'ON DUPLICATE KEY UPDATE click=click+1';
 			$self->dbh->do($sql, {}, @bind);
 		}
 		return $self->redirect($url||'http://www.washingtonrotary.com');

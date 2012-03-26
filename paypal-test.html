@@ -17,7 +17,7 @@ $(document).ready(function(){
         });
         $("#dialog-paypal").dialog("open");
         $("#paypal-os0").autocomplete({
-            source: "pl/api/ac/pay_number",
+            source: "pl/ac/pay_number",
             minLength: 3,
             select: function(event, ui){
                 if (ui.item){

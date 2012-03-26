@@ -1,0 +1,402 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" />
+<title>Radio Auction</title>
+
+<link rel="stylesheet" type="text/css" media="screen" href="css/smoothness/jquery-ui-1.8.16.custom.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
+<script type="text/javascript" src="js/jquery-jtemplates.js"></script>
+<script type="text/javascript" src="js/jquery.jtruncate.js"></script>
+<script type="text/javascript" src="js/jquery.formatCurrency-1.4.0.min.js"></script>
+<script type="text/javascript" src="js/jquery.humanmsg.js"></script>
+
+<script language=javascript src="http://nick8.surfernetwork.com/Media/player/scripts/launch.js"></script>
+
+<script type="text/javascript">
+var allowHumanMsg = 1;
+var c_response = '';
+var alert;
+var alert_msg;
+
+function header_success(data){
+	var msg=$('#alert-get').html();
+	if (msg){
+		if (msg != c_response && allowHumanMsg){$(window).humanMsg(msg, {autoHide: 3*1000});}
+		allowHumanMsg = 1;
+		c_response = msg;
+		$('table.getalert').show();
+	} else {
+		$('table.getalert').hide();
+	}
+	var headergroupHeight = 0;
+	$('#header').not(':hidden').each(function(){headergroupHeight = headergroupHeight + $(this).height() + 10;});   // Add 10 for the 10px padding in #header
+	$('table.setalert tr.alert').not(':hidden').each(function(){headergroupHeight = headergroupHeight + $(this).height();});
+	$('table.setalert tr.msg').not(':hidden').each(function(){headergroupHeight = headergroupHeight + $(this).height();});
+	$('table.getalert').not(':hidden').each(function(){headergroupHeight = headergroupHeight + $(this).height();});
+	$('body').css('height', ($('body').height()-headergroupHeight-50)+'px');    // Sub 50 for the body bottom padding
+	$('body').css('padding-top', headergroupHeight+'px');
+	return true;
+}
+$(document).ready(function(){
+	$("#header").setTemplateElement("t_header", null, {runnable_functions: true});
+	$("#header").processTemplateStart("pl/api/header", null, 17500, null, {
+		type: 'GET',
+		on_success: function(data){header_success(data);}
+	});
+
+	$("#bidding").setTemplateElement("t_bidding", null, {runnable_functions: true});
+	$("#bidding").processTemplateStart("pl/api/bidding", null, 10000, null, {
+		type: 'GET',
+		on_success: function(data){
+			if (!!$(this).attr('item') && $(this).find('span.truncate').html().length > $(this).find('span.truncate').attr("length")){content.push($(this).attr('item'));}
+			if (!!$(this).attr('message') && $(this).find('span.truncate').html().length > $(this).find('span.truncate').attr("length")){content.push($(this).attr('message'));}
+
+			$('span.truncate').each(function(){
+				var text = $(this).html();
+				var len = $(this).attr('length') || 50;
+				text = text.length > len ? text.substring(0,len)+'... <a href="tooltip.html?item_id='+$(this).attr("itemid")+'" target="_new"><img src="img/paper1.gif" /></a>' : text;
+				$(this).html(text);
+			});
+
+			$('.currency').each(function(){
+				$(this).formatCurrency({roundToDecimalPlace:0});
+			});
+
+			$('table.items tbody tr').hover(
+				function(){
+					$(this).addClass("highlight");
+				},
+				function(){
+					$(this).removeClass("highlight");
+				}
+			);
+		}
+	});
+
+    $("#dialog-mibew").dialog({
+        autoOpen: false,
+        height: 290,
+        width: 350,
+        modal: true,
+    });
+    $("#mibew").click(function(){
+        $("#dialog-mibew").dialog("open");
+    });
+
+	$("#paypal").live('click', function(){
+		$("#header").processTemplateStop();
+		$("#dialog-paypal").dialog({
+			autoOpen: false,
+			height: 320,
+			width: 380,
+			modal: true,
+			close: function() {
+				$("#header").processTemplateStart("pl/api/header", null, 5000, null, {
+					type: 'GET',
+					on_success: function(data){header_success(data);}
+				});
+			}
+		});
+		$("#dialog-paypal").dialog("open");
+		$("#paypal-os0").autocomplete({
+			source: "pl/ac/pay_number",
+			minLength: 3,
+			select: function(event, ui){
+				if (ui.item){
+					$('#paypal-name').val(ui.item.item);
+					$('#paypal-os1').val(ui.item.address);
+					$('#paypal-os2').val(ui.item.csz);
+				}
+			}
+		});
+	});
+
+	$("table.setalert span.alert").live('click', function(){
+		$("#header").processTemplateStop();
+		$("#dialog-alert").dialog({
+				autoOpen: false,
+				height: 320,
+				width: 380,
+				modal: true,
+				buttons: {
+					"Send Alert": function() {
+						$("#alert-set-alert").removeClass("ui-state-error");
+						$("#alert-set-msg").removeClass("ui-state-error");
+						$.post('pl/api/alert/'+$('input[name="alert-set-alert"]:checked').val(), {msg: $("#alert-set-msg").val()}, function(data){
+							if ( data.msg ) {
+								$('table.getalert').show();
+								$('#alert-get').html(data.msg);
+							} else {
+								$('table.getalert').hide();
+							}
+							$('span.alert').each(function(){
+								if ($(this).hasClass('selected')){$(this).removeClass('selected');}
+							});
+						});
+						$(this).dialog("close");
+					},
+					Cancel: function() {
+						$(this).dialog("close");
+					}
+				},
+				close: function() {
+					$("#alert-set-alert").removeClass("ui-state-error");
+					$("#alert-set-msg").removeClass("ui-state-error");
+					$("#header").processTemplateStart("pl/api/header", null, 5000, null, {
+						type: 'GET',
+						on_success: function(data){header_success(data);}
+					});
+				}
+		});
+		$("#dialog-alert").dialog("open");
+	});
+});
+</script>
+</head>
+<body>
+
+	<div id="headergroup">
+		<div id="header"></div>
+	</div>
+	<div id="bodygroup">
+		<div id="bidding"></div>
+	</div>
+	<div id="footergroup">
+		<div id="key">
+			<span class="key">Key:
+				<img valign='middle' src='img/paddle1.gif' width='16' height='16' class="tooltip above" description="New Bid">&nbsp;= New Bid |
+				<img valign='middle' src='img/bell2.png' width='16' height='16' class="tooltip above" description="Bell Ringer">&nbsp;= Bell Ringer |
+				<img valign='middle' src='img/clock3.gif' width='16' height='16' class="tooltip above" description="Timer">&nbsp;= Timer |
+				<img valign='middle' src='img/gavel2.gif' width='16' height='16' class="tooltip above" description="Sold">&nbsp;= Sold |
+				<img valign='middle' src='img/paper1.gif' width='16' height='16' class="tooltip above" description="More description">&nbsp;= More description |
+				<img valign='middle' src='img/chain1.png' width='16' height='16' class="tooltip_fixed above" description="<a href='http://google.com' target='_new'>Link</a>">&nbsp;= External link |
+				<img valign='middle' src='img/attach_image.gif' width='16' height='16' class="tooltip above" description="<img src='img/attach_image.gif' />">&nbsp;= View image
+			</span>
+		</div>
+	</div>
+
+	<textarea id="t_header" style="display:none">
+			<table class="header">
+				<tr>
+					<td class="mast">
+						<table class="mast">
+							<tr><td class="title">
+							{#if $T.about.live==1}
+								<span class="title">{$T.about.name} {$T.about.year} {$T.about.night?", Night " + $T.about.night:''} {$T.about.live?'':' (Offline)'}
+							{#else}
+								<span class="title">{$T.about.name} -- Closed</span>
+								<span class="reopens">Re-opens {$T.about.date_next}</span>
+							{#/if}
+							</span></td></tr>
+							{#if $T.about.live==1}
+							<tr>
+								<td class="play">
+									<span class="listen">Listen:
+										<span class="radio">
+											{#foreach $T.header.play.listen.radio as station}
+												{#if $T.station.link}
+													<span class="nolive"><a class="mast" href="{$T.station.link}" target="blank">{$T.station.name}</a></span>
+												{#else}
+													{$T.station.name}
+												{#/if}
+												{#if $T.station$last == false}
+													<span class="choicesep">/</span>
+												{#/if}
+											{#/foreach}
+										</span>
+									</span>
+									<img class="arrowsep" src="img/right_arrow_button.gif" />
+									<span class="bid">Bid:
+										<span class="phone">
+											{#foreach $T.header.play.bid.phone as phone}
+												{$T.phone}
+												{#if $T.station$last == false}
+													<span class="choicesep">/</span>
+												{#/if}
+											{#/foreach}
+										</span>
+										<span class="choicesep">/</span>
+										<span class="chat">
+											{#foreach $T.header.play.bid.chat as online}
+												{#if $T.online.link}
+													<span class="nolive"><a id="{$T.online.id}" class="mast" href="{$T.online.link}" target="new">{$T.online.name}</a></span>
+												{#else}
+													{$T.online.name}
+												{#/if}
+												{#if $T.station$last == false}
+													<span class="choicesep">/</span>
+												{#/if}
+											{#/foreach}
+										</span>
+									</span>
+									<img class="arrowsep" src="img/right_arrow_button.gif" />
+									<span class="pay">Pay:
+										<a id="paypal" class="modal">PayPal</a>
+									</span>
+									<div id="dialog-paypal" title="Pay by Credit Card" class="modal">
+										<form action='https://www.paypal.com/cgi-bin/webscr' method='post'>
+											<input type='hidden' name='cmd' value='_s-xclick'><input type='hidden' name='hosted_button_id' value='4113257'>
+											<table>
+												<tr><td colspan="2">Complete the form below to pay for your item:</td></tr>
+												<tr><td>Item #:</td><td><input type='hidden' name='on0' value='Item ID'><input id="paypal-os0" type='text' name='os0' maxlength='60' value='Item ID' onfocus="this.value = ( this.value == this.defaultValue ) ? '' : this.value;return true;"></td></tr>
+												<tr><td>Item:</td><td><input type='hidden' name='item_name' value='Item'><input id="paypal-name" type='text' name='item_name' maxlength='60' value='Item' onfocus="this.value = ( this.value == this.defaultValue ) ? '' : this.value;return true;"></td></tr>
+												<tr><td>Street Address:</td><td><input type='hidden' name='on1' value='Street Address'><input id="paypal-os1" type='text' name='os1' maxlength='60' value='Street Address' onfocus="this.value = ( this.value == this.defaultValue ) ? '' : this.value;return true;"></td></tr>
+												<tr><td>City, ST ZIP</td><td><input type='hidden' name='on2' value='City, State, Zip'><input id="paypal-os2" type='text' name='os2' maxlength='60' value='City, State, Zip' onfocus="this.value = ( this.value == this.defaultValue ) ? '' : this.value;return true;"></td></tr>
+												<tr><td colspan="2" align="center"><input type='image' src='https://www.paypal.com/en_US/i/btn/btn_paynowCC_LG.gif' border='0' name='submit' alt='PayPal - The safer, easier way to pay online!'><img alt='' border='0' src='https://www.paypal.com/en_US/i/scr/pixel.gif' width='1' height='1'></td></tr>
+											</table>
+										</form>
+									</div>
+								</td>
+							</tr>
+							{#/if}
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td class="ad">
+						<table class="ad">
+							<tr>
+								<td class="ad">
+									{#if $T.ads.ad.ad_id && $T.ads.ad.img}
+										<a href="pl/api/ad/{$T.ads.ad.ad_id}" target="_new"><img src="ads/{$T.ads.ad.img}" border="0" /></a>
+									{#else}
+										<a href="http://www.washingtonrotary.com" target="_new"><img src="ads/washrotary.jpg" border="0" /></a>
+									{#/if}
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+			<table class="getalert">
+				<tr class="msg">
+					<td>
+						<span id="alert-get" class="msg">{$T.header.alert.msg}</span>
+					</td>
+				</tr>
+			</table>
+			{#if $T.about.username=="admin"}
+			<div id="dialog-alert" title="Set Alert" class="modal">
+				<form>
+				<fieldset>
+					<label for="alert">Send Alert To</label>
+					<input type="radio" name="alert-set-alert" class="text ui-widget-content ui-corner-all" value="admin"/>Admins
+					<input type="radio" name="alert-set-alert" class="text ui-widget-content ui-corner-all" value="operator"/>Operators
+					<input type="radio" name="alert-set-alert" class="text ui-widget-content ui-corner-all" value="auctioneer"/>Auctioneers
+					<input type="radio" name="alert-set-alert" class="text ui-widget-content ui-corner-all" value="caller"/>Callers
+					<input type="radio" name="alert-set-alert" class="text ui-widget-content ui-corner-all" value="bellringer"/>Bellringers
+					<input type="radio" name="alert-set-alert" class="text ui-widget-content ui-corner-all" value="public"/>Public
+					<label for="msg">Message</label>
+					<input type="text" name="alert-set-msg" id="alert-set-msg" class="text ui-widget-content ui-corner-all" />
+				</fieldset>
+				</form>
+			</div>
+			<table class="setalert">
+				<tr class="alert">
+					<td>
+						<span class="alert">Send Alert Message</span>
+					</td>
+				</tr>
+			</table>
+			{#/if}
+	</textarea>
+
+	<textarea id="t_bidding" style="display:none">
+		{#if $T.bidding}
+			<table id='itemsbidding' class="items bidding tablesorter">
+				<thead>
+				<tr>
+					<th>Item</th><th>Value</th><th>Last&nbsp;Bid</th><th>High Bidder</th><th>Donor</th><th>Message</th>
+				</tr>
+				</thead>
+				<tbody>
+				{#foreach $T.bidding.rows as r}
+					<tr id="tr_{$T.r.item_id}" itemid="{$T.r.item_id}" name="item" newbid="{$T.r.notify.newbid}" bellringer="{$T.r.bellringer}" timer="{$T.r.timer}" status="{$T.r.status}">
+						<td col="item" class=tooltip name="{$T.r.item}" description="{$T.r.description}" img="{$T.r.img}">
+							<div col="item">
+							<div style="float:left;width:80%">
+							{#if $T.r.auctioneer}<img src="img/{$T.r.auctioneer}.gif" />{#/if}
+							<span class="item number">{$T.r.number}</span><span class="item">:</span>
+							{#if $T.r.itemurl}<a href="{$T.r.itemurl}" target="_new">{#/if}
+							<span class="item name truncate" length="70" itemid="{$T.r.item_id}">{$T.r.item}</span>
+							{#if $T.r.itemurl}</a>{#/if}
+							</div>
+							<div style="float:right;width:20%;text-align:right">
+							{#if $T.r.description}<a href="tooltip.html?item_id={$T.r.item_id}" target="_new"><img src="img/paper1.gif" /></a>{#/if}
+							{#if $T.r.itemurl}<a href="{$T.r.itemurl}" target="_new"><img src="img/chain1.png" style="border-style: none" /></a>{#/if}
+							{#if $T.r.img}<a href="tooltip.html?item_id={$T.r.item_id}" target="_new"><img src="img/attach_image.gif" /></a>{#/if}
+							</div>
+							</div>
+						</td>
+						<td col="value">
+							<div col="value">
+							<div style="float:left;width:80%">
+							<span class="currency">{$T.r.value}</span>
+							</div>
+							<div style="float:right;width:20%;text-align:right">
+							{#if $T.r.timer}<img src="img/clock3.gif" />{#/if}
+							</div>
+							</div>
+						</td>
+						<td col="highbid">
+							<div col="highbid">
+							<div style="float:left;width:80%">
+							<span class="currency">{$T.r.highbid}</span>
+							</div>
+							<div style="float:right;width:20%;text-align:right">
+							{#if $T.r.notify.newbid}<img src="img/paddle1.gif" />{#/if}
+							{#if $T.r.bellringer}<img src="img/bell2.png" />{#/if}
+							</div>
+							</div>
+						</td>
+						<td col="bidder">
+							<div style="margin:0 auto;">
+							<div col="bidder" style="margin:0 auto; width: 141px;">
+							<div style="float: left; width: 80%;">
+							<span class="bidder">{$T.r.highbidder}</span>
+							</div>
+							<div style="float:right;width:20%; text-align:left;">
+							{#if $T.r.status=='Sold'}<img src="img/gavel2.gif"/>{#/if}
+							</div>
+							</div>
+							</div>
+						</td>
+						<td col="donor">
+							<div col="donor">
+							<div style="float:left;width:80%">
+							{#if $T.r.donorurl}<a href="{$T.r.donorurl}" target="_new">{#/if}
+							<span class="donor">{$T.r.donor}</span>
+							{#if $T.r.donorurl}</a>{#/if}
+							</div>
+							<div style="float:right;width:20%;text-align:right">
+							{#if $T.r.donorurl}<a href="{$T.r.donorurl}" target="_new"><img src="img/chain1.png" style="border-style: none" /></a>{#/if}
+							</div>
+							</div>
+						</td>
+						<td col="message" class="tooltip" message="{$T.r.message}">
+							<div col="message">
+							<span class="message truncate" length="15" itemid="{$T.r.item_id}">{$T.r.message}</span>
+							</div>
+						</td>
+					</tr>
+				{#else}
+					<tr><td colspan=6><span name="tableempty">No items currently up for bid</span></td></tr>
+				{#/for}
+				</tbody>
+			</table>
+		{#else}
+			<table class='closed'>
+				<thead>
+				<tr>
+					<th>Closed</th>
+				</tr>
+				</thead>
+			</table>
+		{#/if}
+	</textarea>
+	</body>
+</html>

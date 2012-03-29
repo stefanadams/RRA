@@ -31,6 +31,8 @@ package RRA::Dispatch;
 use base 'CGI::Application::Dispatch';
 use RRA::Dispatch;
 use RRA::Template;
+use RRA::Identify;
+use RRA::Request;
 use RRA::Backup;
 use RRA::XLS;
 use RRA::Bookmarks;
@@ -85,6 +87,12 @@ sub dispatch_args {{
 		'manage/ads/schedule/:n?'		=> { app => 'Manage::Ads::Schedule', rm => 'schedule' },
 		'manage/ads/:rm'			=> { app => 'Manage::Ads' },
 		'manage/:rm/*'				=> { app => 'Manage' },
+		'requests'				=> { app => 'Request', rm => 'requests' },
+		'request/ack/:ack/:request_id'		=> { app => 'Request', rm => 'ack' },
+		'request/approve/:request_id/:approve'	=> { app => 'Request', rm => 'approve' },
+		'request/:request'			=> { app => 'Request', rm => 'request' },
+		'identify'				=> { app => 'Identify', rm => 'identify' },
+		'identify/register'			=> { app => 'Identify', rm => 'register' },
 		'api/header'				=> { app => 'API', rm => 'header' },
 		'api/ad/:ad_id'				=> { app => 'API', rm => 'ad' },
 		'api/alert/:alert?'			=> { app => 'API', rm => 'alert' },

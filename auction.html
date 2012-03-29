@@ -13,8 +13,8 @@
 <script type="text/javascript" src="js/jquery.jtruncate.js"></script>
 <script type="text/javascript" src="js/jquery.formatCurrency-1.4.0.min.js"></script>
 <script type="text/javascript" src="js/jquery.humanmsg.js"></script>
+<script type="text/javascript" src="js/jquery.maskedinput.js"></script>
 
-<script language=javascript src="http://nick8.surfernetwork.com/Media/player/scripts/launch.js"></script>
 
 <script type="text/javascript">
 var allowHumanMsg = 1;
@@ -81,7 +81,7 @@ $(document).ready(function(){
         autoOpen: false,
         height: 290,
         width: 350,
-        modal: true,
+        modal: true
     });
     $("#mibew").click(function(){
         $("#dialog-mibew").dialog("open");
@@ -95,7 +95,7 @@ $(document).ready(function(){
 			width: 380,
 			modal: true,
 			close: function() {
-				$("#header").processTemplateStart("pl/api/header", null, 5000, null, {
+				$("#header").processTemplateStart("pl/api/header", null, 175000, null, {
 					type: 'GET',
 					on_success: function(data){header_success(data);}
 				});
@@ -114,7 +114,195 @@ $(document).ready(function(){
 			}
 		});
 	});
+/*
+	$("#register").live('click', function(){
+		$("#header").processTemplateStop();
+		// Abort if id'd
+		$("#dialog-register").dialog({
+			autoOpen: false,
+			height: 218,
+			width: 350,
+			modal: true,
+			open: function() {
+				$('#register-phone').mask("(999) 999-9999");
+			},
+			buttons: {
+				"Register": function(){
+					$(this).dialog("disable"); 
+					$(this).dialog({title: 'Register...'});
+					$.post('pl/request/newuser', {
+						value: $('#register-username').val()+":"+$('#register-bidder').val()+":"+$('#register-phone').val()
+					});
+					$(this).dialog("close");
+					$("#header").processTemplateStart("pl/api/header", null, 175000, null, {
+						type: 'GET',
+						on_success: function(data){header_success(data);}
+					});
+				},
+				Cancel: function(){$(this).dialog("close");}
+			},
+			close: function() {
+				$("#header").processTemplateStart("pl/api/header", null, 175000, null, {
+					type: 'GET',
+					on_success: function(data){header_success(data);}
+				});
+			}
+		});
+		$("#dialog-register-title").html("Identify yourself.");
+		$("#dialog-register").dialog("open");
+	});
 
+	$("#operator").live('click', function(){
+        var item_id=$(this).attr('item_id');
+        var number=$(this).attr('number');
+        var minbid=$(this).attr('minbid');
+        var highbid=$(this).attr('highbid');
+		$("#header").processTemplateStop();
+		$("#dialog-operator").dialog({
+			autoOpen: false,
+			height: 218,
+			width: 350,
+			modal: true,
+			open: function() {
+				$('form[name=operator] input[name=operator-bid]').val(minbid);
+				$('form[name=operator] input[name=operator-phone]').mask("(999) 999-9999");
+			},
+			buttons: {
+				"Bid": function(){
+					$(this).dialog("disable"); 
+					$(this).dialog({title: 'Bid...'});
+					$.post('pl/request/newbid', {
+						phone: $('#operator-phone').val(),
+						value: item_id+":"+$('#operator-bid').val(),
+						approve: 1
+//						success: function(data){
+//							var json = $.toJSON(data);
+//							$.post('pl/request/approve/'+data.request.request_id+'/1', {
+//								success: function(){
+//									$(window).humanMsg("Bid placed! :D", {autoHide: 3*1000})
+//								}
+//							});
+//						}
+					});
+					$(this).dialog("close");
+					$("#header").processTemplateStart("pl/api/header", null, 175000, null, {
+						type: 'GET',
+						on_success: function(data){header_success(data);}
+					});
+				},
+				Cancel: function(){$(this).dialog("close");}
+			},
+			close: function() {
+				$("#header").processTemplateStart("pl/api/header", null, 175000, null, {
+					type: 'GET',
+					on_success: function(data){header_success(data);}
+				});
+			}
+		});
+		$("#dialog-operator-title").html("Bid on item "+number+" (Minimum: "+minbid+")");
+		$("#dialog-operator").dialog("open");
+	});
+
+	$("#ident").live('click', function(){
+		$("#header").processTemplateStop();
+		$("#dialog-ident").dialog({
+			autoOpen: false,
+			height: 218,
+			width: 350,
+			modal: true,
+			open: function() {
+				$('form[name=ident] input[name="ident-phone"]').mask("9999");
+			},
+			buttons: {
+				"Identify": function(){
+					$(this).dialog("disable"); 
+					$(this).dialog({title: 'Identifying...'});
+					$.post('pl/identify', {
+						username: $('#ident-username').val(),
+						phone: $('#ident-phone').val()
+					});
+					$(this).dialog("close");
+//					$("#header").processTemplateStart("pl/api/header", null, 175000, null, {
+//						type: 'GET',
+//						on_success: function(data){header_success(data);}
+//					});
+				},
+				Cancel: function(){$(this).dialog("close");}
+			},
+			close: function() {
+				$("#header").processTemplateStart("pl/api/header", null, 175000, null, {
+					type: 'GET',
+					on_success: function(data){header_success(data);}
+				});
+			}
+		});
+		$("#dialog-ident-title").html("Identify yourself.");
+		$("#dialog-ident").dialog("open");
+	});
+
+	$("#unident").live('click', function(){
+		$("#header").processTemplateStop();
+		$.post('pl/identify', {});
+		$("#header").processTemplateStart("pl/api/header", null, 175000, null, {
+			type: 'GET',
+			on_success: function(data){header_success(data);}
+		});
+	});
+
+	$("#clearalert").live('click', function(){
+		$("#header").processTemplateStop();
+		$.ajax({
+			url: 'pl/api/alert',
+			type: 'DELETE',
+			success: function(data) {
+				$("#header").processTemplateStart("pl/api/header", null, 175000, null, {
+					type: 'GET',
+					on_success: function(data){header_success(data);}
+				});
+			}
+		});
+	});
+
+	$("#bid").live('click', function(){
+		var item_id=$(this).attr('item_id');
+		var number=$(this).attr('number');
+		var minbid=$(this).attr('minbid');
+		var highbid=$(this).attr('highbid');
+		$("#header").processTemplateStop();
+		$("#dialog-bid").dialog({
+			autoOpen: false,
+			height: 320,
+			width: 380,
+			modal: true,
+			open: function() {
+				$('form[name=bid] input[name=bid-bid]').val(minbid);
+			},
+			buttons: {
+				"Place Bid": function(){
+					$(this).dialog("disable"); 
+					$(this).dialog({title: 'Submitting bid...'});
+					$.post('pl/request/newbid', {
+						value: item_id+":"+$('#bid-bid').val()
+					});
+					$(this).dialog("close");
+					$("#header").processTemplateStart("pl/api/header", null, 175000, null, {
+						type: 'GET',
+						on_success: function(data){header_success(data);}
+					});
+				},
+				Cancel: function(){$(this).dialog("close");}
+			},
+			close: function() {
+				$("#header").processTemplateStart("pl/api/header", null, 175000, null, {
+					type: 'GET',
+					on_success: function(data){header_success(data);}
+				});
+			}
+		});
+		$("#dialog-bid-title").html("Bid on item "+number+" (Minimum: "+minbid+")");
+		$("#dialog-bid").dialog("open");
+	});
+*/
 	$("table.setalert span.alert").live('click', function(){
 		$("#header").processTemplateStop();
 		$("#dialog-alert").dialog({
@@ -165,6 +353,10 @@ $(document).ready(function(){
 	<div id="bodygroup">
 		<div id="bidding"></div>
 	</div>
+	<br /><br />
+<!--
+	<a id="register" style="color:black">.</a> <a id="ident" style="color:black">.</a>
+-->
 	<div id="footergroup">
 		<div id="key">
 			<span class="key">Key:
@@ -179,20 +371,84 @@ $(document).ready(function(){
 		</div>
 	</div>
 
+	<div id="dialog-paypal" title="Pay by Credit Card" class="modal">
+		<form action='https://www.paypal.com/cgi-bin/webscr' method='post'>
+			<input type='hidden' name='cmd' value='_s-xclick'><input type='hidden' name='hosted_button_id' value='4113257'>
+			<table>
+				<tr><td colspan="2">Complete the form below to pay for your item:</td></tr>
+				<tr><td>Item #:</td><td><input type='hidden' name='on0' value='Item ID'><input id="paypal-os0" type='text' name='os0' maxlength='60' value='Item ID' onfocus="this.value = ( this.value == this.defaultValue ) ? '' : this.value;return true;"></td></tr>
+				<tr><td>Item:</td><td><input type='hidden' name='on3' value='Item'><input id="paypal-name" type='text' name='item_name' maxlength='60' value='Item' onfocus="this.value = ( this.value == this.defaultValue ) ? '' : this.value;return true;"></td></tr>
+				<tr><td>Street Address:</td><td><input type='hidden' name='on1' value='Street Address'><input id="paypal-os1" type='text' name='os1' maxlength='60' value='Street Address' onfocus="this.value = ( this.value == this.defaultValue ) ? '' : this.value;return true;"></td></tr>
+				<tr><td>City, ST ZIP</td><td><input type='hidden' name='on2' value='City, State, Zip'><input id="paypal-os2" type='text' name='os2' maxlength='60' value='City, State, Zip' onfocus="this.value = ( this.value == this.defaultValue ) ? '' : this.value;return true;"></td></tr>
+				<tr><td colspan="2" align="center"><input type='image' src='https://www.paypal.com/en_US/i/btn/btn_paynowCC_LG.gif' border='0' name='submit' alt='PayPal - The safer, easier way to pay online!'><img alt='' border='0' src='https://www.paypal.com/en_US/i/scr/pixel.gif' width='1' height='1'></td></tr>
+			</table>
+		</form>
+	</div>
+
+<!--
+	<div id="dialog-operator" title="operator" class="modal">
+		<form name="operator" action='pl/request/newbid' method='post'>
+			<table>
+				<tr><td colspan="2"><div id="dialog-operator-title">Submit Bid</div></td></tr>
+				<tr><td>Phone</td><td><input id="operator-phone" type='text' name='operator-phone' maxlength='60' value='Phone' onfocus="this.value = ( this.value == this.defaultValue ) ? '' : this.value;return true;"></td></tr>
+				<tr><td>Amount</td><td><input id="operator-bid" type='text' name='operator-bid' maxlength='60' value='Amount' onfocus="this.value = ( this.value == this.defaultValue ) ? '' : this.value;return true;"></td></tr>
+			</table>
+		</form>
+	</div>
+
+	<div id="dialog-register" title="register" class="modal">
+		<form name="register" action='pl/request/newuser' method='post'>
+			<table>
+				<tr><td colspan="2"><div id="dialog-register-title">Register</div></td></tr>
+				<tr><td>Username</td><td><input id="register-username" type='text' name='register-username' maxlength='60' value='Username' onfocus="this.value = ( this.value == this.defaultValue ) ? '' : this.value;return true;"></td></tr>
+				<tr><td>Name</td><td><input id="register-bidder" type='text' name='register-bidder' maxlength='60' value='Bidder' onfocus="this.value = ( this.value == this.defaultValue ) ? '' : this.value;return true;"></td></tr>
+				<tr><td>Phone</td><td><input id="register-phone" type='text' name='register-phone' maxlength='60' value='Phone' onfocus="this.value = ( this.value == this.defaultValue ) ? '' : this.value;return true;"></td></tr>
+			</table>
+		</form>
+	</div>
+
+	<div id="dialog-ident" title="ident" class="modal">
+		<form name="ident" action='pl/identify' method='post'>
+			<table>
+				<tr><td colspan="2"><div id="dialog-ident-title">Identify</div></td></tr>
+				<tr><td>Username</td><td><input id="ident-username" type='text' name='ident-username' maxlength='60' value='Username' onfocus="this.value = ( this.value == this.defaultValue ) ? '' : this.value;return true;"></td></tr>
+				<tr><td>Phone</td><td><input id="ident-phone" type='text' name='ident-phone' maxlength='60' value='Phone' onfocus="this.value = ( this.value == this.defaultValue ) ? '' : this.value;return true;"></td></tr>
+			</table>
+		</form>
+	</div>
+
+	<div id="dialog-bid" title="bid" class="modal">
+		<form name="bid" action='pl/request/newbid' method='post'>
+			<table>
+				<tr><td colspan="2"><div id="dialog-bid-title">Submit Bid</div></td></tr>
+				<tr><td>Amount</td><td><input id="bid-bid" type='text' name='bid-bid' maxlength='60' value='Amount' onfocus="this.value = ( this.value == this.defaultValue ) ? '' : this.value;return true;"></td></tr>
+			</table>
+		</form>
+	</div>
+-->
+<!--
+											{#if !$T.about.bidder}
+												(<a id="register" class="mast">Register!</a> |<a id="ident" class="mast">Sign in!</a>)*Beta
+											{#/if}
+-->
 	<textarea id="t_header" style="display:none">
 			<table class="header">
 				<tr>
 					<td class="mast">
 						<table class="mast">
+							{#if $T.about.bidder}
+							<tr><td class="hello">
+								<a id="unident" class="modal"><span class="hello">Hello, {$T.about.bidder}!</span></a>
+							</tr></td>
+							{#/if}
 							<tr><td class="title">
-							{#if $T.about.live==1}
-								<span class="title">{$T.about.name} {$T.about.year} {$T.about.night?", Night " + $T.about.night:''} {$T.about.live?'':' (Offline)'}
+							{#if $T.about.live}
+								<span class="title">{$T.about.name} {$T.about.year} {$T.about.night?", Night " + $T.about.night:''} {$T.about.live?'':' (Offline)'}</span>
 							{#else}
 								<span class="title">{$T.about.name} -- Closed</span>
 								<span class="reopens">Re-opens {$T.about.date_next}</span>
 							{#/if}
-							</span></td></tr>
-							{#if $T.about.live==1}
+							</td></tr>
 							<tr>
 								<td class="play">
 									<span class="listen">Listen:
@@ -220,39 +476,15 @@ $(document).ready(function(){
 											{#/foreach}
 										</span>
 										<span class="choicesep">/</span>
-										<span class="chat">
-											{#foreach $T.header.play.bid.chat as online}
-												{#if $T.online.link}
-													<span class="nolive"><a id="{$T.online.id}" class="mast" href="{$T.online.link}" target="new">{$T.online.name}</a></span>
-												{#else}
-													{$T.online.name}
-												{#/if}
-												{#if $T.station$last == false}
-													<span class="choicesep">/</span>
-												{#/if}
-											{#/foreach}
+										<span class="chat"><a href="http://dev.washingtonrotary.com/rra/mibew/client.php?locale=en&style=simplicit" id="mibew">Web Chat</a>
 										</span>
 									</span>
 									<img class="arrowsep" src="img/right_arrow_button.gif" />
 									<span class="pay">Pay:
 										<a id="paypal" class="modal">PayPal</a>
 									</span>
-									<div id="dialog-paypal" title="Pay by Credit Card" class="modal">
-										<form action='https://www.paypal.com/cgi-bin/webscr' method='post'>
-											<input type='hidden' name='cmd' value='_s-xclick'><input type='hidden' name='hosted_button_id' value='4113257'>
-											<table>
-												<tr><td colspan="2">Complete the form below to pay for your item:</td></tr>
-												<tr><td>Item #:</td><td><input type='hidden' name='on0' value='Item ID'><input id="paypal-os0" type='text' name='os0' maxlength='60' value='Item ID' onfocus="this.value = ( this.value == this.defaultValue ) ? '' : this.value;return true;"></td></tr>
-												<tr><td>Item:</td><td><input type='hidden' name='item_name' value='Item'><input id="paypal-name" type='text' name='item_name' maxlength='60' value='Item' onfocus="this.value = ( this.value == this.defaultValue ) ? '' : this.value;return true;"></td></tr>
-												<tr><td>Street Address:</td><td><input type='hidden' name='on1' value='Street Address'><input id="paypal-os1" type='text' name='os1' maxlength='60' value='Street Address' onfocus="this.value = ( this.value == this.defaultValue ) ? '' : this.value;return true;"></td></tr>
-												<tr><td>City, ST ZIP</td><td><input type='hidden' name='on2' value='City, State, Zip'><input id="paypal-os2" type='text' name='os2' maxlength='60' value='City, State, Zip' onfocus="this.value = ( this.value == this.defaultValue ) ? '' : this.value;return true;"></td></tr>
-												<tr><td colspan="2" align="center"><input type='image' src='https://www.paypal.com/en_US/i/btn/btn_paynowCC_LG.gif' border='0' name='submit' alt='PayPal - The safer, easier way to pay online!'><img alt='' border='0' src='https://www.paypal.com/en_US/i/scr/pixel.gif' width='1' height='1'></td></tr>
-											</table>
-										</form>
-									</div>
 								</td>
 							</tr>
-							{#/if}
 						</table>
 					</td>
 				</tr>
@@ -272,13 +504,15 @@ $(document).ready(function(){
 					</td>
 				</tr>
 			</table>
+			{#if $T.header.alert.msg}
 			<table class="getalert">
 				<tr class="msg">
 					<td>
-						<span id="alert-get" class="msg">{$T.header.alert.msg}</span>
+						<span id="alert-get" class="msg"><a id="clearalert" class="modal">{$T.header.alert.msg}</a></span>
 					</td>
 				</tr>
 			</table>
+			{#/if}
 			{#if $T.about.username=="admin"}
 			<div id="dialog-alert" title="Set Alert" class="modal">
 				<form>
@@ -305,6 +539,9 @@ $(document).ready(function(){
 			{#/if}
 	</textarea>
 
+<!--
+								<a id="bid" class="modal" item_id="{$T.r.item_id}" number="{$T.r.number}" minbid="{$T.r.minbid}" value="{$T.r.value}" highbid="{$T.r.highbid}"><span class="item number">{$T.r.number}</span><span class="item"></a>:</span>
+-->
 	<textarea id="t_bidding" style="display:none">
 		{#if $T.bidding}
 			<table id='itemsbidding' class="items bidding tablesorter">
@@ -316,7 +553,7 @@ $(document).ready(function(){
 				<tbody>
 				{#foreach $T.bidding.rows as r}
 					<tr id="tr_{$T.r.item_id}" itemid="{$T.r.item_id}" name="item" newbid="{$T.r.notify.newbid}" bellringer="{$T.r.bellringer}" timer="{$T.r.timer}" status="{$T.r.status}">
-						<td col="item" class=tooltip name="{$T.r.item}" description="{$T.r.description}" img="{$T.r.img}">
+						<td col="item" class=tooltip item="{$T.r.item}" description="{$T.r.description}" img="{$T.r.img}">
 							<div col="item">
 							<div style="float:left;width:80%">
 							{#if $T.r.auctioneer}<img src="img/{$T.r.auctioneer}.gif" />{#/if}
@@ -379,7 +616,7 @@ $(document).ready(function(){
 						</td>
 						<td col="message" class="tooltip" message="{$T.r.message}">
 							<div col="message">
-							<span class="message truncate" length="15" itemid="{$T.r.item_id}">{$T.r.message}</span>
+							<span class="message truncate" length="45" itemid="{$T.r.item_id}">{$T.r.message}</span>
 							</div>
 						</td>
 					</tr>

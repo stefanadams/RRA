@@ -1,0 +1,196 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">  
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" />
+<title>Sequence Items</title>
+
+<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" />
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery.json-2.3.min.js"></script>
+<script type="text/javascript" src="js/jquery-jtemplates.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
+
+<script type="text/javascript" src="js/env.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	var baseurl = 'pl/manage/items/sales';
+	$( "#sortable0, #sortable1, #sortable2, #sortable3, #sortable4" ).sortable().disableSelection();
+	$( "#sortable0, #sortable1, #sortable2, #sortable3, #sortable4, #sortable9999" ).setTemplateElement("template", null, {runnable_functions: true});
+
+	function tablabels (data) {
+console.log(data);
+		if (data.rows[0] ) {
+			$('a[href="#tabs-0"]').html(data.rows[0].label||'Not Assigned');
+		}
+		if (data.rows[1] ) {
+			$('a[href="#tabs-1"]').html(data.rows[1].label||'Night 1');
+		}
+		if (data.rows[2] ) {
+			$('a[href="#tabs-2"]').html(data.rows[2].label||'Night 2');
+		}
+		if (data.rows[3] ) {
+			$('a[href="#tabs-3"]').html(data.rows[3].label||'Night 3');
+		}
+		if (data.rows[4] ) {
+			$('a[href="#tabs-4"]').html(data.rows[4].label||'Night 4');
+		}
+		if (data.rows[5] ) {
+			$('a[href="#tabs-9999"]').html(data.rows[5].label||'All Nights');
+		}
+	}
+
+	var selectedtab;
+	var $tabs = $( "#tabs" ).tabs({
+		select: function( event, ui ) {
+			selectedtab = $tabs.tabs('option', 'selected');
+//			$("#sortable9999").processTemplateURL(baseurl+"/9999", null, {type: 'GET'}).ajaxError(function(){window.location = "login.html?referer=seqitems.html";});
+		}
+	});
+
+	var $tab_items = $( "ul:first li", $tabs ).droppable({
+		accept: ".connectedSortable li",
+		hoverClass: "ui-state-hover",
+		tolerance: "pointer",
+		drop: function( event, ui ) {
+			var $item = $( this );
+			var $list = $( $item.find( "a" ).attr( "href" ) )
+				.find( ".connectedSortable" );
+			ui.draggable.hide( "slow", function() {
+				$tabs.tabs( "select", $tab_items.index( $item ) );
+				$( this ).appendTo( $list ).show( "slow" );
+				$tabs.tabs( "select", selectedtab );
+			});
+		}
+	});
+
+	$.ajax({
+		type: 'GET',
+		url: baseurl,
+		dataType: 'json',
+		success: function(data) {tablabels(data);}
+	});
+
+	$("#sortable0").sortable({
+		update: function(event, ui) {
+			$.ajax({
+				type: 'POST',
+				url: baseurl+'/0',
+				dataType: 'json',
+				contentType: "application/json; charset=utf-8",
+				data: $.toJSON({item_id:$(this).sortable('toArray')}),
+				success: function(data) {tablabels(data);}
+			});
+		}
+	});
+	$("#sortable0").processTemplateURL(baseurl+"/0", null, {type: 'GET'}).ajaxError(function(){window.location = "login.html?referer=seqitems.html";});
+	$("#sortable1").sortable({
+		update: function(event, ui) {
+			$.ajax({
+				type: 'POST',
+				url: baseurl+'/1',
+				dataType: 'json',
+				contentType: "application/json; charset=utf-8",
+				data: $.toJSON({item_id:$(this).sortable('toArray')}),
+				success: function(data) {tablabels(data);}
+			});
+		}
+	});
+	$("#sortable1").processTemplateURL(baseurl+"/1", null, {type: 'GET'}).ajaxError(function(){window.location = "login.html?referer=seqitems.html";});
+	$("#sortable2").sortable({
+		update: function(event, ui) {
+			$.ajax({
+				type: 'POST',
+				url: baseurl+'/2',
+				dataType: 'json',
+				contentType: "application/json; charset=utf-8",
+				data: $.toJSON({item_id:$(this).sortable('toArray')}),
+				success: function(data) {tablabels(data);}
+			});
+		}
+	});
+	$("#sortable2").processTemplateURL(baseurl+"/2", null, {type: 'GET'}).ajaxError(function(){window.location = "login.html?referer=seqitems.html";});
+	$("#sortable3").sortable({
+		update: function(event, ui) {
+			$.ajax({
+				type: 'POST',
+				url: baseurl+'/3',
+				dataType: 'json',
+				contentType: "application/json; charset=utf-8",
+				data: $.toJSON({item_id:$(this).sortable('toArray')}),
+				success: function(data) {tablabels(data);}
+			});
+		}
+	});
+	$("#sortable3").processTemplateURL(baseurl+"/3", null, {type: 'GET'}).ajaxError(function(){window.location = "login.html?referer=seqitems.html";});
+	$("#sortable4").sortable({
+		update: function(event, ui) {
+			$.ajax({
+				type: 'POST',
+				url: baseurl+'/4',
+				dataType: 'json',
+				contentType: "application/json; charset=utf-8",
+				data: $.toJSON({item_id:$(this).sortable('toArray')}),
+				success: function(data) {tablabels(data);}
+			});
+		}
+	});
+	$("#sortable4").processTemplateURL(baseurl+"/4", null, {type: 'GET'}).ajaxError(function(){window.location = "login.html?referer=seqitems.html";});
+	$("#sortable9999").processTemplateURL(baseurl+"/9999", null, {type: 'GET'}).ajaxError(function(){window.location = "login.html?referer=seqitems.html";});
+	//$("#summary").load(baseurl, 'summary=5');
+
+});
+</script>
+<style>
+	.scroll {width:100%;height:80%;overflow:scroll;}
+	#sortable0 li, #sortable1 li, #sortable2 li, #sortable3 li, #sortable4 li, #sortable9999 li { margin: 0 2px 2px 2px; padding: 2px; font-size: 12px; width: 90%; cursor: move;}
+</style>
+</head> 
+<body> 
+	<div id="loggedin"></div>
+	Bugs in the item sequencer: when you drag an item to a new tab, the tab information will not recalculate and no sorting will be initiated.  You MUST reorder within the tab that you dragged the item to.  Also, when you drag an item to a new tab, the tabs don't automatically recalc; you MUST reorder a tab first.
+	<div id="tabs">
+		<ul>
+			<li><a href="#tabs-0">Not Assigned</a></li>
+			<li><a href="#tabs-1">Night 1</a></li>
+			<li><a href="#tabs-2">Night 2</a></li>
+			<li><a href="#tabs-3">Night 3</a></li>
+			<li><a href="#tabs-4">Night 4</a></li>
+			<li><a href="#tabs-9999">All Nights</a></li>
+		</ul>
+		<div id="tabs-0">
+			<ul id="sortable0" class="scroll connectedSortable ui-helper-reset jTemplatesTest">
+			</ul>
+		</div>
+		<div id="tabs-1">
+			<ul id="sortable1" class="scroll connectedSortable ui-helper-reset jTemplatesTest">
+			</ul>
+		</div>
+		<div id="tabs-2">
+			<ul id="sortable2" class="scroll connectedSortable ui-helper-reset jTemplatesTest">
+			</ul>
+		</div>
+		<div id="tabs-3">
+			<ul id="sortable3" class="scroll connectedSortable ui-helper-reset jTemplatesTest">
+			</ul>
+		</div>
+		<div id="tabs-4">
+			<ul id="sortable4" class="scroll connectedSortable ui-helper-reset jTemplatesTest">
+			</ul>
+		</div>
+		<div id="tabs-9999">
+			This list is not for sorting, just for showing a full list of items in case you're looking for a specific item.
+			<ul id="sortable9999" class="scroll ui-helper-reset jTemplatesTest">
+			</ul>
+		</div>
+	</div>
+
+	<!-- Template content -->
+	<textarea id="template" style="display:none">
+		{#foreach $T.rows as r}
+			<li id="id_{$T.r.item_id}" class="ui-state-default">{$T.r.item}</li>
+		{#/for}
+	</textarea>
+</body> 
+</html>

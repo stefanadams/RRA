@@ -22,6 +22,7 @@ use CGI::Application::Plugin::JSON ':all';
 use CGI::Application::Plugin::RequireAjax 'requires_ajax';
 use CGI::Application::Plugin::RequireSSL 'mode_redirect';
 use CGI::Application::Plugin::Stream (qw/stream_file/);
+use CGI::Application::Plugin::Request;
 
 use CGI::Application::Plugin::LogDispatch;
 #use CGI::Application::Plugin::DevPopup;
@@ -50,6 +51,9 @@ sub cgiapp_init {
 		},
 		template_filename_generator => \&template_filename_generator,
 	);
+	$self->session_config(
+		CGI_SESSION_OPTIONS => [ "driver:mysql", $self->query, {Handle=>$self->dbh} ],
+	);
 	my %users = %{$self->cfg('USERS')};
 	my %groups = %{$self->cfg('GROUPS')};
 	$self->authen->config(
@@ -59,7 +63,7 @@ sub cgiapp_init {
 				return 1 if $1 && $2 && $users{$1} && $users{$1} eq $2;	# As long as you supply a valid user/pass, you'll be authorized for any runmode
 			}
 			my ($user, $password) = @_;
-			return $user if $password eq $users{$user};
+			return $user if $password && $users{$user} && $password eq $users{$user};
 			return undef;
 		}],
 		CREDENTIALS => ['username', 'password'],	# This is the names of the POST keys that will be checked and presented by loginbox

@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" />
+<title>Summary</title>
+
+<link rel="stylesheet" type="text/css" media="screen" href="css/smoothness/jquery-ui-1.8.16.custom.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="css/jquery.autocomplete.css" />
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="js/i18n/grid.locale-en.js"></script>
+<script type="text/javascript" src="js/jquery.jqGrid.min.js"></script>
+<script type="text/javascript" src="js/jquery.json-2.3.min.js"></script>
+<script type="text/javascript" src="js/jquery.autocomplete.js"></script>
+<script type="text/javascript" src="js/jquery.maskedinput.js"></script>
+
+<script type="text/javascript" src="js/env.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#list1").jqGrid({
+		url: 'pl/api/summary',
+		postData: {debug: 1},
+		mtype: 'POST',   
+		datatype: 'json',
+		jsonReader: {repeatitems: false, id: "stockitem_id"},
+		ajaxGridOptions: { contentType: "application/json; charset=utf-8" },  
+		serializeGridData: function (postData) { return $.toJSON(postData); },
+		caption: "Summary",
+		colModel:[
+			{name:'year',label:'Year', width:50},
+			{name:'sold',label:'Sold', width:100},
+			{name:'items',label:'Items', width:50},
+			{name:'bellringers',label:'Bellringers', width:50},
+			{name:'value',label:'Value', width:100, align:'right',formatter:'currency',formatoptions:{decimalSeparator:".", thousandsSeparator: ",", decimalPlaces: 0, prefix: "$"}},
+			{name:'revenue',label:'Revenue', width:100, align:'right',formatter:'currency',formatoptions:{decimalSeparator:".", thousandsSeparator: ",", decimalPlaces: 0, prefix: "$"}},
+			{name:'diff',label:'Diff', width:100, align:'right',formatter:'currency',formatoptions:{decimalSeparator:".", thousandsSeparator: ",", decimalPlaces: 0, prefix: "$"}},
+			{name:'br_revenue',label:'BR Revenue', width:100, align:'right',formatter:'currency',formatoptions:{decimalSeparator:".", thousandsSeparator: ",", decimalPlaces: 0, prefix: "$"}},
+			{name:'undef',label:' ', width:50}
+		],
+		recreateForm: true,
+		altRows: true,
+		rownumbers: true,
+		rownumWidth: 50,
+		scroll: true,
+		rowNum: 50,
+		rowList: [10, 20, 50, 100, 500, 1000, 5000, 10000],
+		pager: $('#pager1'),
+		viewrecords: true,
+		height: "75\%",
+		width: 900,
+		autowidth: false,
+		grouping: true, 
+		groupingView: {
+			groupField: ['year'],
+			groupDataSorted: true,
+			groupColumnShow: false,
+			groupSummary: false,
+			groupCollapse: false
+		}
+	}).ajaxComplete(function(e, xhr, settings){
+        var json = $.parseJSON(xhr.responseText);
+        if ( json && json.error == "401" ) { window.location = "error.html?referer=summary.html;status=401"; }
+        if ( json && json.error == "403" ) { window.location = "login.html?referer=summary.html"; }
+    });
+	setInterval(function(){$("#list1").trigger('reloadGrid');}, 15000);
+});
+</script>
+</head> 
+<body> 
+<div id="loggedin"></div>
+<a href="bookmarks.html">Back to Bookmarks</a>
+<table id="list1" class="scroll"></table> 
+<div id="pager1" class="scroll" style="text-align:center;" />
+</body> 
+</html>

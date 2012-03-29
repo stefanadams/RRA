@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" />
+<title>Search</title>
+
+<link rel="stylesheet" type="text/css" media="screen" href="css/smoothness/jquery-ui-1.8.16.custom.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
+<script type="text/javascript" src="js/jquery-jtemplates.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#search").setTemplateElement("t_search", null, {runnable_functions: true});
+	$("#search").processTemplateStart("pl/api/search", null, 10000, null, {
+		type: 'GET',
+	});
+
+	$("#dialog-search").dialog({
+			autoOpen: false,
+			height: 320,
+			width: 380,
+			modal: true,
+			buttons: {
+				"Send Alert": function() {
+					$("#search-set-search").removeClass("ui-state-error");
+					$("#search-set-msg").removeClass("ui-state-error");
+					$.post('pl/api/search/'+$('input[name="search-set-search"]:checked').val(), {msg: $("#search-set-msg").val()}, function(data){
+						if ( data.msg ) {
+							$('table.getsearch').show();
+							$('#search-get').html(data.msg);
+						} else {
+							$('table.getsearch').hide();
+						}
+						$('span.search').each(function(){
+							if ($(this).hasClass('selected')){$(this).removeClass('selected');}
+						});
+					});
+					$(this).dialog("close");
+				},
+				Cancel: function() {
+					$(this).dialog("close");
+				}
+			},
+			close: function() {
+				$("#search-set-search").removeClass("ui-state-error");
+				$("#search-set-msg").removeClass("ui-state-error");
+			}
+	});
+	$("#dialog-search").dialog("open");
+});
+</script>
+</head>
+<body>
+
+	<div id="bodygroup">
+		<div id="search"></div>
+	</div>
+
+	<textarea id="t_search" style="display:none">
+		<table class="donors">
+			{#foreach $T.r.donors as d}
+			<tr class="row">
+				<td class="donor"><b>{#if $T.d.items}YES: {#else}NO: {#/if}</b>{$T.d.donor}<br />{#if $T.d.contact && $T.d.contact != $T.d.donor}{$T.d.contact}<br />{#/if}{#if $T.d.address && $T.d.address != ""}{$T.d.address}{#if $T.d.city} ({$T.d.city}){#/if}<br />{#/if}{#if $T.d.phone || $T.d.email}{$T.d.phone||""} {$T.d.email||""}{#/if}</td>
+				<td class="items">
+				<table class="items">
+				{#foreach $T.d.items as i}
+				<tr>
+					<td class="year">{$T.i.year}</td>
+					<td class="item">{$T.i.number}: {$T.i.item}{#if $T.i.stockitem} <img src="img/barcode.png" />{#/if}</td>
+					<td class="value">${$T.i.value} (${$T.i.highbid}){#if $T.i.bellringer} <img src="img/bell.png" />{#/if}</td>
+				</tr>
+				{#else}
+				<tr><td>[ No donation found ]</td></tr>
+				{#/for}
+				</table>
+				</td>
+				<td class="advertisement">{$T.d.advertisement||"[ No Advertisement on file ]"}</td>
+			</tr>
+			{#/for}
+		</table>
+		<br />
+		{#/for}
+	</textarea>
+	</body>
+</html>

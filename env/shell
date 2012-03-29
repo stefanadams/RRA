@@ -2,13 +2,29 @@ MYSQLHOST=mysql.washingtonrotary.com
 MYSQLUSER=washingtonrotary
 MYSQLPASS=harris
 
+# export CGISESSID="30d7cc01252a1c89e31a6989b31e7d14" ; rra_ajax POST manage/winner post1=data post2=data
+rra_ajax ()
+{
+    CONFIG=/data/vhosts/washingtonrotary.com/dev/htdocs/rra.cfg
+    export CONTENT_LENGTH=999 REQUEST_METHOD="$1" PATH_INFO="$2" HTTP_X_REQUESTED_WITH=XMLHttpRequest HTTP_COOKIE="CGISESSID=$CGISESSID; path=/"
+    [ -z $CGISESSID ] && unset HTTP_COOKIE
+    shift
+    shift
+    #echo 'celname=sold;id=50094;username=;password=' | env HTTP_X_REQUESTED_WITH=XMLHttpRequest REQUEST_METHOD=POST CONTENT_LENGTH=999 PATH_INFO=manage/winners/cell CONFIG=/data/vhosts/washingtonrotary.com/dev/htdocs/rra.cfg perl -I/data/vhosts/washingtonrotary.com/dev/htdocs/rra/lib -MRRA::Dispatch -e 'RRA::Dispatch->dispatch' 
+    echo -n "$*" | sed 's/\s+/;/g'
+    echo -n "$*" | sed 's/\s+/;/g' | env CONFIG=/data/vhosts/washingtonrotary.com/dev/htdocs/rra.cfg perl -I/data/vhosts/washingtonrotary.com/dev/htdocs/rra/lib -MRRA::Dispatch -e 'RRA::Dispatch->dispatch' ; echo
+}
+# rra POST manage/winner post1=data post2=data
 rra ()
 {
     CONFIG=/data/vhosts/washingtonrotary.com/dev/htdocs/rra.cfg
-    export REQUEST_METHOD="$1" PATH_INFO="$2"
+    export CONTENT_LENGTH=999 REQUEST_METHOD="$1" PATH_INFO="$2" HTTP_COOKIE="CGISESSID=$CGISESSID; path=/"
+    [ -z $CGISESSID ] && unset HTTP_COOKIE
     shift
     shift
-    env CONFIG=/data/vhosts/washingtonrotary.com/dev/htdocs/rra.cfg perl -I/data/vhosts/washingtonrotary.com/dev/htdocs/rra/lib -MRRA::Dispatch -e 'RRA::Dispatch->dispatch' "$@"; echo
+    #echo 'celname=sold;id=50094;username=;password=' | env HTTP_X_REQUESTED_WITH=XMLHttpRequest REQUEST_METHOD=POST CONTENT_LENGTH=999 PATH_INFO=manage/winners/cell CONFIG=/data/vhosts/washingtonrotary.com/dev/htdocs/rra.cfg perl -I/data/vhosts/washingtonrotary.com/dev/htdocs/rra/lib -MRRA::Dispatch -e 'RRA::Dispatch->dispatch' 
+    echo -n "$*" | sed 's/\s+/;/g'
+    echo -n "$*" | sed 's/\s+/;/g' | env CONFIG=/data/vhosts/washingtonrotary.com/dev/htdocs/rra.cfg perl -I/data/vhosts/washingtonrotary.com/dev/htdocs/rra/lib -MRRA::Dispatch -e 'RRA::Dispatch->dispatch' ; echo
 }
 
 rralogin () 

@@ -31,6 +31,9 @@ sub ac_GET : Runmode RequireAjax {
 		case 'item' {
 			($sql, @bind) = sql_interp 'SELECT ac FROM ac_item_vw WHERE',{number=>$q},'OR item LIKE',\"%$q%",'OR donor LIKE',\"$q%",'OR',{donor_id=>$q},'OR',{item_id=>$q},'LIMIT', \$limit;
 		}
+		case 'bellitem' {
+			($sql, @bind) = sql_interp 'SELECT ac FROM ac_bellitem_vw WHERE', {bidder_id=>$self->param('highbidder_id')},'LIMIT', \$limit;
+		}
 		case 'ad' {
 			($sql, @bind) = sql_interp 'SELECT ac FROM ac_ad_vw WHERE',{number=>$q},'OR ad LIKE',\"%$q%",'OR advertiser LIKE',\"$q%",'OR',{advertiser_id=>$q},'OR',{ad_id=>$q},'LIMIT', \$limit;
 		}

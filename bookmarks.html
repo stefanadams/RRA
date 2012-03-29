@@ -47,21 +47,59 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	// attach the template
-	$("#result1").setTemplateElement("template", null, {runnable_functions: true});
+//	$("#result1").setTemplateElement("template", null, {runnable_functions: true});
 			
 	// process the template
-	$("#result1").processTemplateURL("pl/bookmarks", null, {
-		type: 'GET'
-	}).ajaxComplete(function(e, xhr, settings){
-		var json = $.parseJSON(xhr.responseText);
-		if ( json && json.error == "401" ) { window.location = "error.html?referer=bookmarks.html;status=401"; }
-		if ( json && json.error == "403" ) { window.location = "login.html?referer=bookmarks.html"; }
-	});
+//	$("#result1").processTemplateURL("pl/bookmarks", null, {
+//		type: 'GET'
+//	}).ajaxComplete(function(e, xhr, settings){
+//		var json = $.parseJSON(xhr.responseText);
+//		if ( json && json.error == "401" ) { window.location = "error.html?referer=bookmarks.html;status=401"; }
+//		if ( json && json.error == "403" ) { window.location = "login.html?referer=bookmarks.html"; }
+//	});
 });
 </script>
 </head>
 <body>
 	<div id="loggedin"></div>
+<a href="logout.html">Sign Out</a><br />
+<br />
+<a href="rotarians.html">View Rotarians</a><br />
+<a href="donors.html">Manage Donors</a><br />
+<a href="postcards.html">Donor Mailing Label (Excel Data File Only)</a><br />
+<a href="stockitems.html">Manage Pre-arranged Items</a><br />
+<a href="solicitation_aids.html">Rotarian Solicitation Aids</a><br />
+<br />
+<a href="items.html">Manage Items</a><br />
+<a href="seqitems.html">Sequence Items</a><br />
+<a href="bellitems.html">Manage Bellringers</a><br />
+<a href="insert.html">Missourian Insert Data (Excel Data File Only)</a><br />
+<br />
+<a href="ads.html">Manage Ads</a><br />
+<a href="schedule_ads.html">Schedule Ads</a><br />
+<br />
+<a href="auction.html">Public View</a><br />
+<a href="seqitems.html">Sequence Items</a><br />
+<a href="http://iis.radioauction.washingtonrotary.com/admin_auctioneer_a.asp">Auctioneer A</a><br />
+<a href="http://iis.radioauction.washingtonrotary.com/admin_auctioneer_b.asp">Auctioneer B</a><br />
+<a href="http://iis.radioauction.washingtonrotary.com/admin_start_auction_01.asp">Start Auctions (Assign Auctioneers)</a><br />
+<a href="http://iis.radioauction.washingtonrotary.com/admin_main.asp">Control Functions (Start Timers, Sell Items)</a><br />
+<a href="http://iis.radioauction.washingtonrotary.com/admin_place_bid_01.asp">Place Bids from Callers</a><br />
+<a href="requests.html">Manage Requests</a><br />
+<a href="bidders.html">Manage Bidders</a><br />
+<a href="bidding.html">Manage Items Currently In Bidding</a><br />
+<a href="winners.html">Manage Winners</a><br />
+<br />
+<a href="summary.html">View Current Summary</a><br />
+<a href="bankreport.html">Download Bank Report</a><br />
+<a href="stockreport.html">Download Stock Report</a><br />
+<br />
+<a href="paypal-test.html">Test Paypal Interface</a><br />
+<a href="ringcentral.html">Ring Central Notes</a><br />
+<a href="committee.html">Committee Notes</a><br />
+<br />
+<a href="backup.html">Backup Database and Application</a><br />
+
 	<!-- Template content -->
 	<textarea id="template" style="display:none">
 		{#foreach $T.rows as r}

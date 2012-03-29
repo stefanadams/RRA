@@ -11,7 +11,7 @@ sub cell_POST : Runmode RequireAjax Authen Authz(':admins') {
 	my ($sql, @bind);
         if ( grep { $_ eq $self->param('celname') } qw/sold/ ) {
 		if ( !$self->param('sold') ) {
-	                ($sql, @bind) = sql_interp 'UPDATE items SET sold=null WHERE', {item_id => $self->param('id')};
+	                ($sql, @bind) = sql_interp 'UPDATE items SET sold=null,cleared=null WHERE', {item_id => $self->param('id')};
 		}
 		return $self->to_json({sc=>'false',msg=>"Editing disabled"}) if $self->cfg('NOEDIT');
 		$self->dbh->do($sql, {}, @bind) or return $self->to_json({sc=>'false',msg=>"Error: ".$self->dbh->errstr});

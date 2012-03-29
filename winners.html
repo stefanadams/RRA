@@ -10,7 +10,7 @@
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script type="text/javascript" src="js/i18n/grid.locale-en.js"></script>
-<script type="text/javascript" src="js/jquery.jqGrid.min.js"></script>
+<script type="text/javascript" src="js/jquery.jqGrid.src.js"></script>
 <script type="text/javascript" src="js/jquery.json-2.3.min.js"></script>
 <script type="text/javascript" src="js/jquery.autocomplete.js"></script>
 <script type="text/javascript" src="js/jquery.maskedinput.js"></script>
@@ -20,71 +20,6 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	var selectBool = "1:Yes;0:No";
-	var categories = ":;food:Food;gc:Gift Certificates;travel:Travel;personal care:Personal Care;auto:Auto;apparel:Apparel;sports:Sports;event tickets:Event Tickets;baskets:Baskets;wine:Wine;misc:Misc;garden:Garden;one per:One Per;restaurant:Restaurant;catering:Catering;floral:Floral & Landscape;spa:Salon & Spa;golf:Golf;meat:Steak & Meat;car wash:Car Wash;droege:Droege's;kr:K & R";
-
-	function alertAddedItemNumber(response,postdata) {
-		// Reference in .navGrid {add} object afterSubmit: property
-		var json=response.responseText;
-		var result=eval("("+json+")");
-		if (result.sc) alert("Added Item Number "+result.number);
-		return [result.sc,result.msg,null];
-	}
-
-	// Autocompletes
-	function ac_donor(elem){
-		$(elem).autocomplete('pl/ac/donor', {minChars: 3});
-		$(elem).result(function(event, data, formatted){
-			if (data) {
-				$('#advertisement').val(data[1]);
-			}
-		}); 
-		return true;
-	}
-	function ac_stockitem(elem){
-		$(elem).autocomplete('pl/ac/stockitem', {minChars: 3});
-		$(elem).result(function(event, data, formatted){
-			if (data) {
-				$('#item').val(data[1]);
-				$('#value').val(data[2]);
-				$('#itemcat').val(data[3]);
-			}
-		}); 
-		return true;
-	}
-	function ac_item(elem){
-		$(elem).autocomplete('pl/ac/item', {minChars: 3, limit: 20, extraParams: {donor: function(){ return $('#donor').val(); }}});
-		$(elem).result(function(event, data, formatted){
-			if (data) {
-				$('#description').val(data[1]);
-				$('#value').val(data[2]);
-				$('#url').val(data[3]);
-				$('#itemcat').val(data[4]);
-			}
-		}); 
-		return true;
-	}
-	function ac_advertisement(elem){
-		$(elem).autocomplete('pl/ac/advertisement', {minChars: 3, extraParams: {donor: function(){ return $('#donor').val(); }}});
-		return true;
-	}
-
-	// Reference in .jqGrid {options} colModel {name:...} property with formatter:'___Fmatter' property
-	function hideFK(cellvalue, options, rowdata) {
-		if ( cellvalue ) {
-			var re = /^(.*?):([0-9]+)$/.exec(cellvalue);
-			return re[1] + '<span style="display: none">:' + re[2] + '</span>';
-		}
-		return '';
-	}
-	function showFK(cellvalue, options) {
-		if ( cellvalue ) return cellvalue;
-		return '';
-	}
-	function hasFK(value, colname) {
-		var RE = /:[0-9]+$/;
-		if ( RE.test(value) ) return [true,""];
-		return [false,colname+": Please make a selection from the suggestion menu"];
-	}
 
 	function checkUpdate(response,postdata) {  
 		// Reference in .navGrid {add/edit/del} object afterSubmit: property
@@ -127,18 +62,23 @@ $(document).ready(function(){
 		datatype: 'json',
 		jsonReader: {repeatitems: false, id: "item_id"},
 		ajaxGridOptions: { contentType: "application/json; charset=utf-8" },  
+		ajaxSelectOptions: {data:{bidder_id:function(){
+			var row_id = $("#list1").getGridParam('selrow');
+			return $("#list1").jqGrid('getCell',row_id,'highbidder_id');
+		}}},
 		serializeGridData: function (postData) { return $.toJSON(postData); },
 		caption: "Winners",
 		colModel:[
-			{name:'number',label:'Number',width:20,editable:false},
+			{name:'number',label:'Number',width:20},
 			{name:'sold',label:'Sold',width:25,editable:true,edittype:'select',editoptions:{multiple:false,value:selectBool},formatter:'boolFmatter'},
-			{name:'item',label:'Item', width:200,editable:false},
-			{name:'highbid',label:'Price', width:25, align:'right',editable:false,formatter:'currency',formatoptions:{decimalSeparator:".", thousandsSeparator: ",", decimalPlaces: 0, prefix: "$"}},
-			{name:'highbidder',label:'Winner',editable:false},
-			{name:'phone',label:'Phone',editable:false},
+			{name:'item',label:'Item', width:200},
+			{name:'highbid',label:'Price', width:25, align:'right',formatter:'currency',formatoptions:{decimalSeparator:".", thousandsSeparator: ",", decimalPlaces: 0, prefix: "$"}},
+			{name:'bellringer',label:'BR',width:25,formatter:'boolFmatter'},
 			{name:'bellitem',label:'Bellringer Item',width:100,editable:true,edittype:'select',editoptions:{multiple:false,dataUrl:'pl/bs/bellitems'}},
-			{name:'qty',label:'Qty',width:50},
-			{name:'contacted',label:'Contacted',width:25,editable:true,edittype:'select',editoptions:{multiple:false,value:selectBool},formatter:'boolFmatter'}
+			{name:'highbidder_id',label:'Winner ID',hidden:true},
+			{name:'highbidder',label:'Winner'},
+			{name:'phone',label:'Phone'},
+			{name:'undef',label:' ',width:10}
 		],
 		cellEdit: true,
 		cellurl: 'pl/manage/winners/cell',
@@ -158,6 +98,7 @@ $(document).ready(function(){
 		rowNum: 50,
 		rowList: [10, 20, 50, 100, 500, 1000, 5000, 10000],
 		pager: $('#pager1'),
+		//sortname: 'bellringer desc,number',
 		sortname: 'number',
 		viewrecords: true,
 		height: "75\%",
@@ -177,8 +118,7 @@ $(document).ready(function(){
 			url: "pl/manage/winners/add",
 			addCaption: "Add Item",
 			width: 700,
-			closeOnEscape: true,
-			afterSubmit: alertAddedItemNumber
+			closeOnEscape: true
 		},
 		{
 			url: "pl/manage/winners/del",
@@ -200,6 +140,7 @@ $(document).ready(function(){
         if ( json && json.error == "401" ) { window.location = "error.html?referer=winners.html;status=401"; }
         if ( json && json.error == "403" ) { window.location = "login.html?referer=winners.html"; }
     });
+	//setInterval(function(){$("#list1").trigger('reloadGrid');}, 15000);
 });
 </script>
 </head> 

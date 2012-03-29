@@ -22,14 +22,14 @@
 
     <textarea id="template" style="display:none">
 	{#foreach $T.rows as r}
-		{#if $T.r.img}
-			<img src="{$T.r.img}" /><br />
-		{#/if}
 		{#if $T.r.description}
         	{$T.r.description}<br />
 		{#/if}
 		{#if $T.r.message}
         	{$T.r.message}<br />
+		{#/if}
+		{#if $T.r.img}
+			<img width=640 height=480 src="{$T.r.img}" /><br />
 		{#/if}
 	{/#foreach}
     </textarea>

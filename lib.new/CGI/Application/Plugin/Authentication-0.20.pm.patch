@@ -1,0 +1,25 @@
+--- Authentication-0.19.pm	2011-11-16 12:25:08.000000000 -0600
++++ Authentication.pm	2011-11-16 16:58:00.000000000 -0600
+@@ -2,7 +2,7 @@
+ 
+ use 5.006;
+ use strict;
+-our $VERSION = '0.19';
++our $VERSION = '0.20';
+ 
+ our %__CONFIG;
+ 
+@@ -29,11 +29,11 @@
+ use Attribute::Handlers;
+ my %RUNMODES;
+ 
+-sub CGI::Application::RequireAuthentication : ATTR(CODE) {
++sub CGI::Application::RequireAuthentication : ATTR(CODE,BEGIN,CHECK) {
+     my ( $package, $symbol, $referent, $attr, $data, $phase ) = @_;
+     $RUNMODES{$referent} = $data || 1;
+ }
+-sub CGI::Application::Authen : ATTR(CODE) {
++sub CGI::Application::Authen : ATTR(CODE,BEGIN,CHECK) {
+     my ( $package, $symbol, $referent, $attr, $data, $phase ) = @_;
+     $RUNMODES{$referent} = $data || 1;
+ }

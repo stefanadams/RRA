@@ -1,0 +1,37 @@
+--- Authorization-0.07.pm	2011-11-16 12:25:32.000000000 -0600
++++ Authorization.pm	2011-11-16 17:27:04.000000000 -0600
+@@ -2,7 +2,7 @@
+ 
+ use strict;
+ use vars qw($VERSION);
+-$VERSION = '0.07';
++$VERSION = '0.08';
+ 
+ our %__CONFIG;
+ 
+@@ -11,6 +11,14 @@
+ use List::Util qw(first);
+ use Carp;
+ 
++use Attribute::Handlers;
++my %AUTHZ = ();
++ 
++sub CGI::Application::Authz : ATTR(CODE,BEGIN,CHECK) {
++    my ( $package, $symbol, $ref, $attr, $data, $phase ) = @_;
++    $AUTHZ{$ref} = $data || 1;
++}
++
+ sub import {
+     my $pkg     = shift;
+     my $callpkg = caller;
+@@ -424,6 +432,10 @@
+       }
+     }
+ 
++    # See if the user is using attributes
++    my $sub = $self->{cgiapp}->can($runmode);
++    return $AUTHZ{$sub} if $sub && $AUTHZ{$sub};
++
+     return undef;
+ }
+ 
